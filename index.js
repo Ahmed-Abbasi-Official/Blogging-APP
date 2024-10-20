@@ -12,5 +12,5 @@ app.set('views',path.resolve('./views'))
 app.get('/',(req,res)=>{res.render('home')})
 
 app.listen(PORT, () => {
-  console.log(`Server Started at PORT : ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
