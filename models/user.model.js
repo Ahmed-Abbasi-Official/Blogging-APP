@@ -18,7 +18,6 @@ const userSchema = new Schema(
     },
     salt: {
       type: String,
-      required: true,
     },
     ProfileImageURL: {
       type: String,
@@ -37,8 +36,8 @@ const userSchema = new Schema(
 userSchema.pre("save", function (next) {
   const user = this;
   if (!user.isModified("password")) return;
-  const secret = randomBytes(16).toString();
-  const hashPassword = createHmac("sha256", secret)
+  const salt = randomBytes(16).toString();
+  const hashPassword = createHmac("sha256", salt)
     .update(user.password)
     .digest("hex");
 
@@ -47,6 +46,18 @@ userSchema.pre("save", function (next) {
   console.log(hashPassword);
   next();
 });
+
+userSchema.static('matchPassword',function (email,password){
+  const user=this.findOne({email})
+  if(!user) return false;
+  const salt =user.salt;
+  const hashPassword=user.password;
+
+  const userProviderHashPassword=createHmac('sha256',salt).update(password).digest('hex')
+
+  return hashPassword === userProviderHashPassword
+
+} )
 
 const USER = mongoose.model("USER", userSchema);
 

@@ -1,12 +1,12 @@
 import {Router} from 'express'
 import { signIn, signUp } from '../controllers/user.controllers.js'
 
-const router=Router()
+const userRouter=Router()
 
-router.get('/signin',(req,res)=>{res.render('signin')})
-router.get('/signup',(req,res)=>{res.render('signup')})
-router.post('/signup',signUp)
-router.post('/signin',signIn)
+userRouter.get('/signin',(req,res)=>{res.render('signin')})
+userRouter.get('/signup',(req,res)=>{res.render('signup')})
+userRouter.post('/signup',signUp)
+userRouter.post('/signin',signIn)
 
 
-export default router
+export default userRouter
