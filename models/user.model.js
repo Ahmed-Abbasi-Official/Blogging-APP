@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { createHmac, randomBytes } from "crypto";
+import { error } from "console";
 
 const userSchema = new Schema(
   {
@@ -47,15 +48,15 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.static('matchPassword',function (email,password){
-  const user=this.findOne({email})
-  if(!user) return false;
+userSchema.static('matchPassword',async function (email,password){
+  const user=await this.findOne({email})
+  if(!user) throw new Error("User not Found!!");
   const salt =user.salt;
   const hashPassword=user.password;
 
   const userProviderHashPassword=createHmac('sha256',salt).update(password).digest('hex')
-
-  return hashPassword === userProviderHashPassword
+  if(hashPassword !== userProviderHashPassword) throw new Error("Incorect Password !!");
+  return {...user,password:null,salt:null}
 
 } )
 

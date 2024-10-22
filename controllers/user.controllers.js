@@ -24,6 +24,9 @@ export async function signUp(req, res) {
 export async function signIn(req, res) {
   try {
     const {email,password}=req.body
+    const user=await USER.matchPassword(email,password)
+    console.log(user);
+    res.redirect('/')
     
   } catch (error) {
     console.log(`Error in SignIn ::: ${error}`);

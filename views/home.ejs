@@ -2,12 +2,49 @@
 <html lang="en">
 <head>
     <%- include('./partials/head.ejs') %>
-    
     <title>Home Page</title>
+     <style>
+        #hero_images {
+            transition: background-color 1.5s ease; /* Transition for background color */
+        }
+    </style>
 </head>
-<body>
-    <%- include('./partials/nav.ejs') %>
-    <h1>Good</h1>
+<body class="relative">
+    <!-- Main navigation bar -->
+    <header class="relative w-[100%] h-[4rem] text-white z-20">
+        <%- include('./partials/nav.ejs') %>
+    </header>
+
+    <!-- Main content -->
+    <main class="relative z-10">
+        <section class="relative z-10">
+            <!-- Content header -->
+            <header class="flex justify-center items-center flex-col text-white z-20 space-y-4">
+                <h1 class="text-3xl tracking-wider ">Publish your passions, your way</h1>
+                <p class="pb-7">Create a unique and beautiful blog easily.</p>
+                <a href="" class="uppercase px-4 py-3 text-[.8125rem] bg-[#ff8000] hover:bg-orange-400 text-white font-[500] rounded">create your blog</a>
+            </header>
+        </section>
+        
+
+        <!-- Background overlay -->
+        <div class="w-full h-full bg-[#2f454f] fixed top-0 left-0 z-0 overflow-hidden  " id="hero_images">
+           <!-- <div>
+            <img src="..//images/default.png" alt="">
+           </div>
+           <div>
+            <img src="..//images/default.png" alt="">
+           </div>
+           <div>
+            <img src="..//images/default.png" alt="">
+           </div> -->
+        </div>
+        
+    </main>
+    <div class="theme js-theme red active">
+    
+        </div>
+
     <%- include('./partials/script.ejs') %>
 </body>
 </html>

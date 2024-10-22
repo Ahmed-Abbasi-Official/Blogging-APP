@@ -9,6 +9,8 @@ const PORT = 8000;
 
 // Middleware to parse form data (urlencoded) and JSON
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
+
 
 
 
