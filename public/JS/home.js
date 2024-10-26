@@ -1,5 +1,6 @@
 const hero_images = document.querySelector("#hero_images");
 const img_div_1st = document.querySelector("#img_div_1st");
+const img_div_2nd = document.querySelector("#img_div_2nd");
 const img_1st = document.querySelector("#img_1st");
 const img_2nd = document.querySelector("#img_2nd");
 const img_3rd = document.querySelector("#img_3rd");
@@ -8,6 +9,17 @@ const img_5th = document.querySelector("#img_5th");
 const img_6th = document.querySelector("#img_6th");
 const img_7th = document.querySelector("#img_7th");
 const img_8th = document.querySelector("#img_8th");
+
+    // Blue Part
+
+const img_2nd_blue = document.querySelector("#img_2nd_blue");
+const img_3rd_blue = document.querySelector("#img_3rd_blue");
+const img_4th_blue = document.querySelector("#img_4th_blue");
+const img_5th_blue = document.querySelector("#img_5th_blue");
+const img_6th_blue = document.querySelector("#img_6th_blue");
+const img_7th_blue = document.querySelector("#img_7th_blue");
+const img_8th_blue = document.querySelector("#img_8th_blue");
+const img_1st_blue = document.querySelector("#img_1st_blue");
 let state = 0; // Variable to track the current color state
 
 setInterval(() => {
@@ -17,6 +29,8 @@ setInterval(() => {
   // Determine the background color and image based on the current state
   if (state === 1) {
     hero_images.style.backgroundColor = "#bc382e"; // First color
+    img_div_1st.style.display='flex'
+    img_div_2nd.style.display='none'
 
     img_1st.src = "/images/cooking_card.png";
     img_2nd.src = "/images/spoon_1.png";
@@ -43,11 +57,33 @@ setInterval(() => {
     console.log(`in IFFF state: ${state}`);
   } else if (state === 2) {
     hero_images.style.backgroundColor = "#388d80"; // Second color
-    resetImageTransform(); // Optionally reset the image if needed
+    resetImageTransform(); 
+     
   } else {
     hero_images.style.backgroundColor = "#4583aa"; // Third color
     state = 0; // Reset the state
-    resetImageTransform(); // Optionally reset the image if needed
+    // resetImageTransform(); // Optionally reset the image if needed
+    img_div_1st.style.display='none'
+    img_div_2nd.style.display='flex'
+    resetImageTransform(); 
+    img_1st_blue.src = "/images/blue_fan_7.png";
+    img_2nd_blue.src = "/images/blue_fan_1.png";
+    img_3rd_blue.src = "/images/blue_fan_2.png";
+    img_4th_blue.src = "/images/blue_fan_3.png";
+    img_5th_blue.src = "/images/blue_fan_4.png";
+    img_6th_blue.src = "/images/blue_fan_5.png";
+    img_7th_blue.src = "/images/blue_fan_6.png";
+
+    img_1st_blue.onload = function () {
+      // Apply transformations after the image is fully loaded
+
+      img_1st_blue.style.opacity = "1";
+      img_2nd_blue.style.opacity = "1";
+      img_3rd_blue.style.opacity = "1";
+      img_4th_blue.style.opacity = "1";
+      img_5th_blue.style.opacity = "1";
+      img_6th_blue.style.opacity = "1";
+    };
   }
 }, 4000);
 
