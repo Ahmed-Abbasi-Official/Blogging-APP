@@ -1,6 +1,7 @@
 const hero_images = document.querySelector("#hero_images");
 const img_div_1st = document.querySelector("#img_div_1st");
 const img_div_2nd = document.querySelector("#img_div_2nd");
+const img_div_3rd = document.querySelector("#img_div_3rd");
 const img_1st = document.querySelector("#img_1st");
 const img_2nd = document.querySelector("#img_2nd");
 const img_3rd = document.querySelector("#img_3rd");
@@ -20,6 +21,18 @@ const img_6th_blue = document.querySelector("#img_6th_blue");
 const img_7th_blue = document.querySelector("#img_7th_blue");
 const img_8th_blue = document.querySelector("#img_8th_blue");
 const img_1st_blue = document.querySelector("#img_1st_blue");
+
+    // Green Part 
+
+    const img_2nd_green = document.querySelector("#img_2nd_green");
+    const img_3rd_green = document.querySelector("#img_3rd_green");
+    const img_4th_green = document.querySelector("#img_4th_green");
+    const img_5th_green = document.querySelector("#img_5th_green");
+    const img_6th_green = document.querySelector("#img_6th_green");
+    const img_7th_green = document.querySelector("#img_7th_green");
+    const img_8th_green = document.querySelector("#img_8th_green");
+    const img_1st_green = document.querySelector("#img_1st_green");
+
 let state = 0; // Variable to track the current color state
 
 setInterval(() => {
