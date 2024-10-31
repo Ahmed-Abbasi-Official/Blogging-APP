@@ -75,7 +75,7 @@ setInterval(() => {
   } else {
     hero_images.style.backgroundColor = "#4583aa"; // Third color
     state = 0; // Reset the state
-    // resetImageTransform(); // Optionally reset the image if needed
+    // resetImageTransform(); 
     img_div_1st.style.display='none'
     img_div_2nd.style.display='flex'
     resetImageTransform(); 
