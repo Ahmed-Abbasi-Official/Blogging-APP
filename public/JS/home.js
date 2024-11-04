@@ -71,6 +71,13 @@ setInterval(() => {
   } else if (state === 2) {
     hero_images.style.backgroundColor = "#388d80"; // Second color
     resetImageTransform(); 
+    img_1st_blue.src = "/images/blue_fan_7.png";
+    img_2nd_blue.src = "/images/blue_fan_1.png";
+    img_3rd_blue.src = "/images/blue_fan_2.png";
+    img_4th_blue.src = "/images/blue_fan_3.png";
+    img_5th_blue.src = "/images/blue_fan_4.png";
+    img_6th_blue.src = "/images/blue_fan_5.png";
+    img_7th_blue.src = "/images/blue_fan_6.png";
      
   } else {
     hero_images.style.backgroundColor = "#4583aa"; // Third color
