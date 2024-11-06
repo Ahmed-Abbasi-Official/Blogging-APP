@@ -11,7 +11,7 @@ const img_6th = document.querySelector("#img_6th");
 const img_7th = document.querySelector("#img_7th");
 const img_8th = document.querySelector("#img_8th");
 
-    // Blue Part
+// Blue Part
 
 const img_2nd_blue = document.querySelector("#img_2nd_blue");
 const img_3rd_blue = document.querySelector("#img_3rd_blue");
@@ -22,16 +22,17 @@ const img_7th_blue = document.querySelector("#img_7th_blue");
 const img_8th_blue = document.querySelector("#img_8th_blue");
 const img_1st_blue = document.querySelector("#img_1st_blue");
 
-    // Green Part 
+// Green Part
 
-    const img_2nd_green = document.querySelector("#img_2nd_green");
-    const img_3rd_green = document.querySelector("#img_3rd_green");
-    const img_4th_green = document.querySelector("#img_4th_green");
-    const img_5th_green = document.querySelector("#img_5th_green");
-    const img_6th_green = document.querySelector("#img_6th_green");
-    const img_7th_green = document.querySelector("#img_7th_green");
-    const img_8th_green = document.querySelector("#img_8th_green");
-    const img_1st_green = document.querySelector("#img_1st_green");
+const img_2nd_green = document.querySelector("#img_2nd_green");
+const img_3rd_green = document.querySelector("#img_3rd_green");
+const img_4th_green = document.querySelector("#img_4th_green");
+const img_5th_green = document.querySelector("#img_5th_green");
+const img_6th_green = document.querySelector("#img_6th_green");
+const img_7th_green = document.querySelector("#img_7th_green");
+const img_8th_green = document.querySelector("#img_8th_green");
+const img_9th_green = document.querySelector("#img_9th_green");
+const img_1st_green = document.querySelector("#img_1st_green");
 
 let state = 0; // Variable to track the current color state
 
@@ -42,8 +43,9 @@ setInterval(() => {
   // Determine the background color and image based on the current state
   if (state === 1) {
     hero_images.style.backgroundColor = "#bc382e"; // First color
-    img_div_1st.style.display='flex'
-    img_div_2nd.style.display='none'
+    img_div_1st.style.display = "flex";
+    img_div_2nd.style.display = "none";
+    img_div_3rd.style.display = "none";
 
     img_1st.src = "/images/cooking_card.png";
     img_2nd.src = "/images/spoon_1.png";
@@ -70,22 +72,27 @@ setInterval(() => {
     console.log(`in IFFF state: ${state}`);
   } else if (state === 2) {
     hero_images.style.backgroundColor = "#388d80"; // Second color
-    resetImageTransform(); 
-    img_1st_blue.src = "/images/blue_fan_7.png";
-    img_2nd_blue.src = "/images/blue_fan_1.png";
-    img_3rd_blue.src = "/images/blue_fan_2.png";
-    img_4th_blue.src = "/images/blue_fan_3.png";
-    img_5th_blue.src = "/images/blue_fan_4.png";
-    img_6th_blue.src = "/images/blue_fan_5.png";
-    img_7th_blue.src = "/images/blue_fan_6.png";
-     
+    resetImageTransform();
+    img_div_1st.style.display = "none";
+    img_div_2nd.style.display = "none";
+    img_div_3rd.style.display = "flex";
+
+    img_1st_green.src = "/images/green_9.png";
+    img_2nd_green.src = "/images/green_1.png";
+    img_3rd_green.src = "/images/green_2.png";
+    img_4th_green.src = "/images/green_3.png";
+    img_5th_green.src = "/images/green_4.png";
+    img_6th_green.src = "/images/green_5.png";
+    img_7th_green.src = "/images/green_6.png";
+    img_8th_green.src = "/images/green_7.png";
+    img_9th_green.src = "/images/green_8.png";
   } else {
     hero_images.style.backgroundColor = "#4583aa"; // Third color
     state = 0; // Reset the state
-    // resetImageTransform(); 
-    img_div_1st.style.display='none'
-    img_div_2nd.style.display='flex'
-    resetImageTransform(); 
+    resetImageTransform();
+    img_div_1st.style.display = "none";
+    img_div_2nd.style.display = "flex";
+    img_div_3rd.style.display = "none";
     img_1st_blue.src = "/images/blue_fan_7.png";
     img_2nd_blue.src = "/images/blue_fan_1.png";
     img_3rd_blue.src = "/images/blue_fan_2.png";
