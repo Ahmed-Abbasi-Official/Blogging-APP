@@ -94,7 +94,7 @@ setInterval(() => {
     img_8th_green.src = "/images/green_7.png";
     img_9th_green.src = "/images/green_8.png";
   } else {
-    hero_images.style.backgroundColor = "#4583aa"; // Third color
+    hero_images.style.backgroundColor = "#4583aa"; // Third 
     state = 0; // Reset the state
     img_div_1st.style.display = "none";
     img_div_2nd.style.display = "flex";
