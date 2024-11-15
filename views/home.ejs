@@ -9,20 +9,78 @@
                 transition: background-color 1.5s ease;
                 /* Transition for background color */
             }
-            .opacityall{
-                opacity: 0;
-                transform: translateY(85px);
+
+            #img_2nd {
+                transform: translateX(-36rem) translateY(500%);
+                animation: scaleUp 1s ease forwards;
+
+
+            }
+            #img_3rd{
+                transform: translateX(-36rem) translateY(500%);
+                animation: scaleUp 1.1s ease forwards;
+            }
+            #img_4th{
+                transform: translateX(-36rem) translateY(500%);
+                animation: scaleUp 1.3s ease forwards;
+            }
+            #img_5th{
+                transform: translateX(-6rem) translateY(500%);
+                animation: scaleUpp 1.4s ease forwards;
+            }
+            #img_6th{
+                transform: translateX(225%) translateY(500%);
+                animation: scaleUppp 1.4s ease forwards;
+            }
+            #img_7th{
+                transform: translateX(225%) translateY(500%);
+                animation: scaleUpppp 1.4s ease forwards;
+            }
+            #img_8th{
+                transform: translateX(225%) translateY(500%);
+                animation: scaleUppp 1.4s ease forwards;
+            }
+            #img_1st{
+                transform: translateX(0%) translateY(500%);
+                animation: scaleUp1st 1.1s ease forwards;
             }
            
-    .transform-transition {
-        opacity: 1; 
-        transform: translateX(-602px) translateY(85px);
+            
 
-        transition: transform 1.5s ease, opacity 3s ease;
-    }
 
-          
+            @keyframes scaleUp {
+                to {
+                    transform: translateX(-36rem) translateY(6rem);
+                }
+            }
+            @keyframes scaleUpp {
+                to {
+                    transform: translateX(-6rem) translateY(3rem);
+                }
+            }
+             @keyframes scaleUpp {
+                to {
+                    transform: translateX(-6rem) translateY(3rem);
+                }
+            }
+            @keyframes scaleUppp {
+                to {
+                    transform: translateX(225%) translateY(2.5rem);
+                }
+            }
+            @keyframes scaleUpppp {
+                to {
+                    transform: translateX(250%) translateY(5rem);
+                }
+            }
+            @keyframes scaleUp1st {
+                to {
+                    transform: translateX(0%) translateY(83px);
+                }
+            }
+           
         </style>
+
 </head>
 
 <body class="relative">
@@ -43,54 +101,75 @@
                     your blog</a>
 
 
-                    <!-- 1st Div -->
+                <!-- 1st Div -->
 
-                    <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_1st">
-                        <img src="" id="img_2nd" alt="" class="opacityall  w-[17%] absolute -top-[83px] ">
-                        <img src="" id="img_3rd" alt="" class=" opacityall w-[15%] absolute top-[15px] ">
-                        <img src="" id="img_4th" alt="" class="opacityall  w-[20%] absolute top-[173px] ">
-                        <img src="" id="img_5th" alt="" class="opacityall w-[4.5%] absolute top-[27px]">
-                        <img src="" id="img_6th" alt="" class="opacityall  w-[20%] absolute -top-[35px] -right-[5%] overflow-x-hidden">
+                <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_1st">
+                    <img src="" id="img_2nd" alt=""
+                        class="transform -translate-x-[36rem] -translate-y-[100%]  w-[17%] absolute -top-[83px] ">
+                    <img src="" id="img_3rd" alt=""
+                        class=" transform -translate-x-[36rem] translate-y-24   w-[15%] absolute top-[15px] ">
+                    <img src="" id="img_4th" alt="" class="  w-[20%] absolute top-[173px] ">
+                    <img src="" id="img_5th" alt=""
+                        class="transform -translate-x-[6rem] translate-y-10 w-[4.5%] absolute top-[27px]">
+                    <img src="" id="img_6th" alt=""
+                        class="transform  translate-y-10 translate-x-[225%]  w-[20%] absolute -top-[35px]  overflow-x-hidden">
 
-                        <img src="" id="img_7th" alt="" class="opacityall  w-[11%] absolute top-[19px] right-[16%]">
-                        <img src="" id="img_8th" alt="" class="opacityall w-[24%] absolute top-[160px] -right-[10%]">
-                        <img src="" id="img_1st" alt="" class="m-auto transform translate-y-[83px] opacity-1 w-[50%]">
-                    </div>
+                    <img src="" id="img_7th" alt=""
+                        class="transform  translate-y-20 translate-x-[220%]  w-[11%] absolute top-[19px] ">
+                    <img src="" id="img_8th" alt="" class="transform translate-y-0 translate-x-[250%] w-[24%] absolute top-[160px] ">
+                    <img src="" id="img_1st" alt="" class="m-auto transform translate-y-[83px] opacity-1 w-[50%]">
+                </div>
 
-                    <!-- // 2nd Blue -->
+                <!-- // 2nd Blue -->
 
-                    <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_2nd">
-                        <img src="" id="img_2nd_blue" alt="" class=" translate-y-[87px]  w-[24%] absolute -top-[83px] -left-[9%]">
-                        <img src="" id="img_3rd_blue" alt="" class=" translate-y-[258px]  w-[15%] absolute top-[50px] -left-[4.4%]">
-                        <img src="" id="img_4th_blue" alt="" class=" translate-y-[158px]  w-[13%] absolute top-[208px] left-[10%]">
-                        <img src="" id="img_5th_blue" alt="" class=" translate-y-[5px]  w-[17%] absolute top-[62px] -right-[6%]">
-                        <img src="" id="img_6th_blue" alt="" class=" translate-y-[160px]  w-[11%] absolute top-[0px] right-[8%] overflow-x-hidden">
+                <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_2nd">
+                    <img src="" id="img_2nd_blue" alt=""
+                        class=" translate-y-[87px]  w-[24%] absolute -top-[83px] -left-[9%]">
+                    <img src="" id="img_3rd_blue" alt=""
+                        class=" translate-y-[258px]  w-[15%] absolute top-[50px] -left-[4.4%]">
+                    <img src="" id="img_4th_blue" alt=""
+                        class=" translate-y-[158px]  w-[13%] absolute top-[208px] left-[10%]">
+                    <img src="" id="img_5th_blue" alt=""
+                        class=" translate-y-[5px]  w-[17%] absolute top-[62px] -right-[6%]">
+                    <img src="" id="img_6th_blue" alt=""
+                        class=" translate-y-[160px]  w-[11%] absolute top-[0px] right-[8%] overflow-x-hidden">
 
-                        <img src="" id="img_7th_blue" alt="" class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
-                        
-                        <img src="" id="img_1st_blue" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[55%]">
-                    </div>
+                    <img src="" id="img_7th_blue" alt=""
+                        class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
 
-                    <!-- 3rd Green -->
+                    <img src="" id="img_1st_blue" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[55%]">
+                </div>
 
-                    <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_3rd">
-                        <img src="" id="img_2nd_green" alt="" class=" translate-y-[55px]  w-[18%] absolute -top-[83px] -left-[9%]">
-                        <img src="" id="img_3rd_green" alt="" class=" translate-y-[258px]  w-[15%] absolute top-[50px] -left-[4.4%]">
-                        <img src="" id="img_4th_green" alt="" class=" translate-y-[158px]  w-[13%] absolute top-[208px] left-[10%]">
-                        <img src="" id="img_5th_green" alt="" class=" translate-y-[5px]  w-[17%] absolute top-[62px] -right-[6%]">
-                        <img src="" id="img_6th_green" alt="" class=" translate-y-[160px]  w-[11%] absolute top-[0px] right-[8%] overflow-x-hidden">
+                <!-- 3rd Green -->
 
-                        <img src="" id="img_7th_green" alt="" class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
-                        <img src="" id="img_8th_green" alt="" class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
-                        <img src="" id="img_9th_green" alt="" class=" translate-y-[302px]  w-[16%] absolute top-[54px] -right-[9%]">
-                        
-                        <img src="" id="img_1st_green" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[55%]">
-                    </div>
-                     
+                <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_3rd">
+                    <img src="" id="img_2nd_green" alt=""
+                        class=" translate-y-[55px]  w-[18%] absolute -top-[83px] -left-[9%]">
+                    <img src="" id="img_3rd_green" alt=""
+                        class=" translate-y-[258px]  w-[15%] absolute top-[50px] -left-[4.4%]">
+                    <img src="" id="img_4th_green" alt=""
+                        class=" translate-y-[158px]  w-[13%] absolute top-[208px] left-[10%]">
+                    <img src="" id="img_5th_green" alt=""
+                        class=" translate-y-[5px]  w-[17%] absolute top-[62px] -right-[6%]">
+                    <img src="" id="img_6th_green" alt=""
+                        class=" translate-y-[160px]  w-[11%] absolute top-[0px] right-[8%] overflow-x-hidden">
+
+                    <img src="" id="img_7th_green" alt=""
+                        class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
+                    <img src="" id="img_8th_green" alt=""
+                        class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
+                    <img src="" id="img_9th_green" alt=""
+                        class=" translate-y-[302px]  w-[16%] absolute top-[54px] -right-[9%]">
+
+                    <img src="" id="img_1st_green" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[55%]">
+                </div>
+
             </header>
-            
+
         </section>
-        <div class="w-full bg-black relative z-20"><h1>Ahmed Abbasi</h1></div>
+        <div class="w-full bg-black relative z-20">
+            <h1>Ahmed Abbasi</h1>
+        </div>
 
 
         <!-- Background overlay -->

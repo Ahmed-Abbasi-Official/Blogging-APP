@@ -38,7 +38,6 @@ const img_9th_green = document.querySelector("#img_9th_green");
 const img_1st_green = document.querySelector("#img_1st_green");
 
 // Set the src to trigger the loading
-img_2nd.src = "/images/spoon_1.png";
 
 let state = 0; // Variable to track the current color state
 
@@ -54,15 +53,7 @@ setInterval(() => {
     img_div_3rd.style.display = "none";
 
     img_1st.src = "/images/cooking_card.png";
-    img_2nd.addEventListener("load", () => {
-      img_2nd.classList.add("transform-transition");
-      img_3rd.classList.add("transform-transition");
-      img_4th.classList.add("transform-transition");
-      img_5th.classList.add("transform-transition");
-      img_6th.classList.add("transform-transition");
-      img_7th.classList.add("transform-transition");
-      img_8th.classList.add("transform-transition");
-    });
+   
     
     img_2nd.src = "/images/spoon_1.png";
     img_3rd.src = "/images/spoon_2.png";
@@ -71,13 +62,7 @@ setInterval(() => {
     img_6th.src = "/images/spoon_5.png";
     img_7th.src = "/images/spoon_6.png";
     img_8th.src = "/images/spoon_7.png";
-    img_2nd.classList.remove("transform-transition");
-      img_3rd.classList.remove("transform-transition");
-      img_4th.classList.remove("transform-transition");
-      img_5th.classList.remove("transform-transition");
-      img_6th.classList.remove("transform-transition");
-      img_7th.classList.remove("transform-transition");
-      img_8th.classList.remove("transform-transition");
+   
   } else if (state === 2) {
     hero_images.style.backgroundColor = "#388d80"; // Second color
     img_div_1st.style.display = "none";
@@ -107,4 +92,4 @@ setInterval(() => {
     img_6th_blue.src = "/images/blue_fan_5.png";
     img_7th_blue.src = "/images/blue_fan_6.png";
   }
-}, 4000);
+}, 2200);
