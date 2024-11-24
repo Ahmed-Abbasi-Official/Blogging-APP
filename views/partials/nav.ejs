@@ -1,5 +1,5 @@
-<nav class="flex justify-between items-center p-4">
-  <div class="flex items-center space-x-2">
+<nav class="flex justify-around  items-center py-2 px-4 ">
+  <div class="flex lg:gap-20 gap-9">
     <a href="/" class="flex items-center">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-7 h-7">
         <style>
@@ -35,10 +35,15 @@
       </svg>
       <span class="ml-2 text-lg font-semibold">Bloggify</span>
     </a>
-  </div>
-  <div>
-    <ul class="flex space-x-4">
-      <li class="uppercase"><a href="/user/signin" class="text-white text-sm font-semibold">Sign in</a></li>
+  
+    <ul class="flex justify-center items-center gap-10">
+      <li class=""><a href="/user/signin" class="text-white text-sm font-[400] transition_class hover:text-[#FC4308] hover:font-bold  ">Catogaries</a></li>
+      <li class=""><a href="/user/signin" class="text-white text-sm font-[400] transition_class hover:text-[#FC4308] hover:font-bold  ">About Us</a></li>
+      <li class=""><a href="/user/signin" class="text-white text-sm font-[400] transition_class hover:text-[#FC4308] hover:font-bold  ">Contact Us</a></li>
     </ul>
+  </div>
+  <div class="flex gap-4">
+    <input type="text" placeholder="Search Anything" class="px-4 py-1.2 text-[.6rem] bg-[#dadada] min-w-64 text-black outline-none border rounded focus:border-[#021021]">
+    <button class="hover:text-[#ff8000] transition_class hover:font-bold"><a href="/user/signin">Sign in</a></button>
   </div>
 </nav>
