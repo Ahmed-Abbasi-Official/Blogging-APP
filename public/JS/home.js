@@ -2,6 +2,10 @@ const hero_images = document.querySelector("#hero_images");
 const img_div_1st = document.querySelector("#img_div_1st");
 const img_div_2nd = document.querySelector("#img_div_2nd");
 const img_div_3rd = document.querySelector("#img_div_3rd");
+let burger = document.querySelector("#burger");
+let search_bar = document.querySelector("#search_bar");
+let ul_nav = document.querySelector("#ul_nav");
+let toggle_id = document.querySelector("#toggle_id");
 
 // Green Part
 
@@ -93,3 +97,19 @@ setInterval(() => {
     img_7th_blue.src = "/images/blue_fan_6.png";
   }
 }, 2200);
+
+let toggle=false
+burger.addEventListener('click',()=>{
+  toggle=!toggle
+  console.log(toggle);
+  
+  if(toggle){
+    search_bar.style.display='block'
+    ul_nav.style.display='block'
+   
+  }
+  else{
+    search_bar.style.display='none'
+    ul_nav.style.display='none'
+  }
+})
