@@ -11,12 +11,12 @@
                 
             }
 
-            #img_2nd {
+           #img_2nd {
                 transform: translateX(-36rem) translateY(500%);
                 animation: scaleUp 1s ease forwards;
 
 
-            }
+            } 
             #img_3rd{
                 transform: translateX(-36rem) translateY(500%);
                 animation: scaleUp 1.1s ease forwards;
@@ -49,11 +49,11 @@
             
 
 
-            @keyframes scaleUp {
-                to {
-                    transform: translateX(-36rem) translateY(6rem);
+                @keyframes scaleUp {
+                    to {
+                        transform: translateX(-36rem) translateY(6rem);
+                    }
                 }
-            }
             @keyframes scaleUpp {
                 to {
                     transform: translateX(-6rem) translateY(3rem);
@@ -209,8 +209,67 @@
                     transform: translateX(0) translateY(5.188rem);
                 }
             }
+
+            /* ====================================
+                        1st div responsive 
+                =================================== */
+
+            @media (max-width: 768px) {
+                #img_7th{
+                    width:19% ;
+                transform: translateX(210%) translateY(500%);
+                animation: scaleUppppres1 1.4s ease forwards;
+            }
+            #img_8th{
+                transform: translateX(225%) translateY(500%);
+                animation: scaleUpppres2 1.4s ease forwards;
+            }
+            #img_6th{
+                width: 30%;
+                transform: translateX(140%) translateY(500%);
+                animation: scaleUpppres3 1.4s ease forwards;
+            }
+            #img_5th{
+                width: 15%;
+                
+            }
+            #img_2nd {
+                width: 20%;
+                transform: translateX(-10rem) translateY(500%);
+                animation: scaleUp 1s ease forwards;
+
+
+            }
+            @keyframes scaleUppppres1 {
+                to {
+                    transform: translateX(210%) translateY(11rem);
+                }
+            }
+            @keyframes scaleUpppres2 {
+                to {
+                    transform: translateX(225%) translateY(9rem);
+                }
+            }
+            @keyframes scaleUpppres3 {
+                to {
+                    transform: translateX(160%) translateY(7rem);
+                }
+            }
+
+            @keyframes scaleUp {
+                to {
+                    transform: translateX(-11rem) translateY(8rem);
+                }
+            }
+           
+            }
+           
+                /* ====================================
+                        2nd div responsive 
+                =================================== */
            
         </style>
+        
 
 </head>
 
@@ -292,7 +351,7 @@
                     <img src="" id="img_9th_green" alt=""
                         class=" translate-y-[302px]  w-[16%] absolute top-[54px] -right-[9%]">
 
-                    <img src="" id="img_1st_green" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[55%]">
+                    <img src="" id="img_1st_green" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[80%] md:w-[55%]">
                 </div>
 
             </header>
