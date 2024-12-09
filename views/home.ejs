@@ -51,7 +51,7 @@
 
                 @keyframes scaleUp {
                     to {
-                        transform: translateX(-36rem) translateY(6rem);
+                        transform: translateX(-45rem) translateY(6rem);
                     }
                 }
             @keyframes scaleUpp {
@@ -71,7 +71,7 @@
             }
             @keyframes scaleUpppp {
                 to {
-                    transform: translateX(250%) translateY(5rem);
+                    transform: translateX(290%) translateY(4rem);
                 }
             }
             @keyframes scaleUp1st {
@@ -262,11 +262,50 @@
                 }
             }
            
+            /* ====================================
+                    2nd div responsive 
+            =================================== */
+
+
+            #img_2nd_green{
+                width: 24%;
+                transform: translateX(0) translateY(500%);
+                animation: green_scaleUp 1s ease forwards;
+            }
+            #img_5th_green{
+                width: 23%;
+                transform: translateX(0) translateY(500%);
+                animation: green_scaleUpppp 1.4s ease forwards; 
+            }
+            #img_6th_green{
+                width: 20%;
+                transform: translateX(0) translateY(500%);
+                animation: green_scaleUppppp 1.4s ease forwards;  
+            }
+            @keyframes green_scaleUp {
+                to{
+                    transform: translateX(0) translateY(10rem);
+                }
+            }
+            @keyframes green_scaleUpppp {
+                to{
+                    transform: translateX(0) translateY(1.3rem);
+                }
+            }
+            @keyframes green_scaleUppppp {
+                to{
+                    transform: translateX(0) translateY(10rem);
+                }
+            }
+
+             /* ====================================
+                    3rd div responsive 
+            =================================== */
+
+
+
             }
            
-                /* ====================================
-                        2nd div responsive 
-                =================================== */
            
         </style>
         
@@ -286,7 +325,7 @@
             <header class="flex justify-center items-center flex-col text-white z-20 space-y-4 ">
                 <h1 class="text-3xl tracking-wider md:text-start text-center">Publish your passions, your way</h1>
                 <p class="pb-7">Create a unique and beautiful blog easily.</p>
-                <a href=""
+                <a href="/user/signin"
                     class="uppercase px-4 py-3 text-[.8125rem] bg-[#ff8000] hover:bg-orange-400 text-white font-[500] rounded">create
                     your blog</a>
 
@@ -295,18 +334,18 @@
 
                 <div class="relative z-20 w-full h-[29rem] flex justify-center  overflow-hidden" id="img_div_1st">
                     <img src="" id="img_2nd" alt=""
-                        class="transform md:-translate-x-[36rem] -translate-y-[100%]  w-[17%] absolute -top-[83px] ">
+                        class="transform md:-translate-x-[36rem] -translate-y-[100%]  w-[13%] absolute -top-[83px] ">
                     <img src="" id="img_3rd" alt=""
-                        class=" transform -translate-x-[36rem] translate-y-24   w-[15%] absolute top-[15px] ">
+                        class=" transform -translate-x-[36rem] translate-y-24   w-[13%] absolute top-[15px] ">
                     <img src="" id="img_4th" alt="" class="  w-[20%] absolute top-[173px] ">
                     <img src="" id="img_5th" alt=""
                         class="transform -translate-x-[6rem] translate-y-10 w-[4.5%] absolute top-[27px]">
                     <img src="" id="img_6th" alt=""
-                        class="transform  translate-y-10 translate-x-[225%]   w-[21%] absolute -top-[35px]  overflow-x-hidden">
+                        class="transform  translate-y-10 translate-x-[225%]   w-[20%] absolute -top-[35px]  overflow-x-hidden">
 
                     <img src="" id="img_7th" alt=""
-                        class="transform  translate-y-20 translate-x-[220%]  w-[11%] absolute top-[19px] ">
-                    <img src="" id="img_8th" alt="" class="transform translate-y-0 translate-x-[250%]   w-[24%] absolute top-[160px] ">
+                        class="transform  translate-y-20 translate-x-[220%]  w-[9%] absolute top-[19px] ">
+                    <img src="" id="img_8th" alt="" class="transform translate-y-0 translate-x-[250%]   w-[25%] absolute top-[160px] ">
                     <img src="" id="img_1st" alt="" class="m-auto transform translate-y-[83px] opacity-1 md:w-[50%] w-[80%] ">
                 </div>
 
@@ -327,7 +366,7 @@
                     <img src="" id="img_7th_blue" alt=""
                         class=" translate-y-[302px]  w-[21%] absolute top-[54px] right-[3%]">
 
-                    <img src="" id="img_1st_blue" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[55%]">
+                    <img src="" id="img_1st_blue" alt="" class="m-auto  translate-y-[83px] opacity-1 w-[80%] md:w-[55%]">
                 </div>
 
                 <!-- 3rd Green -->
@@ -357,6 +396,8 @@
             </header>
 
         </section>
+
+        
         
 
 
@@ -367,11 +408,12 @@
         </div>
 
 
-
+        
 
     </main>
-
+    
     </div>
+    <%- include('./partials/homeSecondSection.ejs') %>
 
 
     <%- include('./partials/script.ejs') %>

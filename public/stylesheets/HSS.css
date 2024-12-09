@@ -1,0 +1,30 @@
+@media (min-width: 488px) and (max-width:717px) {
+   
+#HSSMyBlog{
+    width: 70%;
+    bottom: -3rem;
+}
+#HSSBeach{
+    width: 58%;
+    bottom: -5rem;
+}
+#HSSP{
+    width: 65%;
+}
+
+}
+
+@media  (min-width: 717px )and (max-width: 768px){
+    #HSSMyBlog{
+        /* background-color: red; */
+        width: 68%;
+        bottom: -4rem;
+    }
+    #HSSP{
+        width: 65%;
+    }
+    #HSSBeach{
+        width: 58%;
+        bottom: -5rem;
+    }
+}
