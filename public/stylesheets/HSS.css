@@ -46,24 +46,6 @@
   #HSSP {
     width: 65%;
   }
-  
-  
-  @keyframes HSSMyBlogSlide {
-    from {
-      bottom: -30rem;
-    }
-    to {
-      bottom: -3rem;
-    }
-  }
-  @keyframes HSSBeachSlide{
-      from {
-          bottom: -40rem;
-        }
-        to {
-          bottom: -5rem;
-        }
-  }
 }
 
 @media (min-width: 717px) and (max-width: 768px) {
@@ -98,4 +80,21 @@
           bottom: -5rem;
         }
   }
+}
+
+@keyframes HSSMyBlogSlide {
+  from {
+    bottom: -30rem;
+  }
+  to {
+    bottom: -3rem;
+  }
+}
+@keyframes HSSBeachSlide{
+    from {
+        bottom: -40rem;
+      }
+      to {
+        bottom: -5rem;
+      }
 }
