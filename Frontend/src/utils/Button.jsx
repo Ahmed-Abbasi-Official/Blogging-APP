@@ -1,8 +1,8 @@
 import React from 'react'
-
-const Button = ({value , containerClass}) => {
+import {Link} from 'react-router-dom'
+const Button = ({value , containerClass,to}) => {
   return (
-    <div className={`${containerClass}`}>{value}</div>
+    <Link to={to} className={`${containerClass}`}>{value}</Link>
   )
 }
 

@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-import { logoImg, icons, iconsList } from "./constants/Constant.js";
+import { logoImage, icons, iconsList } from "../constants/Constant.js";
 import Button from "../utils/Button.jsx";
+import Image from "../utils/image.jsx";
+import {Link} from 'react-router-dom'
+
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between ">
       {/* LOGO */}
-      <div className="flex items-center gap-4 text-2xl font-bold ">
-        <img src={logoImg} className="w-8 h-8" alt="Logo Image" />
+      <Link to='/' className="flex items-center gap-4 text-2xl font-bold ">
+        <Image
+        src={logoImage.logoImg}
+        alt={logoImage.alt}
+        w={32}
+        h={32}
+
+        />
         <span>Bloggify</span>
-      </div>
+      </Link>
       {/* MOBILE MENU */}
       <div className="md:hidden">
         {/* TOGGLE BUTTON */}
@@ -30,11 +39,11 @@ const Navbar = () => {
           {
             iconsList.map((link, idx) => {
               return (
-                <a href={link.path} key={idx}
+                <Link to={link.path} key={idx}
                 cursor="pointer"
                 >
                   {link.title}
-                </a>
+                </Link>
               );
             })
           }
@@ -48,16 +57,17 @@ const Navbar = () => {
       <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
         {iconsList.map((link, idx) => {
           return (
-            <a href={link.path} key={idx}
+            <Link to={link.path} key={idx}
             cursor="pointer"
             >
               {link.title}
               
-            </a>
+            </Link>
           );
         })}
         <Button 
         value="Login 💛"
+        to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
         />
       </div>

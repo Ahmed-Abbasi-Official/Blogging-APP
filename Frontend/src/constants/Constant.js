@@ -1,5 +1,9 @@
-// LOGO IMAGE:
-import logoImg from "../../../public/logo.png";
+// LOGO IMAGE From ImageKit :
+import logoImg from "/logo.png";
+const logoImage={
+  logoImg,
+  alt:"logo image"
+}
 
 // ICONS:
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -30,4 +34,4 @@ const iconsList = [
 ];
 
 // EXPORT:
-export { logoImg, icons , iconsList };
+export { logoImage, icons , iconsList };
