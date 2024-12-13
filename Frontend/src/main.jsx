@@ -15,6 +15,15 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.jsx";
+import {ClerkProvider} from '@clerk/clerk-react'
+
+// Import your Publishable Key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,7 +33,7 @@ const router = createBrowserRouter(
       <Route path="/:slug" element={<SinglePostPage/>} />
       <Route path="/write" element={<Write />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/:slug" element={<RegisterPage />} />
+      <Route path="/register" element={<RegisterPage />} />
      
     </Route>
   )
@@ -32,6 +41,9 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} >
     <RouterProvider router={router} />
+      
+    </ClerkProvider>
   </StrictMode>
 );
