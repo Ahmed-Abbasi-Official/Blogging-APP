@@ -3,6 +3,7 @@ import { logoImage, icons, iconsList } from "../constants/Constant.js";
 import Button from "../utils/Button.jsx";
 import Image from "../utils/image.jsx";
 import {Link} from 'react-router-dom'
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 
 const Navbar = () => {
@@ -31,9 +32,9 @@ const Navbar = () => {
         </div>
         {/* MOBILE MENU LIST */}
         <div
-          className={`w-full h-52   flex flex-col px-4 justify-center absolute top-16 items-start  transition-all duration-500 ease-in-out ${
+          className={`w-full h-52   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
             open ? "left-0" : "left-[100%]"
-          } gap-4 font-medium text-sm `}
+          } gap-4 font-medium text-sm  bg-white`}
           style={{boxShadow: '0px 1px 10px 2px #8d86ff'}}
         >
           {
@@ -47,10 +48,16 @@ const Navbar = () => {
               );
             })
           }
-          <Button 
+           <SignedOut>
+        <Button 
         value="Login 💛"
+        to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
         />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
         </div>
       </div>
       {/* DESKTOP MENU */}
@@ -65,11 +72,16 @@ const Navbar = () => {
             </Link>
           );
         })}
+        <SignedOut>
         <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
         />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
       </div>
     </div>
   );
