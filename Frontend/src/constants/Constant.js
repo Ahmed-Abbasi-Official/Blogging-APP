@@ -33,5 +33,35 @@ const iconsList = [
   },
 ];
 
+// CATEGORIES LIST
+
+const categoriesList = [
+  {
+    title: "All Posts",
+    path: "/posts",
+    class:'bg-blue-800 text-white outline-none border-none'
+  },
+  {
+    title: "Web Design",
+    path: "/posts?cat=web-design",
+  },
+  {
+    title: "Development",
+    path: "/posts?cat=Development",
+  },
+  {
+    title: "Database",
+    path: "/posts?cat=database",
+  },
+  {
+    title: "Search Engine",
+    path: "/posts?cat=search",
+  },
+  {
+    title: "Marketing",
+    path: "/posts?cat=marketing",
+  },
+];
+
 // EXPORT:
-export { logoImage, icons , iconsList };
+export { logoImage, icons , iconsList , categoriesList };

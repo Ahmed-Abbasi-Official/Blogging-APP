@@ -10,6 +10,7 @@ const FeaturedPosts = () => {
       <div className="w-full lg:w-1/2 flex flex-col gap-4">
         {/* IMAGE */}
         <Image src='Blogging%20Website/featured1.jpeg'
+        w={895}
         alt='Featured'
         className="rounded-3xl object-cover" />
 
@@ -32,11 +33,14 @@ const FeaturedPosts = () => {
       <div className="w-full lg:w-1/2 flex-col gap-4">
       {/* SECOND */}
       <div className="lg:h-1/3 flex justify-between gap-4 text-sm lg:text-base mb-4">
+      <div className="w-1/3 aspect-video">
       <Image
       src='Blogging%20Website/featured2.jpeg'
       alt='featured2'
-      className='rounded-3xl object-cover w-1/3 aspect-video'
+      className='rounded-3xl object-cover w-full h-full'
+      w={298}
       />
+      </div>
       {/* DETAILS AND TITLE */}
       <div className="w-2/3">
       {/* DETAILS */}
@@ -56,12 +60,15 @@ const FeaturedPosts = () => {
       </div>
       </div>
       {/* THIRD */}
-      <div className="lg:h-1/3 flex justify-between gap-4 ">
+      <div className="lg:h-1/3 flex justify-between gap-4 mb-4 ">
+      <div className="w-1/3 aspect-video">
       <Image
       src='Blogging%20Website/featured3.jpeg'
-      className='rounded-3xl w-1/3 object-cover aspect-video'
-
+      alt='featured3'
+      className='rounded-3xl object-cover w-full h-full '
+      w={298}
       />
+      </div>
       {/* DETAILS AND TITLE */}
       {/* DETAILS */}
       <div className="w-2/3">
@@ -83,11 +90,14 @@ const FeaturedPosts = () => {
       </div>
       {/* FOURTH */}
       <div className="lg:h-1/3 flex justify-between gap-4 ">
+      <div className="w-1/3 aspect-video">
       <Image
       src='Blogging%20Website/featured4.jpeg'
-      className='rounded-3xl w-1/3'
       alt='featured4'
+      className='rounded-3xl object-cover w-full h-full '
+      w={298}
       />
+      </div>
       {/* DETAILS AND TITLE */}
       <div className="  w-2/3 ">
       <div className="flex gap-4 mb-4 lg:text-base text-sm items-center">

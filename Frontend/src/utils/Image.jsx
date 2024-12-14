@@ -1,7 +1,7 @@
 import { IKImage } from "imagekitio-react";
 import React from "react";
 
-const Image = ({ src, className, alt,w,h }) => {
+const Image = ({ src, className, alt, w, h }) => {
   return (
     <>
       <IKImage
@@ -13,6 +13,7 @@ const Image = ({ src, className, alt,w,h }) => {
         lqip={{ active: true, quality: 20 }}
         width={w}
         height={h}
+        transformation={[{ width: w, height: h }]}
       />
     </>
   );

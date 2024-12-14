@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../utils/Button";
 import MainCategories from "../components/MainCategories";
 import FeaturedPosts from "../components/FeaturedPosts";
+import PostList from "../components/PostList";
 const HomePage = () => {
   return (
     <div className="mt-4 flex flex-col gap-4 ">
@@ -78,6 +79,10 @@ const HomePage = () => {
       {/* FEATURES POST */}
       <FeaturedPosts/>
       {/* POST LIST */}
+      <div className="">
+        <h1 className="text-gray-600 my-8 text-2xl">Recent Posts</h1>
+        <PostList/>
+      </div>
     </div>
   );
 };
