@@ -1,5 +1,5 @@
 // LOGO IMAGE From ImageKit :
-import logoImg from "/logo.png";
+import logoImg from "../../public/logo.png";
 const logoImage={
   logoImg,
   alt:"logo image"

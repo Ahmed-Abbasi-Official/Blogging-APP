@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { logoImage, icons, iconsList } from "../constants/Constant.js";
 import Button from "../utils/Button.jsx";
-import Image from "../utils/image.jsx";
+// import Image from "../utils/image.jsx";
 import {Link} from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
@@ -12,11 +12,11 @@ const Navbar = () => {
     <div className="w-full h-16 md:h-20 flex items-center justify-between ">
       {/* LOGO */}
       <Link to='/' className="flex items-center gap-4 text-2xl font-bold ">
-        <Image
+        <img
         src={logoImage.logoImg}
         alt={logoImage.alt}
-        w={32}
-        h={32}
+        width='32'
+        height='32'
 
         />
         <span>Bloggify</span>

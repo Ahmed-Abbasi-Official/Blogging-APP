@@ -115,7 +115,6 @@ const FeaturedPosts = () => {
       />
       </div>
       </div>
-
       </div>
     </div>
   );
