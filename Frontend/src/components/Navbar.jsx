@@ -22,7 +22,7 @@ const Navbar = () => {
         <span>Bloggify</span>
       </Link>
       {/* MOBILE MENU */}
-      <div className="md:hidden">
+      <div className="md:hidden ">
         {/* TOGGLE BUTTON */}
         <div
           className="cursor-pointer text-4xl  "
