@@ -1,9 +1,13 @@
-import {Router} from 'express';
-import webhooksController from '../controllers/webhook.controller.js';
-import bodyParser from 'body-parser';
+import express from "express";
+import { clerkWebHook } from "../controllers/webhook.controller.js";
+import bodyParser from "body-parser";
 
-const webhooksRouter=Router();
+const router = express.Router();
 
-webhooksRouter.post('/clerk', bodyParser.raw({ type: 'application/json' }) , webhooksController.clerWebHook);
+router.post(
+  "/clerk",
+  bodyParser.raw({ type: "application/json" }),
+  clerkWebHook
+);
 
-export default webhooksRouter;
+export default router;
