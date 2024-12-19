@@ -5,6 +5,8 @@ import userRouter from "./routes/user.router.js";
 import postsRouter from "./routes/posts.router.js";
 import commentsRouter from "./routes/comments.router.js";
 import webhooksRouter from "./routes/webhook.router.js";
+import { clerkMiddleware } from '@clerk/express'
+
 import 'dotenv/config'
 
 
@@ -21,6 +23,7 @@ const MONGO=process.env.MONGO || 'mongodb://localhost:27017/blogify' ;
 // Middleware to parse form data (urlencoded) and JSON
 app.use(express.urlencoded({ extended: false }));
 
+app.use(clerkMiddleware())
 
 app.use('/webhooks',webhooksRouter)
 

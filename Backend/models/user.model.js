@@ -12,6 +12,10 @@ const userSchema=new Schema({
     required:true,
     unique:true,
   },
+  fullName:{
+    type:String,
+    required:true,
+  },
   email:{
     type:String,
     required:true,
@@ -19,7 +23,7 @@ const userSchema=new Schema({
   },
   password:{
     type:String,
-    unique:true,
+    default:null
   },
   userImg:{
     type:String

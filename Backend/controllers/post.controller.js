@@ -1,4 +1,5 @@
 import postModel from "../models/post.model.js";
+import userModel from "../models/user.model.js";
 
 class Post {
   //  ALL POSTS
@@ -15,15 +16,29 @@ class Post {
 
   //  CREATE POST
   async createPost(req, res) {
-      const newPost = new postModel(req.body);
+    const clerkUserId=req.auth.userId;
+    const user = await userModel.findOne({clerkUserId})
+    console.log(req.body);
+    
+      const newPost = new postModel(user,...req.body);
       const post = await newPost.save();
-      res.status(200).json(post);
+      res.status(200).json({
+        message: "Post created",
+        post: post,
+      });
   }
 
   //  DELETE POST
   async deletePost(req, res) {
-      const deletePost = await postModel.findByIdAndDelete(req.params.id);
-      res.status(200).json("Post deleted");
+    const user= await userModel.findOne({clerkId:req.auth.userId})
+      const deletePost = await postModel.findByIdAndDelete({_id:req.params.id,user:user._id})
+      if(!deletePost){
+        return res.status(403).json("You can delete only your Post");
+      }
+      res.status(200).json({
+        message: "Post deleted",
+        post: deletePost,
+      });
   }
 }
 
