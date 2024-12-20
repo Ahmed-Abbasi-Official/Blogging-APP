@@ -11,11 +11,15 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.20.1",
+    "@tanstack/react-query": "^5.62.8",
+    "axios": "^1.7.9",
+    "cls": "^0.1.5",
     "imagekitio-react": "^4.2.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
     "react-icons": "^5.4.0",
-    "react-quill-new": "^3.3.3"
+    "react-quill-new": "^3.3.3",
+    "react-router-dom": "^7.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
