@@ -4,6 +4,7 @@ import { isAuth } from '../middlewares/isAuth.js';
 
 const postsRouter = express.Router();
 
+postsRouter.get('/upload-auth',postController.uploadAuth)
 postsRouter.get('/',postController.getPosts);
 postsRouter.get('/:slug',isAuth,postController.getPost);
 postsRouter.post('/',postController.createPost);

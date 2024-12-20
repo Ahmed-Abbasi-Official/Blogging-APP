@@ -23,14 +23,22 @@ const PORT =process.env.PORT || 3000;
 const MONGO=process.env.MONGO || 'mongodb://localhost:27017/blogify' ;
 
 // Middleware to parse form data (urlencoded) and JSON
+
 app.use(express.urlencoded({ extended: false }));
-
 app.use(clerkMiddleware())
-
 app.use('/webhooks',webhooksRouter)
-
 app.use(express.json());
 app.use(express.static('public'));
+
+
+// ALLOW CROSS-ORIGIN REQUEST
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", 
+    "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 
