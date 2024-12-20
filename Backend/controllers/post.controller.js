@@ -4,22 +4,7 @@ import userModel from "../models/user.model.js";
 class Post {
   //  ALL POSTS
   async getPosts(req, res) {
-    const clerkUserId = req.auth.userId;
-
-  console.log(req.auth);
-
-  if (!clerkUserId) {
-    return res.status(401).json("Not authenticated!");
-  }
-
-
-  const user = await userModel.findOne({ clerkUserId });
-  console.log(user);
-  
-
-  if (!user) {
-    return res.status(404).json("User not found!");
-  }
+   
 
     const allPosts = await postModel.find();
     res.status(200).json(allPosts);

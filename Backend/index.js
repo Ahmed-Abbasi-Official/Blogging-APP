@@ -6,11 +6,13 @@ import postsRouter from "./routes/posts.router.js";
 import commentsRouter from "./routes/comments.router.js";
 import webhooksRouter from "./routes/webhook.router.js";
 import { clerkMiddleware } from '@clerk/express'
-
+import cors from "cors"
 import 'dotenv/config'
 
 
 const app = express();
+
+app.use(cors(process.env.CLIENT_URL))
 
 //  PORT
 

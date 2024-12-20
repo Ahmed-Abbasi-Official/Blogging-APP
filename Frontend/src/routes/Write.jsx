@@ -1,11 +1,18 @@
 import { useUser } from "@clerk/clerk-react";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 
 const Write = () => {
   const { isLoaded, isSignedIn } = useUser();
 
+  const mutation = useMutation({
+    mutationFn: (newPost) => {
+      return axios.post('/posts', newPost)
+    },
+  })
   if (!isLoaded) {
     return <div className="">Loading...</div>;
   }
@@ -13,6 +20,7 @@ const Write = () => {
   if (isLoaded && !isSignedIn) {
     return <div className="">You should login!</div>;
   }
+
 
   return (
     <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col gap-6">
