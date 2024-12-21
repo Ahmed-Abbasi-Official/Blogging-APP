@@ -5,8 +5,13 @@ import userModel from "../models/user.model.js";
 class Post {
   //  ALL POSTS
   async getPosts(req, res) {
-    const allPosts = await postModel.find();
-    res.status(200).json(allPosts);
+
+    const page=parseInt(req.query.page) || 1;
+    const limit=parseInt(req.query.limit) || 2;
+    const totalPosts=await postModel.countDocuments();
+    const hasMore=page * limit < totalPosts
+    const allPosts = await postModel.find().limit(limit).skip((page-1)*limit);
+    res.status(200).json({allPosts,hasMore});
   }
 
   //  SINGLE POST
