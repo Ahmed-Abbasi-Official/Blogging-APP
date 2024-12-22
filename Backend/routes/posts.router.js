@@ -6,7 +6,7 @@ const postsRouter = express.Router();
 
 postsRouter.get('/upload-auth',postController.uploadAuth)
 postsRouter.get('/',postController.getPosts);
-postsRouter.get('/:slug',isAuth,postController.getPost);
+postsRouter.get('/:slug',postController.getPost);
 postsRouter.post('/',postController.createPost);
 postsRouter.delete('/:id',postController.deletePost);
 

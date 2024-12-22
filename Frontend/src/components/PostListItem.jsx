@@ -1,35 +1,39 @@
 import React from "react";
 import Image from "../utils/Image.jsx";
 import Button from "../utils/Button.jsx";
-const PostListItem = () => {
+import { format } from "timeago.js";
+
+const PostListItem = ({post}) => {
+ 
+
   return (
-    <div className="flex  max-w-[48.1%] flex-col  flex-wrap gap-8 xl:gap-0">
+    <div className="flex   flex-col  flex-wrap gap-8 xl:gap-0 mb-12">
       {/* IMAGE */}
-    <div className="flex gap-8 xl:flex-col flex-col mb-8">
-    <div className="md:hidden xl:block xl:w-9/12">
+    <div className="flex gap-8 xl:flex-row flex-col mb-8">
+    { post.img && <div className="md:hidden xl:block xl:w-[40%]  ">
         <Image
-          src="Blogging%20Website/postImg.jpeg"
-          className="rounded-2xl object-cover"
+          src={post.img || ''}
+          className="rounded-2xl object-cover w-full"
           w={735}
         />
-      </div>
+      </div>}
       {/* DETAILS */}
       <div className="flex flex-col gap-4 xl:w-10/12">
         <Button
-          value="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-          to="/test"
+          value={post.title}
+          to={`/${post.slug}`}
           containerClass="text-4xl font-semibold "
         />
         <div className="flex items-center gap-2 text-gray-400 text-sm">
         <span>Written by</span>
-        <Button containerClass="text-blue-800" value="John Doe" />
+        <Button containerClass="text-blue-800 capitalize " value={post.user.fullName} />
         <span>on</span>
-        <Button containerClass="text-blue-800" value="Web Design" />
-        <span>2 days ago</span>
+        <Button containerClass="text-blue-800 capitalize" value={post.category} />
+        <span>{format(post.createdAt)}</span>
       </div>
-          <p className="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim alias nostrum dolorum similique molestiae numquam asperiores totam debitis iusto! Distinctio ab sint ea velit facere vel quae impedit fugit nihil!</p>
+          <p className="text-justify">{post.desc}</p>
           <Button
-          to='/test'
+          to={`/${post.slug}`}
           value='Read More'
           containerClass='text-sm underline text-blue-800'
           />

@@ -5,18 +5,26 @@ import userModel from "../models/user.model.js";
 class Post {
   //  ALL POSTS
   async getPosts(req, res) {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 2;
+        const allPosts = await postModel
+            .find()
+            .populate("user", "fullName")
+            .limit(limit)
+            .skip((page - 1) * limit);
+        const totalPosts = await postModel.countDocuments();
+        const hasMore = page * limit < totalPosts;
+        res.status(200).json({ allPosts, hasMore });
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred", error });
+    }
+}
 
-    const page=parseInt(req.query.page) || 1;
-    const limit=parseInt(req.query.limit) || 2;
-    const totalPosts=await postModel.countDocuments();
-    const hasMore=page * limit < totalPosts
-    const allPosts = await postModel.find().limit(limit).skip((page-1)*limit);
-    res.status(200).json({allPosts,hasMore});
-  }
 
   //  SINGLE POST
   async getPost(req, res) {
-    const singlePost = await postModel.findOne({ slug: req.params.slug });
+    const singlePost = await postModel.findOne({ slug: req.params.slug }).populate("user","username fullName");
     res.status(200).json(singlePost);
   }
 
@@ -70,9 +78,15 @@ class Post {
 
   //  DELETE POST
   async deletePost(req, res) {
-    const user = await userModel.findOne({ clerkId: req.auth.userId });
+    const clerkUserId=req.auth.userId;
+    const postId=req.params.id;
+    if(!clerkUserId){
+      return res.status(401).json("Not authenticated!")
+    }
+
+    const user = await userModel.findOne({ clerkUserId });
     const deletePost = await postModel.findByIdAndDelete({
-      _id: req.params.id,
+      _id: postId,
       user: user._id,
     });
     if (!deletePost) {

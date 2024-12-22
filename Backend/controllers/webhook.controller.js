@@ -33,7 +33,7 @@ console.log("EVT ========================>",evt);
     const  payload= {
       clerkUserId: evt?.data.id || "clerkUserId",
       username: evt?.data.username || evt?.data.email_addresses[0]?.email_address || "username",
-      fullName: evt?.data.first_name + evt?.data.last_name || "fullname",
+      fullName: evt?.data.first_name + " " + evt?.data.last_name || "fullname",
       email: evt?.data.email_addresses[0]?.email_address || "email",
     }
     console.log(payload);

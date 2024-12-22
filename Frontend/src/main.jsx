@@ -21,7 +21,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-
+import {PostProvider} from './context/postContext.jsx'
 import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient()
@@ -52,7 +52,10 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} >
       <QueryClientProvider client={queryClient}>
+        <PostProvider>
+
     <RouterProvider router={router} />
+        </PostProvider>
     <ToastContainer position="top-right" />
       </QueryClientProvider>
     </ClerkProvider>
