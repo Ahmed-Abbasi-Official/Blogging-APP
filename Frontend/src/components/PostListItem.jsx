@@ -10,9 +10,9 @@ const PostListItem = ({post}) => {
     <div className="flex   flex-col  flex-wrap gap-8 xl:gap-0 mb-12">
       {/* IMAGE */}
     <div className="flex gap-8 xl:flex-row flex-col mb-8">
-    { post.img && <div className="md:hidden xl:block xl:w-[40%]  ">
+    { post?.img && <div className="md:hidden xl:block xl:w-[40%]  ">
         <Image
-          src={post.img || ''}
+          src={post?.img || ''}
           className="rounded-2xl object-cover w-full"
           w={735}
         />
@@ -20,20 +20,20 @@ const PostListItem = ({post}) => {
       {/* DETAILS */}
       <div className="flex flex-col gap-4 xl:w-10/12">
         <Button
-          value={post.title}
-          to={`/${post.slug}`}
+          value={post?.title}
+          to={`/${post?.slug}`}
           containerClass="text-4xl font-semibold "
         />
         <div className="flex items-center gap-2 text-gray-400 text-sm">
         <span>Written by</span>
-        <Button containerClass="text-blue-800 capitalize " value={post.user.fullName} />
+        <Button containerClass="text-blue-800 capitalize " to={`/posts?author=${post?.user?.username}`} value={post?.user.fullName} />
         <span>on</span>
-        <Button containerClass="text-blue-800 capitalize" value={post.category} />
-        <span>{format(post.createdAt)}</span>
+        <Button containerClass="text-blue-800 capitalize" value={post?.category} />
+        <span>{format(post?.createdAt)}</span>
       </div>
-          <p className="text-justify">{post.desc}</p>
+          <p className="text-justify">{post?.desc}</p>
           <Button
-          to={`/${post.slug}`}
+          to={`/${post?.slug}`}
           value='Read More'
           containerClass='text-sm underline text-blue-800'
           />

@@ -27,10 +27,33 @@ const PostMenuActions = ({ post }) => {
     },
   });
 
-  const isAdmin = user?.publicMetadata?.role==="admin" || false
+
+  //  GET USER
+
+  const {
+    isPending: isAdminPending,
+    error: adminError,
+    data: adminData,
+  } = useQuery({
+    queryKey: ["adminData"],
+    queryFn: async () => {
+      const token = await getToken();
+      return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+  });
+  
+  
+
+  const isAdmin = adminData?.data.role==="admin" ? true :false ;
+  // console.log(isAdmin);
+  
   
   const isSaved = savedPosts?.data?.some((p) => p === post._id) || false;
-  console.log(isSaved);
+  // console.log(isSaved);
   
 
   //  DELETE POSTS
@@ -122,7 +145,7 @@ const PostMenuActions = ({ post }) => {
         </div>
       )}
       {/* DELETE POST */}
-      {user && (post.user.username === user.username && isAdmin ) && (
+      {user && (post.user.username === user.username || isAdmin===true ) && (
         <div
           className="flex items-center gap-2 py-2 text-sm cursor-pointer"
           onClick={handleDelete}

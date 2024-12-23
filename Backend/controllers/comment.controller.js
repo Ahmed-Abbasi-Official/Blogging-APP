@@ -5,7 +5,7 @@ class Comment {
   //  GET COMMENTS
   async getPostsComments(req, res) {
     try {
-      const comments = await commentModel.find({post:req.params.postId}).populate("user","username userImg").sort({createdAt:-1})
+      const comments = await commentModel.find({post:req.params.postId}).populate("user","username userImg").sort({createdAt:-1}).populate("post",'slug')
       res.status(200).json(comments)
     } catch (error) {
         res.status(500).json("error in Get Comments :", error)
@@ -39,21 +39,22 @@ class Comment {
   //  DELETE COMMENTS
 
   async deleteComment(req, res) { 
-    const clerkUserId=req.auth.userId;
+    // const clerkUserId=req.auth.userId;
     const id = req.params.id;
+    
 
-    if(!clerkUserId) {
-      return res.status(401).json("Not authenticated!")
-    }
-    const role = req.auth.sessionClaims.metadata.role || "user";
+    // if(!clerkUserId) {
+    //   return res.status(401).json("Not authenticated!")
+    // }
+    const role = await userModel.findOne({role:"admin"}) || "user";
     if (role) {
-      await commentModel.findByIdAndDelete(postId);
+      await commentModel.findByIdAndDelete(id);
      return res.status(200).json({
         message: "Comment deleted",
       });
     }
 
-    const user = await userModel.findOne({clerkUserId})
+    const user = await userModel.findOne  ({clerkUserId})
 
     const deleteComment= new commentModel.findOneAndDelete({
       _id:id,user:user._id

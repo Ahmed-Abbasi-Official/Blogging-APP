@@ -8,18 +8,68 @@ class Post {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 2;
+  
+      const query = {};
+      console.log(req.query);
+  
+      const { cat, author, search, sort } = req.query;
+  
+      if (cat) {
+        query.category = cat;
+      }
+  
+      if (search) {
+        query.title = { $regex: search, $options: "i" }; // Case-insensitive search
+      }
+  
+      if (author) {
+        const user = await userModel.findOne({ username: author }).select("_id");
+        if (!user) {
+          return res.status(404).json("No Post Found");
+        }
+        query.user = user._id;
+      }
+  
+      let sortObj = { createdAt: -1 };
+  
+      if (sort) {
+        switch (sort) {
+          case "newest":
+            sortObj = { createdAt: -1 };
+            break;
+          case "oldest":
+            sortObj = { createdAt: 1 };
+            break;
+          case "popular":
+            sortObj = { visit: -1 };
+            break;
+          case "trending":
+            sortObj = { visit: -1 };
+            query.createdAt = {
+              $gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000), // Last 7 days
+            };
+            break;
+          default:
+            break;
+        }
+      }
+  
       const allPosts = await postModel
-        .find()
+        .find(query)
         .populate("user", "fullName")
+        .sort(sortObj)
         .limit(limit)
         .skip((page - 1) * limit);
-      const totalPosts = await postModel.countDocuments();
+  
+      const totalPosts = await postModel.countDocuments(query); // Count with applied query
       const hasMore = page * limit < totalPosts;
+  
       res.status(200).json({ allPosts, hasMore });
     } catch (error) {
       res.status(500).json({ message: "An error occurred", error });
     }
   }
+  
 
   //  SINGLE POST
   async getPost(req, res) {
@@ -84,7 +134,7 @@ class Post {
     if (!clerkUserId) {
       return res.status(401).json("Not authenticated!");
     }
-    const role = req.auth.sessionClaims.metadata.role || "user";
+    const role = await userModel.findOne({role:"admin"}) || "user";
     if (role) {
       await postModel.findByIdAndDelete(postId);
      return res.status(200).json({

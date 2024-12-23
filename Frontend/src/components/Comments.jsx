@@ -47,6 +47,7 @@ const Comments = ({ postId }) => {
     },
   });
 
+
   //  HANDLE SUBMIT
 
   const handleSubmit = (e) => {
@@ -100,7 +101,7 @@ const Comments = ({ postId }) => {
           )
         }
         {data.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
+            <Comment key={comment._id} comment={comment} post={fetchComments} />
           ))}
         </>}
     </div>

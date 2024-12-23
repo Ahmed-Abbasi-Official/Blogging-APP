@@ -6,6 +6,7 @@ const userRouter=Router()
 
 userRouter.get('/saved',UserController.getUserSavedPosts)
 userRouter.patch('/save',UserController.savePost)
+userRouter.get('/',UserController.getUser)
 
 
 export default userRouter

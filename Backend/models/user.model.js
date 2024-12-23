@@ -31,7 +31,12 @@ const userSchema=new Schema({
   savedPosts:{
     type:[String],
     default:[],
+  },
+  role:{
+    type:String,
+    default:"user"
   }
+
 },{timestamps:true})
 
 const userModel=mongoose.model('User',userSchema);
