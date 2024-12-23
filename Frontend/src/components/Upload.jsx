@@ -62,7 +62,7 @@ const Upload = ({ children,type,setProgress, setCover }) => {
           // fileName="test-upload.png"
           useUniqueFileName
           onError={onError}
-          onSuccess={onSuccess}
+          onSuccess={onSuccess} 
           onUploadProgress={uploadProgress}
           className="hidden"
           ref={ref}

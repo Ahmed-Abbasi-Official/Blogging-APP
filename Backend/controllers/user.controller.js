@@ -34,7 +34,11 @@ class User {
             $pull:{savedPosts:postId},
         })
     }
-    res.status(200).json(isSaved ? "Post Unsaved":"Post Saved");  }
+    setTimeout(() => {
+        
+        res.status(200).json(isSaved ? "Post Unsaved":"Post Saved"); 
+    }, 3000);
+ }
 }
 
 const UserController = new User();

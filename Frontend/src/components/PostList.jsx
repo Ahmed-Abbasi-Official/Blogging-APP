@@ -37,7 +37,7 @@ const PostList = () => {
         <InfiniteScroll
           dataLength={allPosts.length}
           next={fetchNextPage}
-          hasMore={!!hasNextPage}
+          hasMore={!hasNextPage}
           loader={<h4>Loading more Posts...</h4>}
           endMessage={
             <p>

@@ -45,6 +45,13 @@ class Comment {
     if(!clerkUserId) {
       return res.status(401).json("Not authenticated!")
     }
+    const role = req.auth.sessionClaims.metadata.role || "user";
+    if (role) {
+      await commentModel.findByIdAndDelete(postId);
+     return res.status(200).json({
+        message: "Comment deleted",
+      });
+    }
 
     const user = await userModel.findOne({clerkUserId})
 
