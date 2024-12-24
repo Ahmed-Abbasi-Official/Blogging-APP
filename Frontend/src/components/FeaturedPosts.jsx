@@ -3,31 +3,51 @@ import Image from "../utils/Image.jsx";
 import Button from "../utils/Button";
 import {  logoImage } from "../constants/Constant";
 import { IKImage } from "imagekitio-react";
+import {useQuery} from '@tanstack/react-query'
+import { format } from "timeago.js";
+import axios from 'axios'
+
+const fetchPost=async()=>{
+  
+  const res=await axios.get(`${import.meta.env.VITE_API_URL}/posts?featured=true&limit=4&sort=newest`)
+  return res.data;
+}
 const FeaturedPosts = () => {
+
+  const {isLoading,error,data} = useQuery({
+    queryKey: ['featuredPosts'],
+    queryFn: () => fetchPost(),
+  })
+  if(isLoading) return "Loading....."
+  if(error) return "Error............" + error.message 
+  const posts=data.posts;
+  if(!posts || posts.length===0) return
+  console.log("AFTER Featured",data);
+
   return (
     <div className="mt-8 flex flex-col lg:flex-row gap-8">
       {/* FIRST */}
       <div className="w-full lg:w-1/2 flex flex-col gap-4">
         {/* IMAGE */}
-        <Image src='Blogging%20Website/featured1.jpeg'
-        w={895}
-        alt='Featured'
-        className="rounded-3xl object-cover" />
+      {posts[0].img && <Image src={posts[0].img}
+      w={895}
+      alt='Featured'
+      className="rounded-3xl object-cover" />}
 
         {/* DETAILS */}
         <div className="flex items-center gap-4">
           <h1 className="font-semibold  lg:text-lg ">01.</h1>
           <Button
-            value="Web Design"
+            value={posts[0].category}
             containerClass="text-blue-800 lg:text-lg"
           />
-          <span className="text-gray-500">2 days ago</span>
+          <span className="text-gray-500">{format(posts[0].category)}</span>
         </div>
         {/* TITLE */}
         <Button
-        to='/test'
+        to={`/${posts[0].slug}`}
         containerClass='text-xl lg:text-3xl font-semibold lg:font-bold'
-        value="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
+        value={posts[0].title} />
       </div>
       {/* OTHERS */}
       <div className="w-full lg:w-1/2 flex-col gap-4">

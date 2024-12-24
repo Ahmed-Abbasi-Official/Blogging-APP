@@ -7,7 +7,7 @@ const SideMenu = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleFilterChange = (e) => {
-    if(searchParams.get("sort"===!e.target.value)){
+    if(searchParams.get("sort")!==e.target.value){
       setSearchParams({
         ...Object.fromEntries(searchParams.entries()),
         sort: e.target.value,

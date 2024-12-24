@@ -21,15 +21,21 @@ const iconsList = [
   },
   {
     title: "Trending",
-    path: "/trending",
+    path: "/posts?sort=trending",
   },
   {
     title: "Most Popular",
-    path: "/most-popular",
+    path: "/posts?sort=popular",
   },
   {
     title: "About",
     path: "/about",
+    class:'hidden'
+  },
+  {
+    title: "Saved Posts",
+    path: "/saved-posts",
+    class:'hidden'
   },
 ];
 

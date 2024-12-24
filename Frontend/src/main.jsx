@@ -23,6 +23,7 @@ import {
 } from '@tanstack/react-query'
 import {PostProvider} from './context/postContext.jsx'
 import { ToastContainer } from 'react-toastify';
+import SavedPosts from "./routes/SavedPosts.jsx";
 
 const queryClient = new QueryClient()
 
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
       <Route path="/write" element={<Write />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/saved-posts" element={<SavedPosts />} />
      
     </Route>
   )

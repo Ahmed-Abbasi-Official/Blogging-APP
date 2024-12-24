@@ -11,7 +11,9 @@ class Post {
 
       const query = {};
 
-      const { cat, author, search, sort } = req.query;
+      const { cat, author, search, sort ,featured} = req.query;
+      console.log(featured);
+      
 
       if (cat) {
         query.category = cat;
@@ -56,6 +58,10 @@ class Post {
           default:
             break;
         }
+      }
+
+      if(featured){
+        query.isFeatured = true;
       }
 
       const allPosts = await postModel
@@ -178,6 +184,49 @@ class Post {
       });
     }
   }
+
+  //  FEATURE
+  async featurePost(req, res) {
+    try {
+      const clerkUserId = req.auth.userId;
+  const postId = req.body.postId;
+
+  if (!clerkUserId) {
+    return res.status(401).json("Not authenticated!");
+  }
+
+  const role = await userModel.findOne({clerkUserId}) || "user";
+
+  if (role !== "admin") {
+    return res.status(403).json("You cannot feature posts!");
+  }
+
+  const post = await postModel.findById(postId);
+
+  if (!post) {
+    return res.status(404).json("Post not found!");
+  }
+
+  const isFeatured = post.isFeatured;
+
+  const updatedPost = await postModel.findByIdAndUpdate(
+    postId,
+    {
+      isFeatured: !isFeatured,
+    },
+    { new: true }
+  );
+
+  res.status(200).json(updatedPost);
+    } catch (error) {
+      res.status(500).json({
+        message: "Error uploading Auth",
+        error: error.message,
+      });
+    }
+  }
+
+
 }
 
 const postController = new Post();

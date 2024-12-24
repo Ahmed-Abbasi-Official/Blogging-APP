@@ -3,12 +3,13 @@ import { logoImage, icons, iconsList } from "../constants/Constant.js";
 import Button from "../utils/Button.jsx";
 // import Image from "../utils/image.jsx";
 import {Link} from 'react-router-dom'
-import { SignedIn, SignedOut, SignInButton, UserButton , useAuth } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton, UserButton , useAuth, useUser } from "@clerk/clerk-react";
 
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const {getToken}=useAuth();
+  const {user}=useUser();
   useEffect(()=>{
     getToken().then(token=>console.log(token)
     );
@@ -45,11 +46,12 @@ const Navbar = () => {
           {
             iconsList.map((link, idx) => {
               return (
-                <Link to={link.path} key={idx}
+                <Button to={link.path} key={idx}
                 cursor="pointer"
-                >
-                  {link.title}
-                </Link>
+                 containerClass='cursor-pointer '
+                value={link.title}
+                />
+                
               );
             })
           }
@@ -71,6 +73,7 @@ const Navbar = () => {
           return (
             <Link to={link.path} key={idx}
             cursor="pointer"
+            className={`${!user && link.class}`}
             >
               {link.title}
               
