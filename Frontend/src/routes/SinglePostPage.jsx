@@ -115,7 +115,7 @@ const SinglePostPage = () => {
             containerClass='underline'
             />
             <Button
-            value='Database'
+            value='Databases'
             to='/'
             containerClass='underline'
             />

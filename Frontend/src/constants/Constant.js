@@ -51,7 +51,7 @@ const categoriesList = [
   },
   {
     title: "Database",
-    path: "/posts?cat=database",
+    path: "/posts?cat=databases",
   },
   {
     title: "Search Engine",

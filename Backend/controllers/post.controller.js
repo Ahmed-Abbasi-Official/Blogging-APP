@@ -8,34 +8,38 @@ class Post {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 2;
-  
+
       const query = {};
-      console.log(req.query);
-  
+
       const { cat, author, search, sort } = req.query;
-  
+
       if (cat) {
         query.category = cat;
       }
-  
+
       if (search) {
-        query.title = { $regex: search, $options: "i" }; // Case-insensitive search
+        query.title = { $regex: search, $options: "i" };
       }
-  
+
       if (author) {
-        const user = await userModel.findOne({ username: author }).select("_id");
+        const user = await userModel
+          .findOne({ username: author })
+          .select("_id");
         if (!user) {
           return res.status(404).json("No Post Found");
         }
         query.user = user._id;
       }
-  
+
       let sortObj = { createdAt: -1 };
-  
+
       if (sort) {
+        console.log(sort);
+
         switch (sort) {
           case "newest":
             sortObj = { createdAt: -1 };
+
             break;
           case "oldest":
             sortObj = { createdAt: 1 };
@@ -53,23 +57,22 @@ class Post {
             break;
         }
       }
-  
+
       const allPosts = await postModel
         .find(query)
         .populate("user", "fullName")
         .sort(sortObj)
         .limit(limit)
         .skip((page - 1) * limit);
-  
-      const totalPosts = await postModel.countDocuments(query); // Count with applied query
+
+      const totalPosts = await postModel.countDocuments(); // Count with applied query
       const hasMore = page * limit < totalPosts;
-  
+
       res.status(200).json({ allPosts, hasMore });
     } catch (error) {
       res.status(500).json({ message: "An error occurred", error });
     }
   }
-  
 
   //  SINGLE POST
   async getPost(req, res) {
@@ -134,10 +137,10 @@ class Post {
     if (!clerkUserId) {
       return res.status(401).json("Not authenticated!");
     }
-    const role = await userModel.findOne({role:"admin"}) || "user";
+    const role = (await userModel.findOne({ role: "admin" })) || "user";
     if (role) {
       await postModel.findByIdAndDelete(postId);
-     return res.status(200).json({
+      return res.status(200).json({
         message: "Post deleted",
         post: deletePost,
       });
