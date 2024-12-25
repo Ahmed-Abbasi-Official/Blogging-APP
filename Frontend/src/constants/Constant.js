@@ -27,11 +27,11 @@ const iconsList = [
     title: "Most Popular",
     path: "/posts?sort=popular",
   },
-  {
-    title: "About",
-    path: "/about",
-    class:'hidden'
-  },
+  // {
+  //   title: "About",
+  //   path: "/about",
+  //   class:'hidden'
+  // },
   {
     title: "Saved Posts",
     path: "/saved-posts",
@@ -45,7 +45,7 @@ const categoriesList = [
   {
     title: "All Posts",
     path: "/posts",
-    class:'bg-blue-800 text-white outline-none border-none'
+    class:'bg-blue-800 text-white hover:text-black outline-none border-none'
   },
   {
     title: "Web Design",

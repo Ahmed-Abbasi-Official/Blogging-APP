@@ -4,6 +4,7 @@ import Button from "../utils/Button.jsx";
 import { format } from "timeago.js";
 
 const PostListItem = ({post}) => {
+  
  
 
   return (
@@ -26,7 +27,7 @@ const PostListItem = ({post}) => {
         />
         <div className="flex items-center gap-2 text-gray-400 text-sm">
         <span>Written by</span>
-        <Button containerClass="text-blue-800 capitalize " to={`/posts?author=${post?.user?.username}`} value={post?.user.fullName} />
+        <Button containerClass="text-blue-800 capitalize " to={`/posts?author=${post?.user?.username}`} value={post?.user?.username} />
         <span>on</span>
         <Button containerClass="text-blue-800 capitalize" value={post?.category} />
         <span>{format(post?.createdAt)}</span>

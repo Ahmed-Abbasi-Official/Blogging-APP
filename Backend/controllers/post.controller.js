@@ -12,7 +12,6 @@ class Post {
       const query = {};
 
       const { cat, author, search, sort ,featured} = req.query;
-      console.log(featured);
       
 
       if (cat) {
@@ -36,7 +35,6 @@ class Post {
       let sortObj = { createdAt: -1 };
 
       if (sort) {
-        console.log(sort);
 
         switch (sort) {
           case "newest":
@@ -66,7 +64,7 @@ class Post {
 
       const allPosts = await postModel
         .find(query)
-        .populate("user", "fullName")
+        .populate("user", "username fullName")
         .sort(sortObj)
         .limit(limit)
         .skip((page - 1) * limit);
@@ -196,8 +194,10 @@ class Post {
   }
 
   const role = await userModel.findOne({clerkUserId}) || "user";
+  console.log(role.role);
+  
 
-  if (role !== "admin") {
+  if (role.role !== "admin") {
     return res.status(403).json("You cannot feature posts!");
   }
 

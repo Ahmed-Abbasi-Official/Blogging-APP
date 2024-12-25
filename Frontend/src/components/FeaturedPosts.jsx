@@ -14,15 +14,19 @@ const fetchPost=async()=>{
 }
 const FeaturedPosts = () => {
 
-  const {isLoading,error,data} = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ['featuredPosts'],
-    queryFn: () => fetchPost(),
-  })
-  if(isLoading) return "Loading....."
-  if(error) return "Error............" + error.message 
-  const posts=data.posts;
-  if(!posts || posts.length===0) return
-  console.log("AFTER Featured",data);
+    queryFn: fetchPost,
+  });
+  
+  if (isLoading) return "Loading.....";
+  if (error) return "Error............" + error.message;
+  
+  const posts = data?.allPosts || []; // Adjusted to handle backend response
+  if (posts.length === 0) return "No posts available.";
+  
+  // console.log("AFTER Featured", posts);
+  
 
   return (
     <div className="mt-8 flex flex-col lg:flex-row gap-8">
@@ -54,12 +58,12 @@ const FeaturedPosts = () => {
       {/* SECOND */}
       <div className="lg:h-1/3 flex justify-between gap-4 text-sm lg:text-base mb-4">
       <div className="w-1/3 aspect-video">
-      <Image
-      src='Blogging%20Website/featured2.jpeg'
+      { posts[1]?.img && <Image
+      src={posts[1].img || ''}
       alt='featured2'
       className='rounded-3xl object-cover w-full h-full'
       w={298}
-      />
+      />}
       </div>
       {/* DETAILS AND TITLE */}
       <div className="w-2/3">
@@ -67,27 +71,28 @@ const FeaturedPosts = () => {
       <div className="flex items-center gap-4">
         <h1 className="font-semibold">02.</h1>
         <Button
-        value='Web Design'
+        value={posts[1]?.category || 'null'}
+        to={`/${posts[1]?.slug}`}
         containerClass='text-blue-800'
         />
-        <span className="text-gray-500 text-sm">2 days ago</span>
+        <span className="text-gray-500 text-sm">{format(posts[1]?.createdAt)}</span>
       </div>
       <Button
       containerClass='text-base md:text-2xl sm:text-lg lg:text-xl xl:text-2xl font-medium'
-      value='Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
-      to='/test'
+      value={posts[1]?.title}
+      to={`/${posts[1]?.slug}`}
       />
       </div>
       </div>
       {/* THIRD */}
-      <div className="lg:h-1/3 flex justify-between gap-4 mb-4 ">
+     { posts[2] && <div className="lg:h-1/3 flex justify-between gap-4 mb-4 ">
       <div className="w-1/3 aspect-video">
-      <Image
-      src='Blogging%20Website/featured3.jpeg'
+      { posts[2]?.img && <Image
+      src={posts[2]?.img || ''}
       alt='featured3'
       className='rounded-3xl object-cover w-full h-full '
       w={298}
-      />
+      />}
       </div>
       {/* DETAILS AND TITLE */}
       {/* DETAILS */}
@@ -95,46 +100,48 @@ const FeaturedPosts = () => {
       <div className="flex items-center gap-4">
         <h1 className="font-semibold">03.</h1>
         <Button
-        value='Web Design'
+        value={posts[2]?.category || ''}
         containerClass='text-blue-800'
+        to={`/${posts[2]?.slug}`}
         />
-        <span className="text-gray-500 text-sm">2 days ago</span>
+        <span className="text-gray-500 text-sm">{format(posts[2]?.createdAt)}</span>
       </div>
       <Button
       containerClass='text-base md:text-2xl sm:text-lg lg:text-xl xl:text-2xl font-medium'
-      value='Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
-      to='/test'
+      value={posts[2]?.title}
+      to={`/${posts[2]?.slug}`}
       />
       </div>
       
-      </div>
+      </div>}
       {/* FOURTH */}
-      <div className="lg:h-1/3 flex justify-between gap-4 ">
+      { posts[3] && <div className="lg:h-1/3 flex justify-between gap-4 ">
       <div className="w-1/3 aspect-video">
-      <Image
-      src='Blogging%20Website/featured4.jpeg'
+     { posts[3]?.img && <Image
+      src={posts[3]?.img || ''}
       alt='featured4'
       className='rounded-3xl object-cover w-full h-full '
       w={298}
-      />
+      />}
       </div>
       {/* DETAILS AND TITLE */}
       <div className="  w-2/3 ">
       <div className="flex gap-4 mb-4 lg:text-base text-sm items-center">
         <h1 className="font-semibold">04.</h1>
         <Button
-        value='Web Design'
+        value={posts[3]?.category || ''}
         containerClass='text-blue-800'
+        to={`/${posts[3]?.slug}`}
         />
-        <span className="text-gray-500 text-sm">2 days ago</span>
+        <span className="text-gray-500 text-sm">{format(posts[3]?.createdAt)}</span>
       </div>
       <Button
-      to='/test'
-      value=' Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+      to={`/${posts[3]?.slug}`}
+      value={posts[3]?.title}
       containerClass='font-medium text-base sm:text-lg md:text-2xl lg:text-xl xl:text-2xl'
       />
       </div>
-      </div>
+      </div>}
       </div>
     </div>
   );

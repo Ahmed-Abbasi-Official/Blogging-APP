@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 
 const fetchPost = async ({ pageParam ,searchParams}) => {
   const searchParamsObj = Object.fromEntries([...searchParams]);
-  console.log(searchParamsObj);
+  // console.log(searchParamsObj);
   
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
     params: { page: pageParam, limit: 5, ...searchParamsObj },
@@ -37,7 +37,7 @@ const PostList = () => {
   if (isFetching === "loading") return "Loading...";
 
   if (status === "error") return "An error has occurred: " + error.message;
-  console.log("Data =========>>", data);
+  // console.log("Data =========>>", data);
 
   const allPosts = data?.pages?.flatMap((page) => page.allPosts) || [];
 
