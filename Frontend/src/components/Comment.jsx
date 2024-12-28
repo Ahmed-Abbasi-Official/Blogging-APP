@@ -7,9 +7,16 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const Comment = ({ comment }) => {
+const deletePost=async(id)=>{
+ const res= await axios.delete(`${import.meta.env.VITE_API_URL}/comments/${id}`);
+ 
+ toast.success(`Comment deleted`)
+  return res
+}
+
+const Comment = ({ comment,postId,qu }) => {
   let image=comment?.user.userImg;
-  console.log(image);
+  // console.log(image);
   
   
   
@@ -36,12 +43,20 @@ const Comment = ({ comment }) => {
   });
 
   //  DELETE COMMENT
+  
+  const queryClient=useQueryClient();   // Use to get Cache Data .
 
-  const handelDelete=async()=>{
-     await axios.delete(`${import.meta.env.VITE_API_URL}/comments/${comment._id}`);
-    toast.success(`Comment deleted`)
-    return navigate(`/`);
-  }
+  const deleteMutation = useMutation({
+    mutationFn: (id) => deletePost(id),
+    onSuccess:(data,id)=>{
+        queryClient.setQueryData(qu,(elm)=>{  
+         const res= elm?.filter((postId)=>postId._id !== id )
+         return res
+        })
+    }
+  })
+
+ 
 
   const role=adminData?.data?.role==="admin"? true : false;
 
@@ -59,7 +74,7 @@ const Comment = ({ comment }) => {
           (comment.user.username === user.username || role ) && (
             <span
               className="text-xs text-red-300 hover:text-red-500 cursor-pointer"
-              onClick={() => handelDelete()}
+              onClick={() => deleteMutation.mutate(comment._id)}
             >
               delete
               {/* {mutation.isPending && <span>(in progress)</span>} */}

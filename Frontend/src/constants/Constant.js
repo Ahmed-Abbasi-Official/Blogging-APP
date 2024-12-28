@@ -53,7 +53,7 @@ const categoriesList = [
   },
   {
     title: "Development",
-    path: "/posts?cat=Development",
+    path: "/posts?cat=development",
   },
   {
     title: "Database",
@@ -61,7 +61,7 @@ const categoriesList = [
   },
   {
     title: "Search Engine",
-    path: "/posts?cat=search",
+    path: "/posts?cat=seo",
   },
   {
     title: "Marketing",

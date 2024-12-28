@@ -4,6 +4,8 @@ import Button from "../utils/Button.jsx";
 import { format } from "timeago.js";
 
 const PostListItem = ({post}) => {
+  console.log(post);
+  
   
  
 

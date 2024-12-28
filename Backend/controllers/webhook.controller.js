@@ -47,7 +47,7 @@ export const clerkWebHook = async (req, res) => {
     console.log("USER ================ >>>>>>>>", user);
   }
   if (evt.type === "user.updated") {
-    console.log("evt.type=========>>>", evt.type);
+    // console.log("evt.type=========>>>", evt.type);
 
     // User update logic
     const payload = {

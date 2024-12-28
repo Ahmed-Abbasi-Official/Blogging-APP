@@ -20,11 +20,10 @@ const HomePage = () => {
 
         <div className="">
           <h1 className="text-2xl text-gray-800 md:text-5xl lg:text-6xl font-bold">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Explore ideas, insights, and inspiration for everyday growth.
           </h1>
           <p className="mt-8 text-md md:text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            obcaecati perferendis .
+          A dynamic blogging app for effortlessly creating, managing, and sharing content.
           </p>
         </div>
         {/* ANIMATED BUTTON */}

@@ -6,19 +6,26 @@ class Post {
   //  ALL POSTS
   async getPosts(req, res) {
     try {
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 2;
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 2;
+      // console.log("limit",page);
+      
 
       const query = {};
 
       const { cat, author, search, sort ,featured} = req.query;
       
 
+     
       if (cat) {
         query.category = cat;
+        // console.log("QUERIES : ",query);
+        
       }
 
       if (search) {
+        console.log(search);
+        
         query.title = { $regex: search, $options: "i" };
       }
 
@@ -64,12 +71,13 @@ class Post {
 
       const allPosts = await postModel
         .find(query)
-        .populate("user", "username fullName")
+        .populate("user", "username userImg")
         .sort(sortObj)
         .limit(limit)
         .skip((page - 1) * limit);
 
       const totalPosts = await postModel.countDocuments(); // Count with applied query
+      
       const hasMore = page * limit < totalPosts;
 
       res.status(200).json({ allPosts, hasMore });
@@ -82,7 +90,7 @@ class Post {
   async getPost(req, res) {
     const singlePost = await postModel
       .findOne({ slug: req.params.slug })
-      .populate("user", "username fullName");
+      .populate("user", "userImg username");
     res.status(200).json(singlePost);
   }
 

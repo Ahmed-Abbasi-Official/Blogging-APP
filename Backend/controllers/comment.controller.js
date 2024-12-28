@@ -6,6 +6,8 @@ class Comment {
   async getPostsComments(req, res) {
     try {
       const comments = await commentModel.find({post:req.params.postId}).populate("user","username userImg").sort({createdAt:-1}).populate("post",'slug')
+      // console.log(comments);
+      
       res.status(200).json(comments)
     } catch (error) {
         res.status(500).json("error in Get Comments :", error)

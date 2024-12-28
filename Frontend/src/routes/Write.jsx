@@ -73,10 +73,10 @@ const Write = () => {
       content: value,
     };
 
-    console.log("Submitting post:", newPost);
+    // console.log("Submitting post:", newPost);
+    setValue(' ')
     // Trigger mutation
     mutation.mutate(newPost);
-    console.log(mutation);
   };
 
   

@@ -21,10 +21,15 @@ const SinglePostPage = () => {
     queryKey: ['post',slug],
     queryFn: () => fetchPost(slug),
   })
+  
+  
 
   if(isLoading) return "Loading....."
   if(error) return "Error............" + error.message 
   if(!data) return "Post Not Found....."
+  const image=data?.user.userImg;
+  // console.log(image);
+  
   
   return (
     <div className="flex gap-8 flex-col">
@@ -70,8 +75,8 @@ const SinglePostPage = () => {
           <h1  className="font-medium  mb-4 text-sm">Author</h1>
           <div className="flex  flex-col gap-4">
           <div className="flex  items-center gap-8">
-           { data.user.userImg && <Image
-            src={data.user.userImg}
+           {image && <Image
+            src={image}
             className='w-12 h-12 rounded-full object-cover'
             w={48}
             h={48}
@@ -80,7 +85,7 @@ const SinglePostPage = () => {
             value={data.user.username}
             />
             </div>
-            <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur</p>
+            {/* <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur</p> */}
             <div className="flex gap-2">
             <Button
             value={<Image

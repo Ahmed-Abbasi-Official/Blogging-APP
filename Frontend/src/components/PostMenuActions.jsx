@@ -8,6 +8,8 @@ const PostMenuActions = ({ post }) => {
   const { user } = useUser();
   const { getToken } = useAuth();
   const navigate = useNavigate();
+  console.log(post);
+  
 
   //  Fetching SavedPOSTS
 
@@ -61,13 +63,18 @@ const PostMenuActions = ({ post }) => {
   const deleteMutation = useMutation({
     mutationFn: async () => {
       const token = await getToken();
-      return axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, {
+      console.log(token);
+      
+      const rs= axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      return rs.data
     },
-    onSuccess: () => {
+    onSuccess: (data,id) => {
+      console.log(data,id);
+      
       toast.success("Post deleted successfully");
       navigate("/");
     },

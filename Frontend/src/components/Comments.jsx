@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Comment from "../components/Comment.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -13,6 +13,7 @@ const fetchComments = async (postId) => {
 };
 
 const Comments = ({ postId }) => {
+  const [value,setValue]=useState(' ')
   const {user}=useUser();
   const { getToken } = useAuth();
 
@@ -28,7 +29,7 @@ const Comments = ({ postId }) => {
   const mutation = useMutation({
     mutationFn: async (newComment) => {
       const token = await getToken();
-      console.log(token);
+      // console.log(token);
 
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/comments/${postId}`,
@@ -53,14 +54,15 @@ const Comments = ({ postId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-
+    
     const data = {
       desc: formData.get("desc"),
     };
-    console.log(data);
-
+    setValue('')
+    
     mutation.mutate(data);
   };
+  
 
   return (
     <div className="flex flex-col gap-8 lg:w-3/5 mb-12">
@@ -74,6 +76,8 @@ const Comments = ({ postId }) => {
       >
         <textarea
           name="desc"
+          value={value}
+          onChange={(e)=>setValue(e.target.value)}
           className="rounded-xl w-full outline-none px-4 py-4 "
           placeholder="Write a comment..."
         />
@@ -101,7 +105,10 @@ const Comments = ({ postId }) => {
           )
         }
         {data.map((comment) => (
-            <Comment key={comment._id} comment={comment} post={fetchComments} />
+            <Comment key={comment._id} comment={comment} post={fetchComments} 
+            postId={postId}
+            qu={["comments", postId]}
+            />
           ))}
         </>}
     </div>
