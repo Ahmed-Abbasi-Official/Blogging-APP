@@ -42,7 +42,7 @@ const SinglePostPage = () => {
           </h1>
           <div className="flex items-center gap-2 text-gray-400 text-sm">
             <span>Written by</span>
-            <Button containerClass="text-blue-800" value={data.user.fullName} />
+            <Button containerClass="text-blue-800" value={data.user.username} />
             <span>on</span>
             <Button containerClass="text-blue-800 capitalize" value={data.category}/>
             <span>{format(data.createdAt)}</span>
@@ -86,7 +86,7 @@ const SinglePostPage = () => {
             />
             </div>
             {/* <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur</p> */}
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
             <Button
             value={<Image
             src='Blogging%20Website/facebook.svg'
@@ -99,7 +99,7 @@ const SinglePostPage = () => {
             alt='Insta'
             />}
             />
-            </div>
+            </div> */}
             </div>
           <PostMenuActions post={data} />
           <h1  className="font-medium mt-8 mb-4 text-sm">Categories</h1>
