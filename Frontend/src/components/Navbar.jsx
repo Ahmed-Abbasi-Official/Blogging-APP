@@ -54,13 +54,11 @@ const Navbar = () => {
               );
             })
           }
-           <SignedOut>
         <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
         />
-      </SignedOut>
       <SignedIn>
         <UserButton />
       </SignedIn>
@@ -79,13 +77,11 @@ const Navbar = () => {
             </Link>
           );
         })}
-        <SignedOut>
         <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
         />
-      </SignedOut>
       <SignedIn>
         <UserButton />
       </SignedIn>
