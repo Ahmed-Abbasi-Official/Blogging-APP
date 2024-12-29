@@ -16,6 +16,7 @@
     "aos": "^2.3.4",
     "body-parser": "^2.0.2",
     "bootstrap": "^5.3.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
@@ -25,7 +26,8 @@
     "mongoose": "^8.9.1",
     "motion": "^11.13.3",
     "nodemon": "^3.1.7",
-    "svix": "^1.44.0"
+    "svix": "^1.44.0",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.14"
