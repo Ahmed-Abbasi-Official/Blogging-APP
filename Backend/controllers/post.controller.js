@@ -1,6 +1,7 @@
 import ImageKit from "imagekit";
 import postModel from "../models/post.model.js";
 import userModel from "../models/user.model.js";
+import { getUser } from "../service/auth.js";
 
 class Post {
   //  ALL POSTS
@@ -97,18 +98,25 @@ class Post {
   //  CREATE POST
   async createPost(req, res) {
     try {
-      const clerkUserId = req?.auth?.userId;
+      const clerkUserId = req?.headers?.authorization;
       // console.log("ReqAuth=============>>>",req.auth);
 
       // console.log("ClerkID",clerkUserId);
 
+
+
       // console.log(req.headers);
+      const userID=getUser(clerkUserId)
+      // console.log(userID);
+      
 
       if (!clerkUserId) {
         return res.status(401).json("Not authenticated!");
       }
 
-      const user = await userModel.findOne({ clerkUserId });
+      const user = await userModel.findOne({ _id:userID.userId });
+      console.log(user);
+      
 
       if (!user) {
         return res.status(404).json("User not found!");
@@ -144,7 +152,7 @@ class Post {
 
   //  DELETE POST
   async deletePost(req, res) {
-    const clerkUserId = req.auth.userId;
+    const clerkUserId = req.headers?.authorization;
     const postId = req.params.id;
     if (!clerkUserId) {
       return res.status(401).json("Not authenticated!");
@@ -157,8 +165,9 @@ class Post {
         post: deletePost,
       });
     }
-
-    const user = await userModel.findOne({ clerkUserId });
+    const userID=getUser(clerkUserId)
+    // console.log(userID);
+    const user = await userModel.findOne({ _id:userID.userId });
     const deletePost = await postModel.findOneAndDelete({
       _id: postId,
       user: user._id,
@@ -194,14 +203,14 @@ class Post {
   //  FEATURE
   async featurePost(req, res) {
     try {
-      const clerkUserId = req.auth.userId;
+      const clerkUserId = req?.headers?.authorization;
   const postId = req.body.postId;
 
   if (!clerkUserId) {
     return res.status(401).json("Not authenticated!");
   }
-
-  const role = await userModel.findOne({clerkUserId}) || "user";
+const userID=getUser(clerkUserId)
+  const role = await userModel.findOne({_id:userID.userId}) || "user";
   console.log(role.role);
   
 

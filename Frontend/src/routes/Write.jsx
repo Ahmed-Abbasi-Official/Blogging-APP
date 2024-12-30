@@ -1,4 +1,3 @@
-import { useAuth, useUser } from "@clerk/clerk-react";
 import "react-quill-new/dist/quill.snow.css";
 import ReactQuill from "react-quill-new";
 import { useMutation } from "@tanstack/react-query";
@@ -7,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Upload from "../components/Upload";
+import { useAuth } from "../context/userContext";
 
 const Write = () => {
   const [value, setValue] = useState("");
@@ -14,8 +14,7 @@ const Write = () => {
   const [image, setImage] = useState("");
   const [video, setVideo] = useState("");
   const [progress, setProgress] = useState(0);
-  const { isLoaded, isSignedIn } = useUser();
-  const { getToken } = useAuth();
+  const {isAuthenticated,token}=useAuth();
   const navigate = useNavigate();
 
   //  IMAGE
@@ -34,12 +33,12 @@ const Write = () => {
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
-      const token = await getToken();
+      // const token = await getToken();
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/posts`,
         newPost,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `${token}` },
         }
       );
       return data.post;
@@ -52,11 +51,11 @@ const Write = () => {
     },
   });
 
-  if (!isLoaded) {
-    return <div>Loading .....</div>;
-  }
+  // if (!isLoaded) {
+  //   return <div>Loading .....</div>;
+  // }
 
-  if (isLoaded && !isSignedIn) {
+  if ( !isAuthenticated) {
     return <div>You should login!</div>;
   }
 

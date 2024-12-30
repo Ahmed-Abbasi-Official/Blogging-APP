@@ -1,20 +1,13 @@
 import {Schema} from 'mongoose'
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 const userSchema=new Schema({
-  clerkUserId:{
-    type:String,
-    required:true,
-    unique:true,
-  },
   username:{
     type:String,
     required:true,
     unique:true,
-  },
-  fullName:{
-    type:String,
-    required:true,
   },
   email:{
     type:String,
@@ -38,6 +31,20 @@ const userSchema=new Schema({
   }
 
 },{timestamps:true})
+
+userSchema.methods.generateToken=async function () {
+  try {
+    return jwt.sign( {
+userId:this._id,
+email:this.email,
+role:this.role,
+username:this.username
+    },process.env.JWT_SECRET_KEY)
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
 
 const userModel=mongoose.model('User',userSchema);
 

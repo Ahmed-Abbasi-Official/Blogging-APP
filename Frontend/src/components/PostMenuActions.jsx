@@ -1,14 +1,13 @@
-import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/userContext";
 
 const PostMenuActions = ({ post }) => {
-  const { user } = useUser();
-  const { getToken } = useAuth();
+  const { token,isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  console.log(post);
+  // console.log(post);
   
 
   //  Fetching SavedPOSTS
@@ -23,13 +22,20 @@ const PostMenuActions = ({ post }) => {
       const token = await getToken();
       return await axios.get(`${import.meta.env.VITE_API_URL}/user/saved`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
       });
     },
   });
 
 
+  console.log(savedPosts);
+  
+  const isSaved = savedPosts?.some((p) =>p._id==post._id) ? true : false;
+
+ 
+
+  console.log(isSaved);
   //  GET USER
 
   const {
@@ -39,41 +45,39 @@ const PostMenuActions = ({ post }) => {
   } = useQuery({
     queryKey: ["adminData"],
     queryFn: async () => {
-      const token = await getToken();
+      // const token = await getToken();
       return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
       });
     },
   });
   
-  
-
-  const isAdmin = adminData?.data.role==="admin" ? true :false ;
+  const isAdmin = adminData?.data.user.role==="admin" ? true :false ;
   // console.log(isAdmin);
+  // console.log(adminData?.data.userData);
   
   
-  const isSaved = savedPosts?.data?.some((p) => p === post._id) || false;
-  // console.log(isSaved);
+ 
   
 
   //  DELETE POSTS
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      const token = await getToken();
-      console.log(token);
+      // const token = await getToken();
+      // console.log(token);
       
       const rs= axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
       });
       return rs.data
     },
     onSuccess: (data,id) => {
-      console.log(data,id);
+      // console.log(data,id);
       
       toast.success("Post deleted successfully");
       navigate("/");
@@ -89,33 +93,37 @@ const PostMenuActions = ({ post }) => {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const token = await getToken();
-      return  axios.patch(
+      // const token = await getToken();
+      const res= await axios.patch(
         `${import.meta.env.VITE_API_URL}/user/save`,
         {
           postId: post._id,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:`${token}`,
           },
         }
       );
+      return res.data
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success(isSaved  ? "Post Un-Saved" : "Post Saved");
       queryClient.invalidateQueries({ queryKey: ["savedPosts"] });
+      
     },
     onError: () => {
       toast.error(error.response.data);
     },
   });
 
+  
+
   //  FEATURED
 
   const featureMutation = useMutation({
     mutationFn: async () => {
-      const token = await getToken();
+      // const token = await getToken();
       return  await axios.patch(
         `${import.meta.env.VITE_API_URL}/posts/feature`,
         {
@@ -123,7 +131,7 @@ const PostMenuActions = ({ post }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
           },
         }
       );
@@ -140,10 +148,11 @@ const PostMenuActions = ({ post }) => {
     deleteMutation.mutate();
   };
   const handleSave = () => {
-    if (!user) {
+    if (!isAuthenticated) {
       navigate("/login");
     }
     saveMutation.mutate();
+    navigate('/saved-posts')
   };
   const handleFeature = () => {
     featureMutation.mutate();
@@ -153,9 +162,9 @@ const PostMenuActions = ({ post }) => {
     <div className="">
       <h1 className="mt-8 mb-4 text-sm font-medium">Actions</h1>
       {/* SAVE POST */}
-      {isPending ? (
+      {isAdminPending ? (
         "Loading..."
-      ) : error ? (
+      ) : adminError ? (
         "Saved Post Fetching Failed!"
       ) : (
         <div className="flex items-center gap-2 py-2 text-sm cursor-pointer" onClick={handleSave}>
@@ -166,11 +175,19 @@ const PostMenuActions = ({ post }) => {
             height="20px"
           >
             <path
-              d="M12 4C10.3 4 9 5.3 9 7v34l15-9 15 9V7c0-1.7-1.3-3-3-3H12z"
-              stroke="black"
-              strokeWidth="2"
-              fill={saveMutation.isPending ? isSaved ? "none" : "black" : isSaved ? "black" : "none"}
-            />
+  d="M12 4C10.3 4 9 5.3 9 7v34l15-9 15 9V7c0-1.7-1.3-3-3-3H12z"
+  stroke="black"
+  strokeWidth="2"
+  fill={
+    saveMutation.isPending
+                  ? isSaved
+                    ? "none"
+                    : "black"
+                  : isSaved
+                  ? "black"
+                  : "none"
+  }
+/>
           </svg>
           <span>Save this Post</span>
           {saveMutation.isPending && (
@@ -179,7 +196,7 @@ const PostMenuActions = ({ post }) => {
         </div>
       )}
       {/* DELETE POST */}
-      {user && (post.user.username === user.username || isAdmin===true ) && (
+      {isAuthenticated && (post?.user?.username === adminData?.data.userData?.username || isAdmin===true ) && (
         <div
           className="flex items-center gap-2 py-2 text-sm cursor-pointer"
           onClick={handleDelete}

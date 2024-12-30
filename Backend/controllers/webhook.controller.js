@@ -1,77 +1,34 @@
 import userModel from "../models/user.model.js";
-import { Webhook } from "svix";
-import "dotenv/config";
+import {setUser} from "../service/auth.js"
+import 'dotenv/config'
 
-export const clerkWebHook = async (req, res) => {
-  const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
-
-  if (!WEBHOOK_SECRET) {
-    throw new Error("Webhook secret needed!");
-  }
-
-  const payload = req.body;
-  const headers = req.headers;
-
-  const wh = new Webhook(WEBHOOK_SECRET);
-  let evt;
+export const signUp =async(req,res)=>{
   try {
-    evt = wh.verify(payload, headers);
-  } catch (err) {
-    res.status(400).json({
-      message: "Webhook verification failed!",
-    });
+    const user= new userModel(req.body);
+    console.log(user);
+    await user.save();
+    return res.json({message:"Register successful"})
+  } catch (error) {
+    res.json({error: error.message});
+    console.log(error);
+    
   }
+}
+export const signIn =async(req,res)=>{
+  try {
+    const {email,password} = req.body
+    const user=await userModel.findOne({email,password});
+    if(!user) return res.status(400).json({error: "Invalid Credentials"})
+    // console.log(user);
+    //   setUser({ id: user._id, email: user.email,name:user.username },res);
+    //  res.cookie('UUID',"Good")
 
-  console.log("EVT ========================>", evt.type);
-
-  if (evt.type === "user.created") {
-    console.log("EVT>TYPE============>>>>>>>>>>>", evt.type);
-    const payload = {
-      clerkUserId: evt?.data.id || "clerkUserId",
-      username:
-        evt?.data.username ||
-        evt?.data.email_addresses[0]?.email_address ||
-        "username",
-      fullName: evt?.data.first_name + " " + evt?.data.last_name || "fullname",
-      email: evt?.data.email_addresses[0]?.email_address || "email",
-      userImg: evt?.data.image_url,
-    };
-    console.log(payload);
-
-    try {
-      const user = await userModel.create(payload);
-      console.log("USER CREATED ================ >>>>>>>>", user);
-    } catch (err) {
-      console.error("Error saving user to MongoDB: ", err);
-    }
-    console.log("USER ================ >>>>>>>>", user);
+    
+   return res.json({message:"Login successful",token:await user.generateToken()})
+    
+  } catch (error) {
+    res.json({error: error.message});
+    console.log(error);
+    
   }
-  if (evt.type === "user.updated") {
-    // console.log("evt.type=========>>>", evt.type);
-
-    // User update logic
-    const payload = {
-      username:
-        evt?.data.username ||
-        evt?.data.email_addresses[0]?.email_address ||
-        "username",
-      fullName: evt?.data.first_name + " " + evt?.data.last_name || "fullname",
-      email: evt?.data.email_addresses[0]?.email_address || "email",
-      userImg: evt?.data.image_url || evt?.data.profile_image_url,
-    };
-
-    try {
-      const updatedUser = await userModel.findOneAndUpdate(
-        { clerkUserId: evt?.data.id },
-        payload,
-        { new: true }
-      );
-      console.log("USER UPDATED ================ >>>>>>>>", updatedUser);
-    } catch (err) {
-      console.error("Error updating user in MongoDB: ", err);
-    }
-  }
-  return res.status(200).json({
-    message: "Webhook received",
-  });
-};
+}

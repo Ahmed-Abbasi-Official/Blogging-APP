@@ -1,72 +1,86 @@
 import commentModel from "../models/comment.model.js";
 import userModel from "../models/user.model.js";
+import { getUser } from "../service/auth.js";
 
 class Comment {
   //  GET COMMENTS
   async getPostsComments(req, res) {
     try {
-      const comments = await commentModel.find({post:req.params.postId}).populate("user","username userImg").sort({createdAt:-1}).populate("post",'slug')
+      const comments = await commentModel
+        .find({ post: req.params.postId })
+        .populate("user", "username userImg")
+        .sort({ createdAt: -1 })
+        .populate("post", "slug");
       // console.log(comments);
-      
-      res.status(200).json(comments)
+
+      res.status(200).json(comments);
     } catch (error) {
-        res.status(500).json("error in Get Comments :", error)
+      res.status(500).json("error in Get Comments :", error);
     }
   }
 
   //  ADD COMMENTS
 
   async addComment(req, res) {
-    const clerkUserId=req.auth.userId;
+    const clerkUserId = req?.headers?.authorization;
+    // console.log(clerkUserId);
+    
     const postId = req.params.postId;
-
-    if(!clerkUserId) {
-      return res.status(401).json("Not authenticated!")
+    // console.log(clerkUserId);
+    if (!clerkUserId) {
+      return res.status(401).json("Not authenticated!");
     }
 
-    const user = await userModel.findOne({clerkUserId})
-
-    const newComment= new commentModel({
-      user:user._id,post:postId,...req.body
-    })
-
-   const savedComment= await newComment.save();
-   setTimeout(() => {
+    const userID = getUser(clerkUserId);
     
-     res.status(201).json(savedComment)
-   }, 3000);
+    const user = await userModel.findOne({ _id: userID.userId });
+    console.log(user);
 
+    if (!user) {
+      return res.status(404).json("User not found!");
+    }
+
+    const newComment = new commentModel({
+      user: user._id,
+      post: postId,
+      ...req.body,
+    });
+
+    const savedComment = await newComment.save();
+    setTimeout(() => {
+      res.status(201).json(savedComment);
+    }, 3000);
   }
 
   //  DELETE COMMENTS
 
-  async deleteComment(req, res) { 
+  async deleteComment(req, res) {
     // const clerkUserId=req.auth.userId;
     const id = req.params.id;
-    
 
     // if(!clerkUserId) {
     //   return res.status(401).json("Not authenticated!")
     // }
-    const role = await userModel.findOne({role:"admin"}) || "user";
+    const role = (await userModel.findOne({ role: "admin" })) || "user";
     if (role) {
       await commentModel.findByIdAndDelete(id);
-     return res.status(200).json({
+      return res.status(200).json({
         message: "Comment deleted",
       });
     }
 
-    const user = await userModel.findOne  ({clerkUserId})
+    const user = await userModel.findOne({ clerkUserId });
 
-    const deleteComment= new commentModel.findOneAndDelete({
-      _id:id,user:user._id
-    })
+    const deleteComment = new commentModel.findOneAndDelete({
+      _id: id,
+      user: user._id,
+    });
 
     if (!deleteComment) {
-      return res.status(403).json("You can delete only your Comment!")
+      return res.status(403).json("You can delete only your Comment!");
     }
 
-    res.status(201).json("Comment deleted!")
+    res.status(201).json("Comment deleted!");
   }
 }
 

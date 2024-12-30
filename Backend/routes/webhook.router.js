@@ -1,13 +1,9 @@
 import express from "express";
-import { clerkWebHook } from "../controllers/webhook.controller.js";
-import bodyParser from "body-parser";
+import { signIn, signUp } from "../controllers/webhook.controller.js";
 
 const router = express.Router();
 
-router.post(
-  "/clerk",
-  bodyParser.raw({ type: "application/json" }),
-  clerkWebHook
-);
+router.post('/signup',signUp);
+router.post('/signin',signIn);
 
 export default router;

@@ -5,9 +5,10 @@ import userRouter from "./routes/user.router.js";
 import postsRouter from "./routes/posts.router.js";
 import commentsRouter from "./routes/comments.router.js";
 import webhooksRouter from "./routes/webhook.router.js";
-import { clerkMiddleware } from '@clerk/express'
+// import { clerkMiddleware } from '@clerk/express'
 import cors from "cors"
 import 'dotenv/config'
+import cookieParser from "cookie-parser";
 
 
 const app = express();
@@ -24,11 +25,12 @@ const MONGO=process.env.MONGO || 'mongodb://localhost:27017/blogify' ;
 
 // Middleware to parse form data (urlencoded) and JSON
 
-app.use(express.urlencoded({ extended: false }));
-app.use(clerkMiddleware())
-app.use('/webhooks',webhooksRouter)
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// app.use(clerkMiddleware())
+app.use(cookieParser())
+app.use(express.json());  
 app.use(express.static('public'));
+
 
 
 // ALLOW CROSS-ORIGIN REQUEST
@@ -53,6 +55,7 @@ app.set('views',path.resolve('./views'))
 app.use('/user',userRouter)
 app.use('/posts',postsRouter)
 app.use('/comments',commentsRouter)
+app.use('/webhooks',webhooksRouter)
 
 //  ERROR HANDLING
 

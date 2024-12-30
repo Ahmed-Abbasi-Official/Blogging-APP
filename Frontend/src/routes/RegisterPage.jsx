@@ -1,14 +1,36 @@
-import { SignUp } from "@clerk/clerk-react";
+// import { SignUp } from "@clerk/clerk-react";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { useAuth } from "../context/userContext";
 
 const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(false);
   const passwordFieldRef = useRef();
+  const navigate=useNavigate();
+  const {storeTokenInLs}=useAuth();
 
+  // NEW USER
+
+  const newUser = useMutation({
+    mutationFn: async(data) => {
+      const res=await axios.post(`${import.meta.env.VITE_API_URL}/webhooks/signup`, data)
+      console.log(res.data);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      navigate('/login');
+      toast.success("Registration successful");
+    },
+    onError: (error) => {
+      toast.error("Registration failed, please try again : ",error);
+    },
+  })
 
   // FOR USEFORM
 
@@ -35,10 +57,8 @@ const RegisterPage = () => {
   //  FOR ON SUBMIT
 
   const onSubmit = (data) => {
-
-    console.log(data);
+    newUser.mutate(data);
   };
-  console.log(errors);
   
 
   return (
@@ -55,7 +75,7 @@ const RegisterPage = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form  onSubmit={handleSubmit(onSubmit)}>
             {/* Username Input */}
             <div className="mb-6">
               <label

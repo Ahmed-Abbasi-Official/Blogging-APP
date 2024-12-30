@@ -3,16 +3,11 @@ import { logoImage, icons, iconsList } from "../constants/Constant.js";
 import Button from "../utils/Button.jsx";
 // import Image from "../utils/image.jsx";
 import {Link} from 'react-router-dom'
-import { SignedIn, SignedOut, SignInButton, UserButton , useAuth, useUser } from "@clerk/clerk-react";
-
+import { useAuth } from "../context/userContext"; 
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const {getToken}=useAuth();
-  const {user}=useUser();
-  useEffect(()=>{
-    getToken()
-  })
+   const { isAuthenticated } = useAuth();
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between ">
       {/* LOGO */}
@@ -54,14 +49,13 @@ const Navbar = () => {
               );
             })
           }
-        <Button 
+        { isAuthenticated ? (<p>USER</p>):( <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
-        />
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+        />)
+     }
+    
         </div>
       </div>
       {/* DESKTOP MENU */}
@@ -70,21 +64,19 @@ const Navbar = () => {
           return (
             <Link to={link.path} key={idx}
             cursor="pointer"
-            className={`${!user && link.class}`}
+            className={`${!isAuthenticated && link.class}`}
             >
               {link.title}
               
             </Link>
           );
         })}
-        <Button 
+        { isAuthenticated ? (<p>USER</p>):( <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
-        />
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+        />)
+     }
       </div>
     </div>
   );

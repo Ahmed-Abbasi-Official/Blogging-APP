@@ -1,8 +1,53 @@
-import React from 'react'
-import Image from '../utils/Image'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import {toast} from 'react-toastify'
+import { useAuth } from '../context/userContext'
 
 const LoginPage = () => {
+
+  const navigate=useNavigate()
+  const {storeTokenInLs,isAuthenticated}=useAuth();
+  console.log("Login===>>>",isAuthenticated);
+
+  useEffect(()=>{if(isAuthenticated) {
+     navigate('/')
+  }},[])
+
+
+  
+
+   // Login USER
+   const login = useMutation({
+    mutationFn: async(data) => {
+      const res=await axios.post(`${import.meta.env.VITE_API_URL}/webhooks/signin`,data)
+      return res.data;
+    },
+    onSuccess:(data)=>{
+      storeTokenInLs(data?.token)
+      navigate('/');
+      toast.success("Login Successfully");
+
+    }
+  })
+
+
+  // FOR USEFORM
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  // ON SUBMIT
+
+  const onSubmit = (data) => {
+    login.mutate(data);
+  };
+
   return (
     <div className='flex items-center justify-center min-h-[calc(100vh-80px)]'>
       <div className="my-6 flex items-center pb-6 flex-col bg-gray-50 rounded-2xl justify-center">
@@ -15,7 +60,8 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Email Input */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Email Input */}
           <div className="mb-6">
             <label
               htmlFor="email"
@@ -24,11 +70,13 @@ const LoginPage = () => {
               Email address or username
             </label>
             <input
-              type="text"
-              id="email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
-              placeholder="Enter email or username"
-            />
+                type="email"
+                {...register("email", { required: true })}
+                id="email"
+                // name="email"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
+                placeholder="Enter your email address"
+              />
           </div>
 
           {/* Password Input */}
@@ -40,11 +88,27 @@ const LoginPage = () => {
               Password
             </label>
             <input
-              type="password"
-              id="password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
-              placeholder="Enter password"
-            />
+                {...register("password", {
+                  required: "password is required",
+                  pattern: {
+                    value:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    message:
+                      "Password must contain at least 8 characters, including uppercase letters, lowercase letters, numbers, and special characters",
+                  },
+                })}
+                // ref={passwordFieldRef}
+                type="password"
+                id="password"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
+                placeholder="Enter your password"
+              />
+              {/* ERROR IN PASSWORD */}
+              {errors.password && (
+                <p className="text-xs text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
           </div>
 
           {/* Continue Button */}
@@ -52,6 +116,7 @@ const LoginPage = () => {
             <span>Continue</span>
             <span className="ml-2">→</span>
           </button>
+          </form> 
 
           {/* Divider */}
           <div className="relative my-6">

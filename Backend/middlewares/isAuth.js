@@ -1,19 +1,11 @@
-import userModel from "../models/user.model.js";
-
+import {getUser} from '../service/auth.js'
 export const isAuth = async (req, res,next) => {
   try {
-    const clerkUserId = req.auth.userId;
-    console.log(clerkUserId);
-    
-    if (!clerkUserId) {
-      res.status(401).json("Not Authenticated");
-    }
-    const user = await userModel.findOne({ clerkUserId });
-    console.log(user);
-    
-    if (!user) {
-      res.status(401).json("Please Login");
-    }
+   const token =req.cookies.uid; 
+   if(!token)return res.json({message:"not authorized"})
+   const user= getUser(token)
+   if(!user)return res.json({message:"not authorized"})
+    req.user=user
     next();
   } catch (error) {
     res.status(500).json({

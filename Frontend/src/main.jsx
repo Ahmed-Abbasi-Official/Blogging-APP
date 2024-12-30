@@ -21,9 +21,10 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import {PostProvider} from './context/postContext.jsx'
+import {PostProvider} from './context/userContext.jsx'
 import { ToastContainer } from 'react-toastify';
 import SavedPosts from "./routes/SavedPosts.jsx";
+import ProtectedRoute from "./protected/ProtectedRoute.jsx";
 
 const queryClient = new QueryClient()
 
@@ -38,13 +39,25 @@ if (!PUBLISHABLE_KEY) {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='' element={<MainLayout/>}>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={
+          <HomePage/>
+      } />
       <Route path="/posts" element={<PostListPage />} />
       <Route path="/:slug" element={<SinglePostPage/>} />
-      <Route path="/write" element={<Write />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/write" element={
+        <ProtectedRoute>
+          <Write />
+        </ProtectedRoute>
+      } />
+      <Route path="/login" element={
+        <LoginPage/>
+      } />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/saved-posts" element={<SavedPosts />} />
+      <Route path="/saved-posts" element={
+        <ProtectedRoute>
+          <SavedPosts />
+        </ProtectedRoute>
+      } />
      
     </Route>
   )

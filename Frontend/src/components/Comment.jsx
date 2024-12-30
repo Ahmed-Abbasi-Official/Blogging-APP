@@ -1,11 +1,9 @@
 import React from "react";
-import Image from "../utils/Image.jsx";
 import { format } from "timeago.js";
-import { useAuth, useUser } from "@clerk/clerk-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/userContext.jsx";
 
 const deletePost=async(id)=>{
  const res= await axios.delete(`${import.meta.env.VITE_API_URL}/comments/${id}`);
@@ -16,13 +14,14 @@ const deletePost=async(id)=>{
 
 const Comment = ({ comment,postId,qu }) => {
   let image=comment?.user.userImg;
+  // console.log(comment);
+  
   // console.log(image);
   
   
   
-  const { user } = useUser();
-  const { getToken } = useAuth();
-  const navigate=useNavigate();
+  
+  const { token } = useAuth();
 
   //  GET USER
 
@@ -33,14 +32,17 @@ const Comment = ({ comment,postId,qu }) => {
   } = useQuery({
     queryKey: ["adminData"],
     queryFn: async () => {
-      const token = await getToken();
       return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization:`${token}`,
         },
       });
     },
   });
+
+  const user=adminData?.data?.userData
+  // console.log(user);
+  
 
   //  DELETE COMMENT
   

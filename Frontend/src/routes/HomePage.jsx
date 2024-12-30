@@ -4,7 +4,11 @@ import Button from "../utils/Button";
 import MainCategories from "../components/MainCategories";
 import FeaturedPosts from "../components/FeaturedPosts";
 import PostList from "../components/PostList";
+import { useAuth } from '../context/userContext'
+
 const HomePage = () => {
+  const {isAuthenticated}=useAuth();
+  // console.log("Login===>>>",isAuthenticated);
   return (
     <div className="mt-4 flex flex-col gap-4 ">
       {/* BREADCRUMB */}

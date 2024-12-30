@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Comment from "../components/Comment.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import {  useUser } from "@clerk/clerk-react";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/userContext.jsx";
 
 const fetchComments = async (postId) => {
   const res = await axios.get(
@@ -13,10 +14,26 @@ const fetchComments = async (postId) => {
 };
 
 const Comments = ({ postId }) => {
+  
   const [value,setValue]=useState(' ')
   const {user}=useUser();
-  const { getToken } = useAuth();
+  const { token } = useAuth();
+  // console.log(token);
+  
 
+  const userInfo = useQuery({
+    queryKey: ["user",postId],
+    queryFn: async() =>{
+      const res=await axios.get(`${import.meta.env.VITE_API_URL}/user`,{
+        headers: { Authorization:`${token}` },
+      })
+      return res.data
+    } ,
+    
+  });
+  
+  // const user=userInfo?.data?.);
+  
   const { isLoading, error, data } = useQuery({
     queryKey: ["comments", postId],
     queryFn: () => fetchComments(postId),
@@ -28,14 +45,11 @@ const Comments = ({ postId }) => {
 
   const mutation = useMutation({
     mutationFn: async (newComment) => {
-      const token = await getToken();
-      // console.log(token);
-
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/comments/${postId}`,
         newComment,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `${token}` },
         }
       );
       return data.post;
@@ -58,6 +72,8 @@ const Comments = ({ postId }) => {
     const data = {
       desc: formData.get("desc"),
     };
+    console.log(data);
+    
     setValue('')
     
     mutation.mutate(data);
@@ -96,8 +112,8 @@ const Comments = ({ postId }) => {
               desc:`${mutation.variables.desc} (Sending wait...)`,
               createdAt: new Date(),
               user:{
-                img:user.imageUrl,
-                username:user.username
+                img:user?.imageUrl,
+                username:user?.username
               }
 
 
