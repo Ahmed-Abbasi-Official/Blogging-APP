@@ -8,12 +8,18 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/userContext";
+import { googleSignup } from "../Conf/googleAuth";
+import {  signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../Conf/firebase"; 
+
 
 const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(false);
   const passwordFieldRef = useRef();
   const navigate=useNavigate();
-  const {storeTokenInLs}=useAuth();
+  const provider = new GoogleAuthProvider();
+  
+  // const {storeTokenInLs}=useAuth();
 
   // NEW USER
 
@@ -24,11 +30,11 @@ const RegisterPage = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      navigate('/login');
       toast.success("Registration successful");
+      navigate('/login');
     },
     onError: (error) => {
-      toast.error("Registration failed, please try again : ",error);
+      toast.error("Registration failed, please try again : ",error.message);
     },
   })
 
@@ -57,9 +63,43 @@ const RegisterPage = () => {
   //  FOR ON SUBMIT
 
   const onSubmit = (data) => {
+   
     newUser.mutate(data);
   };
   
+
+  //  FOR GOOGLE
+
+  const handleGoogleBtnClick =async () => {
+  
+  
+       signInWithPopup(auth, provider)
+     .then((result) => {
+       const credential = GoogleAuthProvider.credentialFromResult(result);
+       const token = credential.accessToken;
+       const user = result.user;
+       console.log(user);
+   
+      const data = {
+           username: user?.email.split(' ')[0].slice(0,8),
+           fullname:user.displayName || "fullname",
+           email: user.email || "eamil",
+           userImg: user.photoURL || "/User.png",
+           isVerified: user.emailVerified || "fale",
+         };
+         
+         
+         return newUser.mutate(data)
+       
+     }).catch((error) => {
+       const errorCode = error.code;
+       const errorMessage = error.message;
+       const email = error.customData.email;
+       const credential = GoogleAuthProvider.credentialFromError(error);
+       // ...
+     });
+   
+  };
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
@@ -199,7 +239,7 @@ const RegisterPage = () => {
             </button> */}
 
             {/* Google Button */}
-            <button className="flex justify-center items-center w-full h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <button className="flex justify-center items-center w-full h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors" onClick={handleGoogleBtnClick}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"

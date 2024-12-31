@@ -27,8 +27,10 @@ const SinglePostPage = () => {
   if(isLoading) return "Loading....."
   if(error) return "Error............" + error.message 
   if(!data) return "Post Not Found....."
-  const image=data?.user.userImg;
+  const image=data?.user?.userImg || '';
   // console.log(image);
+  console.log(data);
+  
   
   
   return (
@@ -42,7 +44,7 @@ const SinglePostPage = () => {
           </h1>
           <div className="flex items-center gap-2 text-gray-400 text-sm">
             <span>Written by</span>
-            <Button containerClass="text-blue-800" value={data.user.username} />
+            <Button containerClass="text-blue-800" value={data?.user?.username} />
             <span>on</span>
             <Button containerClass="text-blue-800 capitalize" value={data.category}/>
             <span>{format(data.createdAt)}</span>

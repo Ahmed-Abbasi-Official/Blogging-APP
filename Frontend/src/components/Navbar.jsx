@@ -4,10 +4,15 @@ import Button from "../utils/Button.jsx";
 // import Image from "../utils/image.jsx";
 import {Link} from 'react-router-dom'
 import { useAuth } from "../context/userContext"; 
+import ShowPopUp from "./ShowPopUp.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
    const { isAuthenticated } = useAuth();
+
+   
+
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between ">
       {/* LOGO */}
@@ -71,13 +76,23 @@ const Navbar = () => {
             </Link>
           );
         })}
-        { isAuthenticated ? (<p>USER</p>):( <Button 
+        { isAuthenticated ? (
+          <img src="/User.png" alt="User"
+          className="w-7 h-7 cursor-pointer bg-cover"
+          onClick={()=>setShowPopUp((prev)=>!prev)}
+          />
+        ):( <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
         />)
      }
       </div>
+      {
+        showPopUp && (
+          <ShowPopUp/>
+        )
+      }
     </div>
   );
 };

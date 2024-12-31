@@ -14,6 +14,7 @@
     "@tanstack/react-query": "^5.62.8",
     "axios": "^1.7.9",
     "cls": "^0.1.5",
+    "firebase": "^11.1.0",
     "imagekitio-react": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",

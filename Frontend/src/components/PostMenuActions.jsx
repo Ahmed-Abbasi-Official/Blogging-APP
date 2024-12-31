@@ -53,8 +53,9 @@ const PostMenuActions = ({ post }) => {
       });
     },
   });
+  console.log(adminData);
   
-  const isAdmin = adminData?.data.user.role==="admin" ? true :false ;
+  const isAdmin = adminData?.data?.user?.role==="admin" ? true :false ;
   // console.log(isAdmin);
   // console.log(adminData?.data.userData);
   

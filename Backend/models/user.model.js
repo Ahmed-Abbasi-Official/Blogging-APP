@@ -9,6 +9,10 @@ const userSchema=new Schema({
     required:true,
     unique:true,
   },
+  fullName:{
+    type:String,
+  }
+  ,
   email:{
     type:String,
     required:true,
@@ -19,7 +23,8 @@ const userSchema=new Schema({
     default:null
   },
   userImg:{
-    type:String
+    type:String,
+    default:'/images/User.png'
   },
   savedPosts:{
     type:[String],

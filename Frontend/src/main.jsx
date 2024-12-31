@@ -43,7 +43,11 @@ const router = createBrowserRouter(
           <HomePage/>
       } />
       <Route path="/posts" element={<PostListPage />} />
-      <Route path="/:slug" element={<SinglePostPage/>} />
+      <Route path="/:slug" element={
+        <ProtectedRoute>
+          <SinglePostPage/>
+        </ProtectedRoute>
+      } />
       <Route path="/write" element={
         <ProtectedRoute>
           <Write />
@@ -52,7 +56,9 @@ const router = createBrowserRouter(
       <Route path="/login" element={
         <LoginPage/>
       } />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/register" element={
+        <RegisterPage />
+      } />
       <Route path="/saved-posts" element={
         <ProtectedRoute>
           <SavedPosts />
