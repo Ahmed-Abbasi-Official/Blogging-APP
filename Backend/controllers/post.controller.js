@@ -115,7 +115,7 @@ class Post {
       }
 
       const user = await userModel.findOne({ _id:userID.userId });
-      console.log(user);
+      // console.log(user);
       
 
       if (!user) {

@@ -53,6 +53,7 @@ const LoginPage = () => {
 
   const onSubmit = (data) => {
     login.mutate(data);
+    
   };
 
   //  HANDLE GOOGLE AUTHENTICATION
@@ -76,7 +77,9 @@ const LoginPage = () => {
            };
            
            
-           return login.mutate(data)
+            login.mutate(data)
+            
+           
          
        }).catch((error) => {
          const errorCode = error.code;

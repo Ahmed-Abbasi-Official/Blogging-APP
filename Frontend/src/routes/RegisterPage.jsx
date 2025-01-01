@@ -65,6 +65,7 @@ const RegisterPage = () => {
   const onSubmit = (data) => {
    
     newUser.mutate(data);
+    
   };
   
 

@@ -5,16 +5,39 @@ import Button from "../utils/Button.jsx";
 import {Link} from 'react-router-dom'
 import { useAuth } from "../context/userContext"; 
 import ShowPopUp from "./ShowPopUp.jsx";
+import Image from "../utils/Image.jsx";
+import { useQuery } from "@tanstack/react-query";
+import Modal from "./Modal.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
-   const { isAuthenticated } = useAuth();
+   const { isAuthenticated,token } = useAuth();
+
+  
+
+   //  GET USER
+ 
+   const {
+     isPending: isAdminPending,
+     error: adminError,
+     data: adminData,
+   } = useQuery({
+     queryKey: ["adminData"],
+     queryFn: async () => {
+       return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
+         headers: {
+           Authorization:`${token}`,
+         },
+       });
+     },
+   });
+   const user=adminData?.data?.userData
 
    
 
   return (
-    <div className="w-full h-16 md:h-20 flex items-center justify-between ">
+    <div className="relative w-full h-16 md:h-20 flex items-center justify-between ">
       {/* LOGO */}
       <Link to='/' className="flex items-center gap-4 text-2xl font-bold ">
         <img
@@ -54,7 +77,29 @@ const Navbar = () => {
               );
             })
           }
-        { isAuthenticated ? (<p>USER</p>):( <Button 
+        { isAuthenticated ? (
+          user?.userImg ? (
+            <div    onClick={()=>{
+              setShowPopUp((prev)=>!prev)
+              setOpen((prev)=>!prev)
+            }} className="cursor-pointer">
+              <Image
+            src={user?.userImg}
+            className="w-10 h-10 rounded-full object-cover"
+            alt="image"
+            // w="40"
+          />
+            </div>
+          ) :(
+            <img src="/User.png" alt="User"
+            className="w-7 h-7 cursor-pointer bg-cover"
+          onClick={()=>{
+            setShowPopUp((prev)=>!prev)
+            setOpen((prev)=>!prev)
+          }}
+          />
+          )
+        ):( <Button 
         value="Login 💛"
         to='/login'
         containerClass='py-2 px-4 rounded-3xl bg-blue-800 text-white '
@@ -77,10 +122,22 @@ const Navbar = () => {
           );
         })}
         { isAuthenticated ? (
-          <img src="/User.png" alt="User"
-          className="w-7 h-7 cursor-pointer bg-cover"
+          user?.userImg ? (
+            <div    onClick={()=>setShowPopUp((prev)=>!prev)} className="cursor-pointer">
+              <Image
+            src={user?.userImg}
+            className="w-10 h-10 rounded-full object-cover"
+            alt="image"
+            // w="40"
+          />
+            </div>
+          ) :(
+            <img src="/User.png" alt="User"
+            className="w-7 h-7 cursor-pointer bg-cover"
           onClick={()=>setShowPopUp((prev)=>!prev)}
           />
+          )
+          
         ):( <Button 
         value="Login 💛"
         to='/login'
@@ -90,10 +147,15 @@ const Navbar = () => {
       </div>
       {
         showPopUp && (
-          <ShowPopUp/>
+          //   <ShowPopUp
+          //   showPopUp={showPopUp}
+          //   setShowPopUp={setShowPopUp}
+          // />
+          <Modal/>
         )
       }
-    </div>
+      </div>
+      
   );
 };
 

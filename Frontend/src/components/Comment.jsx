@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/userContext.jsx";
+import Image from "../utils/Image.jsx";
 
 const deletePost=async(id)=>{
  const res= await axios.delete(`${import.meta.env.VITE_API_URL}/comments/${id}`);
@@ -13,10 +14,11 @@ const deletePost=async(id)=>{
 }
 
 const Comment = ({ comment,postId,qu }) => {
-  let image=comment?.user.userImg;
-  // console.log(comment);
+  console.log(comment);
   
-  // console.log(image);
+  const image=comment?.user?.userImg || '';
+  console.log(image);
+  
   
   
   
@@ -65,11 +67,16 @@ const Comment = ({ comment,postId,qu }) => {
   return (
     <div className="p-4 bg-slate-50 rounded-xl mb-8 ">
       <div className="flex items-center gap-4">
-        <img
-          src={image}
+        {
+          image && (
+            <Image
+          src={user?.userImg || "/User.png?updatedAt=1735717183257"}
           className="w-10 h-10 rounded-full object-cover"
-          w="40"
+          alt="image"
+          // w="40"
         />
+          )
+        }
         <span className="font-medium">{comment.user.username}</span>
         <span className="text-sm to-gray-500">{format(comment.createdAt)}</span>
         {user &&

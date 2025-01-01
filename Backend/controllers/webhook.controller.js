@@ -1,6 +1,7 @@
 import userModel from "../models/user.model.js";
 // import { sendEmail } from "../middlewares/nodemailer.js"; 
 import dotenv from 'dotenv';
+import { getUser } from "../service/auth.js";
 
 dotenv.config();
 
@@ -34,21 +35,36 @@ export const signIn =async(req,res)=>{
     
   }
 }
-export const userUpdate =async(req,res)=>{
-  try {
-    const {email,password} = req.body
-    const user=await userModel.findOne({email,password});
-    if(!user) return res.status(400).json({error: "Invalid Credentials"})
-    // console.log(user);
-    //   setUser({ id: user._id, email: user.email,name:user.username },res);
-    //  res.cookie('UUID',"Good")
 
+
+export const userUpdate = async (req, res) => {
+  try {
+    const clerkUserId = req?.headers?.authorization;
+
+    if (!clerkUserId) {
+      return res.status(401).json("Not authenticated!");
+    }
+
+    const userID = getUser(clerkUserId);
+
+    const currentUser = await userModel.findById(userID.userId);
+    if (!currentUser) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    const updatedData = {
+      username: req.body.username || currentUser.username,
+      userImg: req.body.userImg || currentUser.userImg,
+      fullName: req.body.fullname || currentUser.fullName || "Anonymous",
+    };
+
+    const user = await userModel.findByIdAndUpdate(userID.userId, updatedData, { new: true });
     
-   return res.json({message:"Login successful",token:await user.generateToken()})
-    
+    if (!user) return res.status(400).json({ error: "Invalid Credentials" });
+
+    return res.json({ message: "Update successfully", user });
   } catch (error) {
-    res.json({error: error.message});
-    console.log(error);
-    
+    res.json({ error: error.message });
+    console.log("error====>>>", error.message);
   }
-}
+};
