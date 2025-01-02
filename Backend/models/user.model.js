@@ -24,7 +24,7 @@ const userSchema=new Schema({
   },
   userImg:{
     type:String,
-    default:'/images/User.png'
+    default:'/User.png?updatedAt=1735717183257'
   },
   savedPosts:{
     type:[String],

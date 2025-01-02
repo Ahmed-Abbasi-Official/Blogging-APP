@@ -5,12 +5,12 @@ export default {
     extend: {
       keyframes: {
         slide: {
-          // from: { transform: 'translateX(0)' },
-          to: { transform: 'translateY(0)' },
+          from: { scale:"0" },
+          to: { scale: '1' },
         },
       },
       animation: {
-        slide: 'slide 5s ease-in-out',
+        slide: 'slide .2s ease-in-out',
       },
     },
   },

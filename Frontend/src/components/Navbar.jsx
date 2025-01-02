@@ -8,10 +8,12 @@ import ShowPopUp from "./ShowPopUp.jsx";
 import Image from "../utils/Image.jsx";
 import { useQuery } from "@tanstack/react-query";
 import Modal from "./Modal.jsx";
+import axios from "axios";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [showPopUp, setShowPopUp] = useState(false);
+  const [show, setShow] = useState(false);
+  const[update,setUpdate]=useState(false);
    const { isAuthenticated,token } = useAuth();
 
   
@@ -19,20 +21,34 @@ const Navbar = () => {
    //  GET USER
  
    const {
-     isPending: isAdminPending,
-     error: adminError,
-     data: adminData,
-   } = useQuery({
-     queryKey: ["adminData"],
-     queryFn: async () => {
-       return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
-         headers: {
-           Authorization:`${token}`,
-         },
-       });
-     },
-   });
-   const user=adminData?.data?.userData
+    isPending: isAdminPending,
+    error: adminError,
+    data: adminData,
+  } = useQuery({
+    queryKey: ["adminData"],
+    queryFn: async () => {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      console.log("API Response:", res.data); // Debug API response
+      return res.data; // Return actual data
+    },
+  });
+
+  const user = adminData?.userData || {}; // Safely access user data
+  console.log("User Data:", user); // Debug user data
+
+  if (isAdminPending) {
+    return <div>Loading...</div>; // Show a loader if data is fetching
+  }
+
+  if (adminError) {
+    console.error("Error fetching admin data:", adminError);
+    return <div>Error loading data</div>;
+  }
+
 
    
 
@@ -61,7 +77,7 @@ const Navbar = () => {
         {/* MOBILE MENU LIST */}
         <div
           className={`w-full h-52   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
-            open ? "left-0" : "left-[100%]"
+            open ? "left-0" : "left-[120%]"
           } gap-4 font-medium text-sm  bg-white`}
           style={{boxShadow: '0px 1px 10px 2px #8d86ff'}}
         >
@@ -80,7 +96,7 @@ const Navbar = () => {
         { isAuthenticated ? (
           user?.userImg ? (
             <div    onClick={()=>{
-              setShowPopUp((prev)=>!prev)
+              setShow((prev)=>!prev)
               setOpen((prev)=>!prev)
             }} className="cursor-pointer">
               <Image
@@ -94,7 +110,7 @@ const Navbar = () => {
             <img src="/User.png" alt="User"
             className="w-7 h-7 cursor-pointer bg-cover"
           onClick={()=>{
-            setShowPopUp((prev)=>!prev)
+            setShow((prev)=>!prev)
             setOpen((prev)=>!prev)
           }}
           />
@@ -123,7 +139,7 @@ const Navbar = () => {
         })}
         { isAuthenticated ? (
           user?.userImg ? (
-            <div    onClick={()=>setShowPopUp((prev)=>!prev)} className="cursor-pointer">
+            <div    onClick={()=>setShow((prev)=>!prev)} className="cursor-pointer">
               <Image
             src={user?.userImg}
             className="w-10 h-10 rounded-full object-cover"
@@ -132,10 +148,12 @@ const Navbar = () => {
           />
             </div>
           ) :(
-            <img src="/User.png" alt="User"
+            <span  onClick={()=>setShow((prev)=>!prev)}>
+              <Image src={user?.userImg}alt="User"
             className="w-7 h-7 cursor-pointer bg-cover"
-          onClick={()=>setShowPopUp((prev)=>!prev)}
+         
           />
+            </span>
           )
           
         ):( <Button 
@@ -146,12 +164,13 @@ const Navbar = () => {
      }
       </div>
       {
-        showPopUp && (
-          //   <ShowPopUp
-          //   showPopUp={showPopUp}
-          //   setShowPopUp={setShowPopUp}
-          // />
-          <Modal/>
+        show && (
+          <Modal update={update} setUpdate={setUpdate} />
+        )
+      }
+      {
+        update && (
+          <ShowPopUp  show={show} setUpdate={setUpdate} setShow={setShow}  />
         )
       }
       </div>

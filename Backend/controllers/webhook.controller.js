@@ -2,6 +2,7 @@ import userModel from "../models/user.model.js";
 // import { sendEmail } from "../middlewares/nodemailer.js"; 
 import dotenv from 'dotenv';
 import { getUser } from "../service/auth.js";
+import { request } from "express";
 
 dotenv.config();
 
@@ -52,7 +53,9 @@ export const userUpdate = async (req, res) => {
       return res.status(400).json({ error: "User not found" });
     }
 
+    console.log(req.body.userImg);
     const updatedData = {
+      
       username: req.body.username || currentUser.username,
       userImg: req.body.userImg || currentUser.userImg,
       fullName: req.body.fullname || currentUser.fullName || "Anonymous",
