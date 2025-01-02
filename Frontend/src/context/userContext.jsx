@@ -10,7 +10,8 @@ export const PostProvider = ({ children }) => {
 
   // Set Token
  const storeTokenInLs =(serverToken)=>{
-  return localStorage.setItem("token", serverToken);
+   localStorage.setItem("token", serverToken);
+  setIsAuthenticated(true)
  }
  
 
@@ -21,11 +22,8 @@ export const PostProvider = ({ children }) => {
      setToken(token);
      <Navigate to='/'/>
      
-   } else {
-     setIsAuthenticated(false);
-    // <Navigate to='/' />
-   }
- }, [Navigate]);
+   } 
+ }, [Navigate,isAuthenticated]);
   return (
     <UserContext.Provider value={{storeTokenInLs,isAuthenticated,token}}>{children}</UserContext.Provider>
   );

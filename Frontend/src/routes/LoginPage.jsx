@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import {toast} from 'react-toastify'
 import { useAuth } from '../context/userContext'
@@ -19,7 +19,7 @@ const LoginPage = () => {
      navigate('/')
   }},[])
 
-
+const queryClient=useQueryClient();
   
 
    // Login USER
@@ -30,12 +30,15 @@ const LoginPage = () => {
     },
     onSuccess:(data)=>{
       storeTokenInLs(data?.token)
+      queryClient.invalidateQueries(["adminData"]);
       navigate('/');
-      toast.success("Login Successfully");
+      toast.success(data.message);
 
     },
     onError: (error) => {
-      toast.error("Login failed, please try again : ",error.message);
+      console.log(error);
+      
+      toast.error("Login failed, User not found ",error.message);
       navigate('/register');
     },
   })
@@ -52,9 +55,11 @@ const LoginPage = () => {
   // ON SUBMIT
 
   const onSubmit = (data) => {
-    login.mutate(data);
-    
+    if (!login.isLoading) {
+      login.mutate(data);
+    }
   };
+  
 
   //  HANDLE GOOGLE AUTHENTICATION
 
@@ -73,7 +78,7 @@ const LoginPage = () => {
              fullname:user.displayName || "fullname",
              email: user.email || "eamil",
              img: user.photoURL || "img",
-             isVerified: user.emailVerified || "fale",
+             isVerified: user.emailVerified || "false",
            };
            
            

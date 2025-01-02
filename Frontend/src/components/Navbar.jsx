@@ -40,14 +40,14 @@ const Navbar = () => {
   const user = adminData?.userData || {}; // Safely access user data
   console.log("User Data:", user); // Debug user data
 
-  if (isAdminPending) {
-    return <div>Loading...</div>; // Show a loader if data is fetching
-  }
+  // if (isAdminPending) {
+  //   return <div className="absolute w-full h-full bg-black z-20 top-0 left-0 text-white">Loading...</div>; // Show a loader if data is fetching
+  // }
 
-  if (adminError) {
-    console.error("Error fetching admin data:", adminError);
-    return <div>Error loading data</div>;
-  }
+  // if (adminError) {
+  //   console.error("Error fetching admin data:", adminError);
+  //   return <div>Error loading data</div>;
+  // }
 
 
    

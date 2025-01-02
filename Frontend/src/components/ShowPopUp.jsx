@@ -97,8 +97,13 @@ const ShowPopUp = ({ setShow,show,setUpdate }) => {
   console.log(userData);
 
   return (
-    <div
-      className="md:w-[40%] w-[90%] h-3/5 text-black animate-slide fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-sm shadow-black bg-white z-20 overflow-y-auto
+    <>
+    
+   <div className="fixed bg-black  w-full right-0 bottom-0 opacity-[.3] h-full ">
+     
+   </div>
+   <div
+      className="md:w-[40%] w-[50%] h-3/5 text-black animate-slide fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-xl shadow-gray-800 bg-white z-20 overflow-y-auto
     "
     >
       <div className="p-8">
@@ -109,10 +114,10 @@ const ShowPopUp = ({ setShow,show,setUpdate }) => {
         {/* PROFILE */}
         <div className="mb-6 flex justify-between items-center md:gap-0 gap-4 md:flex-row flex-col">
           {/* EDIT PROFILE */}
-          <div className="flex items-center md:flex-row flex-col gap-4">
+          <div className="flex items-center lg:flex-row flex-col gap-4">
             <Image
               src={userData?.userImg || "/User.png?updatedAt=1735717183257"}
-              className="w-12 h-12 rounded-full bg-cover"
+              className="md:w-20 md:h-20 w-24 h-24 rounded-full bg-cover"
             />
             <h1 className="text-lg font-semibold">
               {userData?.fullName || "User Name"}
@@ -208,6 +213,8 @@ const ShowPopUp = ({ setShow,show,setUpdate }) => {
     </div> */}
       </div>
     </div>
+    </>
+   
   );
 };
 
