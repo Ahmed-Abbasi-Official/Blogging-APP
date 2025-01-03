@@ -19,19 +19,35 @@ const PostMenuActions = ({ post }) => {
   } = useQuery({
     queryKey: ["savedPosts"],
     queryFn: async () => {
-      const token = await getToken();
-      return await axios.get(`${import.meta.env.VITE_API_URL}/user/saved`, {
+      // const token = await getToken();
+      const res= await axios.get(`${import.meta.env.VITE_API_URL}/user/saved`, {
         headers: {
           Authorization: `${token}`,
         },
       });
+      // console.log(res.data);
+      
+      return res.data
     },
   });
+  if(error){
+    console.log(error);
+    
+  }
+  if(isPending){
+   <div>Loading...</div>
+    
+  }
 
-
-  console.log(savedPosts);
   
-  const isSaved = savedPosts?.some((p) =>p._id==post._id) ? true : false;
+  console.log(savedPosts?.savedPosts);
+  
+  const isSaved = savedPosts?.savedPosts?.some((p) => {
+    console.log("Checking post:", p);
+    // Add specific logic here if needed
+    return true; // Replace with your condition
+  });
+  
 
  
 
@@ -45,19 +61,24 @@ const PostMenuActions = ({ post }) => {
   } = useQuery({
     queryKey: ["adminData"],
     queryFn: async () => {
-      // const token = await getToken();
-      return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
+      const res= await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
           Authorization: `${token}`,
         },
       });
+      console.log(res.data);
+      
+      return res.data
     },
   });
-  console.log(adminData);
+
+  const roleData=adminData?.userData;
+  // console.log(adminData);
   
-  const isAdmin = adminData?.data?.user?.role==="admin" ? true :false ;
-  // console.log(isAdmin);
-  // console.log(adminData?.data.userData);
+  const isAdmin = roleData?.role === "admin";
+
+  
+  // console.log("isAdmin==>>",isAdmin);
   
   
  
@@ -83,9 +104,11 @@ const PostMenuActions = ({ post }) => {
       toast.success("Post deleted successfully");
       navigate("/");
     },
-    onError: () => {
-      toast.error(error.response.data);
+    onError: (error) => {
+      const errorMessage = error.response?.data || "Something went wrong!";
+      toast.error(errorMessage);
     },
+    
   });
 
   const queryClient = useQueryClient();
@@ -109,10 +132,11 @@ const PostMenuActions = ({ post }) => {
       return res.data
     },
     onSuccess: (data) => {
-      toast.success(isSaved  ? "Post Un-Saved" : "Post Saved");
-      queryClient.invalidateQueries({ queryKey: ["savedPosts"] });
-      
+      toast.success(isSaved ? "Post Un-Saved" : "Post Saved");
+      queryClient.invalidateQueries({ queryKey: ["savedPosts", "adminData"] });
+      navigate("/saved-posts");
     },
+    
     onError: () => {
       toast.error(error.response.data);
     },
@@ -141,8 +165,10 @@ const PostMenuActions = ({ post }) => {
       queryClient.invalidateQueries({ queryKey: ["post", post.slug] });
     },
     onError: (error) => {
-      toast.error(error.response.data);
+      const errorMessage = error.response?.data || "Something went wrong!";
+      toast.error(errorMessage);
     },
+    
   });
 
   const handleDelete = () => {
@@ -197,7 +223,7 @@ const PostMenuActions = ({ post }) => {
         </div>
       )}
       {/* DELETE POST */}
-      {isAuthenticated && (post?.user?.username === adminData?.data.userData?.username || isAdmin===true ) && (
+      {isAuthenticated && (post?.user?.username === adminData?.data?.userData?.username || isAdmin===true ) && (
         <div
           className="flex items-center gap-2 py-2 text-sm cursor-pointer"
           onClick={handleDelete}

@@ -85,9 +85,9 @@ const Write = () => {
       <h1 className="text-cl font-light">Create a New Post</h1>
       <form className="flex flex-col gap-4 flex-1 mb-6" onSubmit={handleSubmit}>
         <Upload setProgress={setProgress} setCover={setCover} type="image">
-          <button className="w-max p-2 shadow-md rounded-xl text-sm text-gray-500 bg-white">
+          <span className="w-max p-2 shadow-md rounded-xl text-sm text-gray-500 bg-white">
             Add a cover image
-          </button>
+          </span>
         </Upload>
         <input
           className="text-4xl font-semibold bg-transparent outline-none"

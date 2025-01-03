@@ -24,6 +24,7 @@ import {PostProvider} from './context/userContext.jsx'
 import { ToastContainer } from 'react-toastify';
 import SavedPosts from "./routes/SavedPosts.jsx";
 import ProtectedRoute from "./protected/ProtectedRoute.jsx";
+import MyBlog from "./routes/MyBlog.jsx";
 
 const queryClient = new QueryClient()
 
@@ -56,6 +57,11 @@ const router = createBrowserRouter(
       <Route path="/saved-posts" element={
         <ProtectedRoute>
           <SavedPosts />
+        </ProtectedRoute>
+      } />
+      <Route path="/my-blog" element={
+        <ProtectedRoute>
+          <MyBlog />
         </ProtectedRoute>
       } />
      

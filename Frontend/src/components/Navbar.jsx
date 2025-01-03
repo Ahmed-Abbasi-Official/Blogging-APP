@@ -9,6 +9,7 @@ import Image from "../utils/Image.jsx";
 import { useQuery } from "@tanstack/react-query";
 import Modal from "./Modal.jsx";
 import axios from "axios";
+import Loader from "./Loader.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -40,9 +41,9 @@ const Navbar = () => {
   const user = adminData?.userData || {}; // Safely access user data
   console.log("User Data:", user); // Debug user data
 
-  // if (isAdminPending) {
-  //   return <div className="absolute w-full h-full bg-black z-20 top-0 left-0 text-white">Loading...</div>; // Show a loader if data is fetching
-  // }
+  if (isAdminPending) {
+    return <Loader/>
+  }
 
   // if (adminError) {
   //   console.error("Error fetching admin data:", adminError);
@@ -76,7 +77,7 @@ const Navbar = () => {
         </div>
         {/* MOBILE MENU LIST */}
         <div
-          className={`w-full h-52   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
+          className={`w-full h-60   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
             open ? "left-0" : "left-[120%]"
           } gap-4 font-medium text-sm  bg-white`}
           style={{boxShadow: '0px 1px 10px 2px #8d86ff'}}
@@ -141,7 +142,7 @@ const Navbar = () => {
           user?.userImg ? (
             <div    onClick={()=>setShow((prev)=>!prev)} className="cursor-pointer">
               <Image
-            src={user?.userImg}
+            src={user?.userImg || '/User.png?updatedAt=1735717183257'}
             className="w-10 h-10 rounded-full object-cover"
             alt="image"
             // w="40"
@@ -165,7 +166,7 @@ const Navbar = () => {
       </div>
       {
         show && (
-          <Modal update={update} setUpdate={setUpdate} />
+          <Modal update={update} setUpdate={setUpdate} setShow={setShow} />
         )
       }
       {

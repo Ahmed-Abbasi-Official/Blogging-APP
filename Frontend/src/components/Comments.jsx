@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Comment from "../components/Comment.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import {  useUser } from "@clerk/clerk-react";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/userContext.jsx";
 
@@ -16,7 +15,6 @@ const fetchComments = async (postId) => {
 const Comments = ({ postId }) => {
   
   const [value,setValue]=useState(' ')
-  const {user}=useUser();
   const { token } = useAuth();
   // console.log(token);
   
@@ -32,7 +30,9 @@ const Comments = ({ postId }) => {
     
   });
   
-  // const user=userInfo?.data?.);
+  const user=userInfo?.data?.userData;
+  // console.log(user);
+  
   
   const { isLoading, error, data } = useQuery({
     queryKey: ["comments", postId],
@@ -72,7 +72,7 @@ const Comments = ({ postId }) => {
     const data = {
       desc: formData.get("desc"),
     };
-    console.log(data);
+    // console.log(data);
     
     setValue('')
     

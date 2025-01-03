@@ -25,7 +25,7 @@ class Post {
       }
 
       if (search) {
-        console.log(search);
+        // console.log(search);
         
         query.title = { $regex: search, $options: "i" };
       }
@@ -211,7 +211,7 @@ class Post {
   }
 const userID=getUser(clerkUserId)
   const role = await userModel.findOne({_id:userID.userId}) || "user";
-  console.log(role.role);
+  // console.log(role.role);
   
 
   if (role.role !== "admin") {

@@ -25,7 +25,7 @@ const authenticator = async () => {
     }
   };
 
-const Upload = ({ children,type,setProgress, setCover }) => {
+const Upload = ({ children,type,setProgress, setCover,onUploadComplete }) => {
 
   const ref=useRef(null);
 
@@ -41,6 +41,7 @@ const Upload = ({ children,type,setProgress, setCover }) => {
   const onSuccess = (res) => {
     console.log(res);
     setCover(res);
+    onUploadComplete(true)
   };
   //  IMAGE UPLOAD PROGRESS
 

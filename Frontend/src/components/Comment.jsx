@@ -14,10 +14,10 @@ const deletePost=async(id)=>{
 }
 
 const Comment = ({ comment,postId,qu }) => {
-  console.log(comment);
+  // console.log(comment);
   
   const image=comment?.user?.userImg || '';
-  console.log(image);
+  // console.log(image);
   
   
   

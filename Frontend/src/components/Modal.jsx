@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { useAuth } from "../context/userContext";
 import Image from "../utils/Image";
 import { toast } from "react-toastify";
-import ShowPopUp from "./ShowPopUp";
+import './Modal.css'
 
-const Modal = ({ update,setUpdate }) => {
+const Modal = ({ update,setUpdate,setShow }) => {
   const { token } = useAuth();
 
   //  GET USER INFO
@@ -40,17 +40,18 @@ const Modal = ({ update,setUpdate }) => {
 
   return (
     <div
-      className={`absolute right-0 top-16  z-20 w-[75%] sm:w-[35%] md:w-[28%] bg-white p-4 rounded animate-slide`}
+      className={`absolute right-0 top-16 md:text-start text-center w_480px shadow-md shadow-black  z-20 w-[45%] sm:w-[35%] md:w-[28%] bg-white p-4 rounded animate-slide`}
     >
-      <div className="flex flex-col gap-4">
+      <span className="absolute right-4 top-2 text-lg font-semibold cursor-pointer md:hidden" onClick={()=>setShow(false)}>X</span>
+      <div className="flex flex-col gap-4 justify-center md:justify-start  ">
         {/* USER INFO */}
-        <div className="flex md:flex-row flex-col items-center gap-4">
+        <div className="flex flex_col md:flex-row flex-col items-center gap-4">
           <Image
             src={userData?.userImg || "/User.png?updatedAt=1735717183257"}
-            className="w-10 h-10 bg-cover rounded-full"
+            className="md:w-10 md:h-10 w-16 h-16 bg-cover rounded-full"
           />
           <div>
-            <h1 className="text-black font-bold">
+            <h1 className="text-black font-bold ">
               {userData?.fullName || "User"}
             </h1>
             <p className="text-sm text-gray-600">{userData?.username}</p>

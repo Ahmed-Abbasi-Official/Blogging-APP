@@ -22,6 +22,8 @@ const SinglePostPage = () => {
     queryFn: () => fetchPost(slug),
   })
   
+  // console.log(data);
+  
   
 
   if(isLoading) return "Loading....."
@@ -29,7 +31,7 @@ const SinglePostPage = () => {
   if(!data) return "Post Not Found....."
   const image=data?.user?.userImg || '';
   // console.log(image);
-  console.log(data);
+  // console.log(image);
   
   
   
@@ -44,7 +46,7 @@ const SinglePostPage = () => {
           </h1>
           <div className="flex items-center gap-2 text-gray-400 text-sm">
             <span>Written by</span>
-            <Button containerClass="text-blue-800" value={data?.user?.username} />
+            <Button containerClass="text-blue-800" value={data?.userData?.username} />
             <span>on</span>
             <Button containerClass="text-blue-800 capitalize" value={data.category}/>
             <span>{format(data.createdAt)}</span>
@@ -56,7 +58,7 @@ const SinglePostPage = () => {
         {/* IMAGE */}
         { data?.img &&  <div className="hidden lg:block w-2/5">
            <Image
-            src={`${data.img}`}
+            src={`${data?.img}`}
             alt="SingleImage"
             className="rounded-xl"
             // w={600}
