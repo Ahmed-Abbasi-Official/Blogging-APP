@@ -41,6 +41,10 @@ const Comment = ({ comment,postId,qu }) => {
       });
     },
   });
+  if (adminError) {
+    console.log(adminError);
+    
+  }
 
   const user=adminData?.data?.userData
   // console.log(user);

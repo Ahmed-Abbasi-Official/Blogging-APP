@@ -40,18 +40,16 @@ const PostMenuActions = ({ post }) => {
   }
 
   
-  console.log(savedPosts?.savedPosts);
+  // console.log(savedPosts?.savedPosts);
   
   const isSaved = savedPosts?.savedPosts?.some((p) => {
-    console.log("Checking post:", p);
-    // Add specific logic here if needed
-    return true; // Replace with your condition
+    return p===post._id
   });
   
 
  
 
-  console.log(isSaved);
+  // console.log(isSaved);
   //  GET USER
 
   const {
@@ -66,7 +64,7 @@ const PostMenuActions = ({ post }) => {
           Authorization: `${token}`,
         },
       });
-      console.log(res.data);
+      // console.log(res.data);
       
       return res.data
     },
@@ -78,7 +76,6 @@ const PostMenuActions = ({ post }) => {
   const isAdmin = roleData?.role === "admin";
 
   
-  // console.log("isAdmin==>>",isAdmin);
   
   
  
@@ -136,9 +133,9 @@ const PostMenuActions = ({ post }) => {
       queryClient.invalidateQueries({ queryKey: ["savedPosts", "adminData"] });
       navigate("/saved-posts");
     },
-    
-    onError: () => {
-      toast.error(error.response.data);
+    onError: (error) => {
+      const errorMessage = error.response?.data || "Something went wrong!";
+      toast.error(errorMessage);
     },
   });
 
@@ -148,8 +145,7 @@ const PostMenuActions = ({ post }) => {
 
   const featureMutation = useMutation({
     mutationFn: async () => {
-      // const token = await getToken();
-      return  await axios.patch(
+      const res=  await axios.patch(
         `${import.meta.env.VITE_API_URL}/posts/feature`,
         {
           postId: post._id,
@@ -160,6 +156,9 @@ const PostMenuActions = ({ post }) => {
           },
         }
       );
+      console.log(res.data);
+      
+      return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post", post.slug] });
@@ -170,6 +169,9 @@ const PostMenuActions = ({ post }) => {
     },
     
   });
+
+  // console.log(featureMutation);
+  
 
   const handleDelete = () => {
     deleteMutation.mutate();

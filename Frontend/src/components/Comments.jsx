@@ -25,10 +25,16 @@ const Comments = ({ postId }) => {
       const res=await axios.get(`${import.meta.env.VITE_API_URL}/user`,{
         headers: { Authorization:`${token}` },
       })
+     
+      
       return res.data
     } ,
     
   });
+
+  if(userInfo.error){
+    console.log(error);
+  }
   
   const user=userInfo?.data?.userData;
   // console.log(user);
@@ -38,7 +44,8 @@ const Comments = ({ postId }) => {
     queryKey: ["comments", postId],
     queryFn: () => fetchComments(postId),
   });
-
+  // console.log(data);
+  
   const queryClient = useQueryClient();
 
   // MUTAION FUNCTIONALITY
@@ -55,7 +62,7 @@ const Comments = ({ postId }) => {
       return data.post;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+      queryClient.invalidateQueries({queryKey: ["comments", postId] });
     },
     onError: (error) => {
       toast.error(error.response.data);

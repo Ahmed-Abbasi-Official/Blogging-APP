@@ -12,7 +12,7 @@ class User {
       }
   
       const userID = getUser(clerkUserId);
-      console.log("UserID from getUser:", userID);
+      // console.log("UserID from getUser:", userID);
   
       if (!userID || !userID.userId) {
         return res.status(400).json({ error: "Invalid user ID!" });
