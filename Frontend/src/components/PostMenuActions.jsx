@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/userContext";
-
+import { TiEdit } from "react-icons/ti";
 const PostMenuActions = ({ post }) => {
   const { token,isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -277,6 +277,15 @@ const PostMenuActions = ({ post }) => {
           )}
         </div>
       )}
+      {/* EDIT POSTS */}
+      {
+        roleData?._id=== post?.user?._id && (
+          <Link className="flex items-center gap-2 cursor-pointer" to={`/update/${post.slug}`} >
+            <TiEdit className="text-xl" />
+            <p>Edit</p>
+          </Link>
+        )
+      }
     </div>
   );
 };

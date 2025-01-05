@@ -34,19 +34,20 @@ const Comment = ({ comment,postId,qu }) => {
   } = useQuery({
     queryKey: ["adminData"],
     queryFn: async () => {
-      return await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
+      const res= await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
           Authorization:`${token}`,
         },
       });
+      return res.data
     },
   });
   if (adminError) {
-    console.log(adminError);
+    return <div>Error : {adminError.message}</div>
     
   }
 
-  const user=adminData?.data?.userData
+  const user=adminData?.userData
   // console.log(user);
   
 
@@ -74,7 +75,7 @@ const Comment = ({ comment,postId,qu }) => {
         {
           image && (
             <Image
-          src={user?.userImg || "/User.png?updatedAt=1735717183257"}
+          src={image}
           className="w-10 h-10 rounded-full object-cover"
           alt="image"
           // w="40"

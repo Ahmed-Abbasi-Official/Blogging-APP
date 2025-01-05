@@ -2,6 +2,8 @@ import { IKImage } from "imagekitio-react";
 import React from "react";
 
 const Image = ({src, className, alt, w, h}) => {
+  if (!src) return null; // Prevent rendering if src is empty or undefined.
+
   return (
     <>
       <IKImage

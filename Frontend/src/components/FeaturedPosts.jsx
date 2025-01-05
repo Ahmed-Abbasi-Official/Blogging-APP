@@ -7,11 +7,15 @@ import {useQuery} from '@tanstack/react-query'
 import { format } from "timeago.js";
 import axios from 'axios'
 
-const fetchPost=async()=>{
-  
-  const res=await axios.get(`${import.meta.env.VITE_API_URL}/posts?featured=true&limit=4&sort=newest`)
-  return res.data;
-}
+const fetchPost = async () => {
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts?featured=true&limit=4&sort=newest`);
+  const posts = res.data.allPosts.map(post => ({
+    ...post,
+    img: post.img || null, // Ensure img is either a valid string or null.
+  }));
+  return { allPosts: posts };
+};
+
 const FeaturedPosts = () => {
 
   const { isLoading, error, data } = useQuery({
@@ -31,9 +35,11 @@ const FeaturedPosts = () => {
   return (
     <div className="mt-8 flex flex-col lg:flex-row gap-8">
       {/* FIRST */}
-      <div className="w-full lg:w-1/2 flex flex-col gap-4">
+      {
+        posts[0] && (
+          <div className="w-full lg:w-1/2 flex flex-col gap-4">
         {/* IMAGE */}
-      {posts[0].img && <Image src={posts[0].img}
+      {posts[0]?.img && <Image src={posts[0].img}
       w={895}
       alt='Featured'
       className="rounded-3xl object-cover" />}
@@ -42,21 +48,25 @@ const FeaturedPosts = () => {
         <div className="flex items-center gap-4">
           <h1 className="font-semibold  lg:text-lg ">01.</h1>
           <Button
-            value={posts[0].category}
+            value={posts[0]?.category}
             containerClass="text-blue-800 lg:text-lg"
           />
-          <span className="text-gray-500">{format(posts[0].category)}</span>
+          <span className="text-gray-500">{format(posts[0]?.category)}</span>
         </div>
         {/* TITLE */}
         <Button
-        to={`/${posts[0].slug}`}
+        to={`/${posts[0]?.slug}`}
         containerClass='text-xl lg:text-3xl font-semibold lg:font-bold'
-        value={posts[0].title} />
+        value={posts[0]?.title} />
       </div>
+        )
+      }
       {/* OTHERS */}
       <div className="w-full lg:w-1/2 flex-col gap-4">
       {/* SECOND */}
-      <div className="lg:h-1/3 flex justify-between gap-4 text-sm lg:text-base mb-4">
+      {
+        posts[1] && (
+          <div className="lg:h-1/3 flex justify-between gap-4 text-sm lg:text-base mb-4">
       <div className="w-1/3 aspect-video">
       { posts[1]?.img && <Image
       src={posts[1].img || ''}
@@ -84,6 +94,8 @@ const FeaturedPosts = () => {
       />
       </div>
       </div>
+        )
+      }
       {/* THIRD */}
      { posts[2] && <div className="lg:h-1/3 flex justify-between gap-4 mb-4 ">
       <div className="w-1/3 aspect-video">

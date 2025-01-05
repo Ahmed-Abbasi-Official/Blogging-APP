@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -7,6 +6,11 @@ const UserContext = createContext();
 export const PostProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState('');
+  const [pImg, setPImg] = useState('');
+
+  const getImg=(img)=>{
+    setPImg(img)
+  }
 
   // Set Token
  const storeTokenInLs =(serverToken)=>{
@@ -25,7 +29,7 @@ export const PostProvider = ({ children }) => {
    } 
  }, [Navigate,isAuthenticated]);
   return (
-    <UserContext.Provider value={{storeTokenInLs,isAuthenticated,token}}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{getImg,storeTokenInLs,isAuthenticated,token,pImg}}>{children}</UserContext.Provider>
   );
 };
 

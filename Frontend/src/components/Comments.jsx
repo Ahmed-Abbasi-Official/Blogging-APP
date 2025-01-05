@@ -45,6 +45,13 @@ const Comments = ({ postId }) => {
     queryFn: () => fetchComments(postId),
   });
   // console.log(data);
+
+  if(isLoading) {
+    <div>load</div>
+  }
+  if(error) {
+    <div>{error}</div>
+  }
   
   const queryClient = useQueryClient();
 

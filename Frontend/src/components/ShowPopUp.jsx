@@ -1,4 +1,4 @@
-  import React, { useState } from "react";
+  import React, { useEffect, useState } from "react";
   import "../transition.css";
   import { useForm } from "react-hook-form";
   import Upload from "./Upload";
@@ -13,9 +13,10 @@
     const [cover, setCover] = useState("");
     let [progress, setProgress] = useState(0);
     const [uploadComplete, setUploadComplete] = useState(false);
+    const { token,
+getImg} = useAuth();
 
     const [editProfile, setEditProfile] = useState(false);
-    const { token } = useAuth();
     const navigate = useNavigate();
     setShow(false)
 
@@ -54,7 +55,7 @@
         queryClient.invalidateQueries(["adminData"]);
         setEditProfile(false); // Form close karne ke liye
         toast.success(data.message);
-        window.location.reload();
+        // window.location.reload();
         // Invalidate the adminData query to trigger refetch
         navigate("/");
       },
@@ -98,8 +99,16 @@
     
 
     const userData = adminData?.data?.userData;
-    console.log(userData);
+    // console.log(userData);
+
+    useEffect (() => {
+      console.log("Updated");
+      getImg(cover?.filePath)
+      
+    }, [cover])
     
+    
+
 
     return (
       <>
@@ -108,7 +117,7 @@
       
     </div>
     <div
-        className="md:w-[40%] w-[50%] h-3/5 text-black animate-slide fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-xl shadow-gray-800 bg-white z-20 overflow-y-auto
+        className="md:w-[55%] w-[80%] h-3/5 text-black animate-slide fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-xl shadow-gray-800 bg-white z-20 overflow-y-auto
       "
       >
         <div className="p-8">
@@ -120,10 +129,22 @@
           <div className="mb-6 flex justify-between items-center md:gap-0 gap-4 md:flex-row flex-col">
             {/* EDIT PROFILE */}
             <div className="flex items-center lg:flex-row flex-col gap-4">
-              <Image
+              {
+                cover?.filePath && (
+                  <Image
+                src={cover?.filePath || "/User.png?updatedAt=1735717183257"}
+                className="md:w-20 md:h-20 w-24 h-24 rounded-full bg-cover"
+              />
+                )
+              }
+              {
+                !cover?.filePath && userData?.userImg && (
+                  <Image
                 src={userData?.userImg || "/User.png?updatedAt=1735717183257"}
                 className="md:w-20 md:h-20 w-24 h-24 rounded-full bg-cover"
               />
+                )
+              }
               <h1 className="text-lg font-semibold">
                 {userData?.fullName || "User Name"}
               </h1>
@@ -137,34 +158,8 @@
           </div>
           {editProfile && (
             <form action="" onSubmit={handleSubmit(onSubmit)}>
-              {/* FOR USERNAME */}
-              <div className="mb-4 flex md:flex-row flex-col gap-2 md:gap-8 md:items-center  items-start">
-                <label
-                  htmlFor="username"
-                  className=" text-sm font-medium text-gray-700 mb-2"
-                >
-                  username
-                </label>
-                <input
-                  {...register("username", {
-                    pattern: {
-                      value: /^[a-z]+[0-9]/,
-                      message:
-                        "Username must contain only lowercase plus letters",
-                    },
-                  })}
-                  className="w-3/4 px-3 py-2 border outline-none border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
-                  placeholder="Enter username"
-                  id="username"
-                  name="username"
-                />
-              </div>
-              {/* ERROR IN USERNAME */}
-              {errors.username && (
-                <p className="text-xs text-red-500">{errors.username.message}</p>
-              )}
               {/* FOR FULLNAME */}
-              <div className="mb-4 flex  gap-2 md:gap-8 md:items-center items-start md:flex-row flex-col">
+              <div className="mb-4 flex gap-2 md:gap-8 md:items-center items-start md:flex-row flex-col">
                 <label
                   htmlFor="fullname"
                   className="block text-sm font-medium text-gray-700 mb-2"
@@ -173,7 +168,7 @@
                 </label>
                 <input
                   {...register("fullname")}
-                  className="w-3/4 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm  "
+                  className="w-full md:w-3/4 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm  "
                   placeholder="Enter fullname"
                   id="fullname"
                   name="fullname"
@@ -199,7 +194,7 @@
                 <button
                 typeof="submit"
                   className="bg-blue-800 text-white font-medium rounded-xl p-2 w-36 disabled:bg-blue-400 disabled:cursor-not-allowed"
-                  disabled={!uploadComplete || user.isPending }
+                  disabled={ user.isPending }
                 >
                   <span >
                     {user.isPending ? "saving..." : "save"} 

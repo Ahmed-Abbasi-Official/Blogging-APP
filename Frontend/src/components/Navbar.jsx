@@ -15,9 +15,14 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const[update,setUpdate]=useState(false);
-   const { isAuthenticated,token } = useAuth();
+   const { isAuthenticated,token,pImg } = useAuth();
 
   
+   useEffect(() => {
+     console.log(pImg);
+     
+   }, [pImg])
+   
 
    //  GET USER
  
@@ -30,7 +35,7 @@ const Navbar = () => {
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
-          Authorization: `${token}`,
+          Authorization:`${token}`,
         },
       });
       console.log("API Response:", res.data); // Debug API response
@@ -45,10 +50,10 @@ const Navbar = () => {
     return <Loader/>
   }
 
-  // if (adminError) {
-  //   console.error("Error fetching admin data:", adminError);
-  //   return <div>Error loading data</div>;
-  // }
+  if (adminError) {
+    console.error("Error fetching admin data:", adminError);
+    return <div>Error loading data</div>;
+  }
 
 
    
@@ -141,12 +146,26 @@ const Navbar = () => {
         { isAuthenticated ? (
           user?.userImg ? (
             <div    onClick={()=>setShow((prev)=>!prev)} className="cursor-pointer">
-              <Image
+              {
+                pImg && (
+                  <Image
+            src={pImg}
+            className="w-10 h-10 rounded-full object-cover"
+            alt="image"
+            // w="40"
+          />
+                )
+              }
+              {
+                !pImg && user?.userImg  && (
+                  <Image
             src={user?.userImg || '/User.png?updatedAt=1735717183257'}
             className="w-10 h-10 rounded-full object-cover"
             alt="image"
             // w="40"
           />
+                )
+              }
             </div>
           ) :(
             <span  onClick={()=>setShow((prev)=>!prev)}>

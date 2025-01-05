@@ -244,6 +244,44 @@ const userID=getUser(clerkUserId)
   }
 
 
+  //  UPDATE POST
+  async updatePost(req, res) {
+    try {
+      const clerkUserId = req?.headers?.authorization;
+      const postId = req.params.slug;
+  
+      if (!clerkUserId) {
+        return res.status(401).json("Not authenticated!");
+      }
+  
+      const updatedPostData = req.body;
+      const post = await postModel.findOne({ slug: postId });
+  
+      if (!post) {
+        return res.status(404).json("Post not found!");
+      }
+  
+      const updatedPost = await postModel.findByIdAndUpdate(
+        post._id,
+        updatedPostData,
+        { new: true }
+      );
+  
+      if (!updatedPost) {
+        return res.status(500).json("Failed to update the post!");
+      }
+  
+      res.status(200).json({ post: updatedPost });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error updating post",
+        error: error.message,
+      });
+    }
+  }
+  
+
+
 }
 
 const postController = new Post();
