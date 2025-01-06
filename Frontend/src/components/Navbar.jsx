@@ -52,7 +52,7 @@ const Navbar = () => {
 
   if (adminError) {
     console.error("Error fetching admin data:", adminError);
-    return <div>Error loading data</div>;
+     <div>Error loading data</div>;
   }
 
 
@@ -82,7 +82,7 @@ const Navbar = () => {
         </div>
         {/* MOBILE MENU LIST */}
         <div
-          className={`w-full h-60   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
+          className={`w-full h-72   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
             open ? "left-0" : "left-[120%]"
           } gap-4 font-medium text-sm  bg-white`}
           style={{boxShadow: '0px 1px 10px 2px #8d86ff'}}
@@ -90,27 +90,53 @@ const Navbar = () => {
           {
             iconsList.map((link, idx) => {
               return (
+                <>
+                <span onClick={()=>setOpen(false)}>
                 <Button to={link.path} key={idx}
                 cursor="pointer"
                  containerClass='cursor-pointer '
                 value={link.title}
                 />
+                </span>
+                </>
                 
               );
             })
+            
           }
+         <span onClick={()=>setOpen(false)}>
+         <Button to='/write'
+                
+                className='cursor-pointer '
+               value='Create Blog'
+               />
+         </span>
         { isAuthenticated ? (
           user?.userImg ? (
             <div    onClick={()=>{
               setShow((prev)=>!prev)
               setOpen((prev)=>!prev)
             }} className="cursor-pointer">
-              <Image
-            src={user?.userImg}
+               {
+                pImg && (
+                  <Image
+            src={pImg}
             className="w-10 h-10 rounded-full object-cover"
             alt="image"
             // w="40"
           />
+                )
+              }
+              {
+                !pImg && user?.userImg  && (
+                  <Image
+            src={user?.userImg || '/User.png?updatedAt=1735717183257'}
+            className="w-10 h-10 rounded-full object-cover"
+            alt="image"
+            // w="40"
+          />
+                )
+              }
             </div>
           ) :(
             <img src="/User.png" alt="User"
@@ -134,13 +160,17 @@ const Navbar = () => {
       <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
         {iconsList.map((link, idx) => {
           return (
-            <Link to={link.path} key={idx}
-            cursor="pointer"
-            className={`${!isAuthenticated && link.class}`}
-            >
-              {link.title}
-              
-            </Link>
+            <Link
+            to={link.path}
+            key={idx}
+            className={`relative ${!isAuthenticated && link.class} group`}
+          >
+            <span className="hover:text-blue-800 ">{link.title}</span>
+            <span
+              className="absolute   -bottom-1 left-1/2 h-[2.5px] w-0 bg-blue-800 transition-all duration-300 ease-in-out group-hover:w-full group-hover:left-0"
+            ></span>
+          </Link>
+          
           );
         })}
         { isAuthenticated ? (

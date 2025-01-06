@@ -24,19 +24,29 @@ const RegisterPage = () => {
   // NEW USER
 
   const newUser = useMutation({
-    mutationFn: async(data) => {
-      const res=await axios.post(`${import.meta.env.VITE_API_URL}/webhooks/signup`, data)
-      console.log(res.data);
+    mutationFn: async (data) => {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/webhooks/signup`, data);
       return res.data;
     },
     onSuccess: (data) => {
-      toast.success("Registration successful");
+      toast.success(data.message);
       navigate('/login');
     },
     onError: (error) => {
-      toast.error("Registration failed, please try again : ",error.message);
+      
+      
+      if (error.response?.status === 400 && error.response?.data?.message === 'Email already registered') {
+        toast.error('This email is already registered. Please try logging in.');
+      }
+      else if(error.response?.status === 400 && error.response?.data?.message === 'username already registered'){
+        toast.error('This username is already registered. Please try logging in.');
+      } else {
+        toast.error('Registration failed, please try again.');
+      }
     },
-  })
+  });
+  
+  
 
   // FOR USEFORM
 

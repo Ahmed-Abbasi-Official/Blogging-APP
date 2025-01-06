@@ -1,8 +1,7 @@
-import "react-quill-new/dist/quill.snow.css";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Upload from "../components/Upload";
@@ -14,26 +13,33 @@ const Write = () => {
   const [image, setImage] = useState("");
   const [video, setVideo] = useState("");
   const [progress, setProgress] = useState(0);
-  const {isAuthenticated,token}=useAuth();
+  const [loadingImage, setLoadingImage] = useState(false); 
+  const { isAuthenticated, token } = useAuth();
   const navigate = useNavigate();
 
-  //  IMAGE
-
+  // IMAGE
   useEffect(() => {
-    image && setValue((prev)=>prev+`<p><img src="${image.url}"  /></p>`)
-  }, [image])
+     // Set loading to true when image is being added
+     if (image) {
+    console.log(loadingImage);
+      setValue((prev) => {
+        const newValue = prev + `<p><img src="${image.url}"  /></p>`;
+        setLoadingImage(false); // Set loading to false after image is added
+        return newValue;
+      });
+    }
+  }, [image]);
+  
 
-  //  VIDEO
-
+  // VIDEO
   useEffect(() => {
-    video && setValue((prev)=>prev+`<p><iframe class="ql-video " src="${image.url}" /></p>`)
-  }, [video])
-
-  // MUTAION FUNCTIONALITY
+    if (video) {
+      setValue((prev) => prev + `<p><iframe class="ql-video " src="${video.url}" /></p>`);
+    }
+  }, [video]);
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
-      // const token = await getToken();
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/posts`,
         newPost,
@@ -44,41 +50,28 @@ const Write = () => {
       return data.post;
     },
     onSuccess: (data) => {
-      // console.log("Post created successfully:", data);
-      // alert("Post created successfully!");
       toast.success("Post created successfully");
       navigate(`/${data.slug}`);
     },
   });
 
-  // if (!isLoaded) {
-  //   return <div>Loading .....</div>;
-  // }
-
-  if ( !isAuthenticated) {
+  if (!isAuthenticated) {
     return <div>You should login!</div>;
   }
-
-  // HANDLE SUBMIT
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newPost = {
-      img:cover.filePath || "",
+      img: cover.filePath || "",
       title: formData.get("title"),
       category: formData.get("category"),
       desc: formData.get("desc"),
       content: value,
     };
-
-    // console.log("Submitting post:", newPost);
-    setValue(' ')
-    // Trigger mutation
+    setValue(" ");
     mutation.mutate(newPost);
   };
-
-  
 
   return (
     <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col gap-6">
@@ -89,8 +82,11 @@ const Write = () => {
             Add a cover image
           </span>
         </Upload>
+        {progress > 0 && progress < 100 && (
+          <span>{"Uploading... :: " + progress}</span>
+        )}
         <input
-          className="text-4xl font-semibold bg-transparent outline-none"
+          className="text-2xl sm:text-4xl font-semibold bg-transparent outline-none"
           type="text"
           required
           placeholder="My Awesome Story"
@@ -116,11 +112,13 @@ const Write = () => {
         />
         <div className="flex flex-1">
           <div className="flex flex-col gap-2 mr-2">
-            <Upload setProgress={setProgress} setCover={setImage} type="image">
+           <span onClick={()=>setLoadingImage(true)}>
+           <Upload setProgress={setProgress} setCover={setImage} type="image" >
               📷
             </Upload>
+           </span>
             <Upload setProgress={setProgress} setCover={setVideo} type="video">
-            🎦
+              🎦
             </Upload>
           </div>
           <ReactQuill
@@ -130,14 +128,22 @@ const Write = () => {
             className="flex-1 rounded-xl bg-white shadow-md"
           />
         </div>
+
+       {
+        loadingImage && (
+          <div className="absolute w-full left-0 top-0 h-full bg-black opacity-[.4]"></div>
+        )
+       }
+       {loadingImage && <span className="font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl">Uploading wait...</span>} 
+
         <button
           type="submit"
           className="bg-blue-800 text-white font-medium rounded-xl p-2 w-36 disabled:bg-blue-400 disabled:cursor-not-allowed"
-          disabled={mutation.isPending || (0 < progress && 100 < progress)}
+          disabled={mutation.isPending || (progress > 0 && progress < 100)}
         >
           {mutation.isPending ? "Sending..." : "Send"}
         </button>
-        {"Progress :: " + progress}
+
         {mutation.isError && <span>{mutation.error.message}</span>}
       </form>
     </div>

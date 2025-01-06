@@ -16,6 +16,7 @@ const PostUpdate = () => {
   const [image, setImage] = useState(""); // For inline image
   const [video, setVideo] = useState(""); // For video
   const [progress, setProgress] = useState(0);
+  const [loadingImage, setLoadingImage] = useState(false); 
    // FETCH EXISTING POST DATA
    const { data, isLoading, isError, error } = useQuery({
     queryKey: ["post", params.slug],
@@ -43,10 +44,16 @@ const PostUpdate = () => {
 
   // IMAGE & VIDEO UPDATES
   useEffect(() => {
+    // Set loading to true when image is being added
     if (image) {
-      setValue((prev) => prev + `<p><img src="${image.url}" /></p>`);
-    }
-  }, [image]);
+   console.log(loadingImage);
+     setValue((prev) => {
+       const newValue = prev + `<p><img src="${image.url}"  /></p>`;
+       setLoadingImage(false); // Set loading to false after image is added
+       return newValue;
+     });
+   }
+ }, [image]);
 
   useEffect(() => {
     if (video) {
@@ -125,7 +132,9 @@ const PostUpdate = () => {
             Add an updated cover image
           </span>
         </Upload>
-        {"Uploading Img :: " + progress}
+        {progress > 0 && progress < 100 && (
+          <span>{"Uploading... :: " + progress}</span>
+        )}
         {cover?.filePath && (
   <Image
     src={cover.filePath}  // Ye cover.filePath ko directly use karega
@@ -178,9 +187,11 @@ const PostUpdate = () => {
         />
         <div className="flex flex-1">
           <div className="flex flex-col gap-2 mr-2">
-            <Upload setProgress={setProgress} setCover={setImage} type="image">
+          <span onClick={()=>setLoadingImage(true)}>
+           <Upload setProgress={setProgress} setCover={setImage} type="image" >
               📷
             </Upload>
+           </span>
             <Upload setProgress={setProgress} setCover={setVideo} type="video">
               🎦
             </Upload>
@@ -191,6 +202,13 @@ const PostUpdate = () => {
             onChange={setValue}
             className="flex-1 rounded-xl bg-white shadow-md"
           />
+          {
+        loadingImage && (
+          <div className="absolute w-full left-0 top-0 h-[100vh] bg-black opacity-[.4]"></div>
+        )
+       }
+       {loadingImage && <span className="font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl">Uploading wait...</span>} 
+
         </div>
         <button
           type="submit"

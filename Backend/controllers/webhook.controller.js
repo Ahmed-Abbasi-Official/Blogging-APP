@@ -8,8 +8,25 @@ dotenv.config();
 
 export const signUp =async(req,res)=>{
   try {
+    const { email, username, password} = req.body;
+
+    // Check if a user with the given email already exists
+    const existingUser = await userModel.findOne({ email });
+    const existingUserName = await userModel.findOne({ username });
+    if (existingUser) {
+      
+      return res.status(400).json({ message: 'Email already registered' });
+
+    }
+    if (existingUserName) {
+      console.log(existingUserName);
+      
+      
+      return res.status(400).json({ message: 'username already registered' });
+
+    }
     const user= new userModel(req.body);
-    console.log(user);
+    // console.log(user);
     await user.save();
     return res.json({message:"Register successful"})
   } catch (error) {
@@ -32,7 +49,7 @@ export const signIn =async(req,res)=>{
     
   } catch (error) {
     res.json({error: error.message});
-    console.log(error);
+    console.log("Error ==== >>> " , error.message);
     
   }
 }

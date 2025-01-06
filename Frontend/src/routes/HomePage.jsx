@@ -19,14 +19,14 @@ const HomePage = () => {
       </div>
       {/* INTRODUCTION */}
 
-      <div className="flex items-center  justify-between">
+      <div className="flex items-center justify-between">
         {/* TITLES */}
 
         <div className="">
-          <h1 className="text-2xl text-gray-800 md:text-5xl lg:text-6xl font-bold">
+          <h1 className="text-4xl text-gray-800 md:text-5xl lg:text-6xl font-bold">
           Explore ideas, insights, and inspiration for everyday growth.
           </h1>
-          <p className="mt-8 text-md md:text-lg">
+          <p className="mt-8 text-lg md:text-lg">
           A dynamic blogging app for effortlessly creating, managing, and sharing content.
           </p>
         </div>
