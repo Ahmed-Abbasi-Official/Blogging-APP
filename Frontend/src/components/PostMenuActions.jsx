@@ -85,18 +85,17 @@ const PostMenuActions = ({ post }) => {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      // const token = await getToken();
-      // console.log(token);
-      
-      const rs= axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, {
+      const rs=await axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, {
         headers: {
           Authorization: `${token}`,
         },
       });
+      console.log(rs.data);
+      
       return rs.data
     },
     onSuccess: (data,id) => {
-      // console.log(data,id);
+      console.log(data);
       
       toast.success("Post deleted successfully");
       navigate("/");

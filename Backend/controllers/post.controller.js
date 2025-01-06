@@ -2,6 +2,7 @@ import ImageKit from "imagekit";
 import postModel from "../models/post.model.js";
 import userModel from "../models/user.model.js";
 import { getUser } from "../service/auth.js";
+import commentModel from "../models/comment.model.js";
 
 class Post {
   //  ALL POSTS
@@ -152,17 +153,22 @@ class Post {
 
   //  DELETE POST
   async deletePost(req, res) {
-    const clerkUserId = req.headers?.authorization;
+    try {
+      const clerkUserId = req?.headers?.authorization;
     const postId = req.params.id;
     if (!clerkUserId) {
       return res.status(401).json("Not authenticated!");
     }
     const role = (await userModel.findOne({ role: "admin" })) || "user";
-    if (role) {
+
+    const allCommentPosts=await commentModel.findOne({post:postId})
+    console.log(allCommentPosts._id);
+    
+
+    if (role==="admin") {
       await postModel.findByIdAndDelete(postId);
       return res.status(200).json({
         message: "Post deleted",
-        post: deletePost,
       });
     }
     const userID=getUser(clerkUserId)
@@ -172,13 +178,21 @@ class Post {
       _id: postId,
       user: user._id,
     });
+    const deleteComments = await commentModel.findByIdAndDelete(allCommentPosts._id);
+    console.log(deleteComments);
+    
     if (!deletePost) {
       return res.status(403).json("You can delete only your Post");
     }
     res.status(200).json({
       message: "Post deleted",
-      post: deletePost,
+      post: deleteComments,
     });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({message: "Error", error: error})
+      
+    }
   }
 
   //  UPLOAD AUTH
