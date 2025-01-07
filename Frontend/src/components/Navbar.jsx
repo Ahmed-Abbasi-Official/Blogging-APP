@@ -137,6 +137,16 @@ const Navbar = () => {
           />
                 )
               }
+              {
+                !pImg && !user?.userImg  && (
+                  <Image
+            src={'/User.png?updatedAt=1735717183257'}
+            className="w-10 h-10 rounded-full object-cover"
+            alt="image"
+            // w="40"
+          />
+                )
+              }
             </div>
           ) :(
             <img src="/User.png" alt="User"
@@ -196,6 +206,7 @@ const Navbar = () => {
           />
                 )
               }
+             
             </div>
           ) :(
             <span  onClick={()=>setShow((prev)=>!prev)}>

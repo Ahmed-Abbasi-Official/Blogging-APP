@@ -2,8 +2,7 @@ import userModel from "../models/user.model.js";
 // import { sendEmail } from "../middlewares/nodemailer.js"; 
 import dotenv from 'dotenv';
 import { getUser } from "../service/auth.js";
-import { request } from "express";
-
+import bcrypt from "bcrypt";
 dotenv.config();
 
 export const signUp =async(req,res)=>{
@@ -25,7 +24,14 @@ export const signUp =async(req,res)=>{
       return res.status(400).json({ message: 'username already registered' });
 
     }
-    const user= new userModel(req.body);
+    const salt =  bcrypt.genSaltSync(10);
+    const hashedPassword =  bcrypt.hashSync(password, salt);
+
+    const user= new userModel({
+      username,
+      email,
+      password:hashedPassword,
+    });
     // console.log(user);
     await user.save();
     return res.json({message:"Register successful"})
@@ -38,7 +44,7 @@ export const signUp =async(req,res)=>{
 export const signIn =async(req,res)=>{
   try {
     const {email,password} = req.body
-    const user=await userModel.findOne({email,password});
+    const user=await userModel.findOne({email});
     if(!user) return res.status(400).json({error: "User not found"})
     // console.log(user);
     //   setUser({ id: user._id, email: user.email,name:user.username },res);
