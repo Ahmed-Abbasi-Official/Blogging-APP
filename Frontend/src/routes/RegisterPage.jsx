@@ -15,7 +15,6 @@ import { auth } from "../Conf/firebase";
 
 const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(false);
-  const passwordFieldRef = useRef();
   const navigate=useNavigate();
   const provider = new GoogleAuthProvider();
   
@@ -60,14 +59,6 @@ const RegisterPage = () => {
   
   const handleSeePassword = (e) => {
     setSeePassword(!seePassword);
-    passwordFieldRef.current.type="text"
-    let pswrdd= passwordFieldRef.current.type
-    console.log("passwordFildRef: " + pswrdd);
-    console.log(passwordFieldRef);
-    
-
-    let pswrd =  seePassword ? passwordFieldRef.current.type='text' : passwordFieldRef.current.type='password'
-    console.log(pswrd);
   };
 
   //  FOR ON SUBMIT
@@ -195,7 +186,7 @@ const RegisterPage = () => {
                   },
                 })}
                 // ref={passwordFieldRef}
-                type="password"
+                type={seePassword ? "text": "password"}
                 id="password"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
                 placeholder="Enter your password"
