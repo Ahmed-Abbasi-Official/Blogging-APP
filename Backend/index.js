@@ -42,7 +42,9 @@ const PORT =process.env.PORT || 3000;
 
 //  DATABSE URL
 
-const MONGO=process.env.MONGO || 'mongodb://localhost:27017/blogify' ;
+const MONGO=process.env.MONGO;
+console.log(MONGO);
+
 
 // Middleware to parse form data (urlencoded) and JSON
 
