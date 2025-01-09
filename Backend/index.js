@@ -13,7 +13,28 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors(process.env.CLIENT_URL))
+const allowedOrigins = [process.env.AllowedOrigin1, process.env.AllowedOrigin2];
+
+// CORS configuration
+
+const corsOptions = {
+    origin: (origin, callback) => {
+      console.log("origin ==>", origin);
+      
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            console.error(`Blocked by CORS: ${origin}`);
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET, POST, PUT, DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 //  PORT
 
