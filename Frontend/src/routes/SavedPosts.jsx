@@ -24,14 +24,14 @@ const SavedPosts = () => {
   });
   console.log(savedPosts?.data);
 
-  if (savedPosts.isLoading) return <p>Loading...</p>;
-  if (savedPosts.isError) return <p>Error: {savedPosts.error.message}</p>;
+  if (savedPosts?.isLoading) return <p>Loading...</p>;
+  if (savedPosts?.isError) return <p>Error: {savedPosts.error.message}</p>;
   
 
 
   return (
     <>
-        {savedPosts?(
+        {savedPosts?.data?.length>0?(
             savedPosts?.data?.map((post) => (
               <PostListItem key={post?._id} post={post} />
             ))
