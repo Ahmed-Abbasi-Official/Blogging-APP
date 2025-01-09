@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import PostListItem from "../components/PostListItem";
 import { useAuth } from "../context/userContext";
 
 const MyBlog = () => {
+  const[posts,setPosts]=useState([])
     const {token}=useAuth();
   const savedPosts = useQuery({
     queryKey: ["savedPosts"],
@@ -17,17 +18,23 @@ const MyBlog = () => {
           },
         }
       );
-    //    console.log(res.data);
+      //  console.log(res.data);
       return res.data;
     },
-    enabled: !!token,
   });
-  console.log(savedPosts.savedPosts);
-  console.log(savedPosts);
+  
   
 
-  if (savedPosts.isLoading) return <p>Loading...</p>;
-  if (savedPosts.isError) return <p>Error: {savedPosts.error.message}</p>;
+  if (savedPosts?.isPending) return <p>Loading...</p>;
+  if (savedPosts?.isError) return <p>Error: {savedPosts.error.message}</p>;
+  // console.log(savedPosts.savedPosts);
+  useEffect(()=>{
+    if(savedPosts?.data){
+      setPosts(savedPosts?.data?.message)
+    }
+  },[savedPosts])
+  console.log(posts);
+  
   
   
 
@@ -39,7 +46,7 @@ const MyBlog = () => {
       savedPosts.isLoading?(
         <p>Loading...</p>
       ):(
-        savedPosts?.length===0 && (
+        posts.length===0 && (
           <p className="text-center mb-6">No posts found.</p>
         )
       )
@@ -47,7 +54,7 @@ const MyBlog = () => {
 
 
         
-            {savedPosts?.map((post) => (
+            {posts.map((post) => (
               <PostListItem key={post?._id} post={post} />
             ))}
       
