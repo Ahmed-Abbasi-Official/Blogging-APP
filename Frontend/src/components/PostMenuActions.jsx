@@ -399,6 +399,7 @@ const PostMenuActions = ({ post }) => {
 
   const isSaved = savedPosts?.savedPosts?.some((p) => p === post._id) ?? false;
   const isAdmin = adminData?.userData?.role === "admin";
+  const roleData=adminData?.userData;
 
   const handleDelete = () => deleteMutation.mutate();
   const handleSave = () => {
@@ -481,6 +482,15 @@ const PostMenuActions = ({ post }) => {
           )}
         </div>
       )}
+      {/* EDIT POSTS */}
+      {
+        roleData?._id=== post?.user?._id && (
+          <Link className="flex items-center gap-2 cursor-pointer" to={`/update/${post.slug}`} >
+            <TiEdit className="text-xl" />
+            <p>Edit</p>
+          </Link>
+        )
+      }
     </div>
   );
 };
