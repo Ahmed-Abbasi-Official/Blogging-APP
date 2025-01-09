@@ -86,7 +86,7 @@ const SinglePostPage = () => {
             h={48}
             />}
             <Button
-            value={data.user.username}
+            value={data?.user?.username}
             />
             </div>
             {/* <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur</p> */}
