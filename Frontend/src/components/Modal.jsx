@@ -5,6 +5,7 @@ import { useAuth } from "../context/userContext";
 import Image from "../utils/Image";
 import { toast } from "react-toastify";
 import './Modal.css'
+import { Link } from "react-router-dom";
 
 const Modal = ({ update,setUpdate,setShow }) => {
   const { token } = useAuth();
@@ -38,6 +39,7 @@ const Modal = ({ update,setUpdate,setShow }) => {
     navigate("/login");
   };
 
+
   return (
     <div
       className={`absolute right-0 top-16 md:text-start text-center w_480px shadow-md shadow-black  z-20 w-[45%] sm:w-[35%] md:w-[28%] bg-white p-4 rounded animate-slide`}
@@ -68,6 +70,12 @@ const Modal = ({ update,setUpdate,setShow }) => {
             Update Profile
           </button>
           {/* LOGOUT  BUTTON */}
+          <Link
+            className="bg-[#dc2525] md:py-2 md:px-4 py-1 px-2 text-white rounded"
+            to='/my-blog'
+          >
+            My Posts
+          </Link>
           <button
             className="bg-[#dc2525] md:py-2 md:px-4 py-1 px-2 text-white rounded"
             onClick={handleLogout}
