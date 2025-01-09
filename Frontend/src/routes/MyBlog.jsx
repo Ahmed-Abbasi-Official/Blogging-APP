@@ -31,7 +31,7 @@ const MyBlog = () => {
 
   return (
     <>
-        {savedPosts?.data?.message?.length>0?(
+        {savedPosts?(
             savedPosts?.data?.message.map((post) => (
               <PostListItem key={post?._id} post={post} />
             ))

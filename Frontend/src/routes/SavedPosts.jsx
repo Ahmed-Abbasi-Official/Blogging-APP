@@ -31,7 +31,7 @@ const SavedPosts = () => {
 
   return (
     <>
-        {savedPosts?.data?.length>0?(
+        {savedPosts?(
             savedPosts?.data?.map((post) => (
               <PostListItem key={post?._id} post={post} />
             ))

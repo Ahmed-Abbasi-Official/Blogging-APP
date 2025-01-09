@@ -185,6 +185,8 @@ const PostMenuActions = ({ post }) => {
   const handleFeature = () => {
     featureMutation.mutate();
   };
+  // console.log(adminData?.userData?.username);
+  
 
   return (
     <div className="">
@@ -224,7 +226,7 @@ const PostMenuActions = ({ post }) => {
         </div>
       )}
       {/* DELETE POST */}
-      {isAuthenticated && (post?.user?.username === adminData?.data?.userData?.username || isAdmin===true ) && (
+      {isAuthenticated && (post?.user?.username === adminData?.userData?.username || isAdmin===true ) && (
         <div
           className="flex items-center gap-2 py-2 text-sm cursor-pointer"
           onClick={handleDelete}
