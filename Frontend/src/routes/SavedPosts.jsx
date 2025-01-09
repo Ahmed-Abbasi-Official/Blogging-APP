@@ -31,14 +31,21 @@ const SavedPosts = () => {
 
   return (
     <>
-        {savedPosts?.data?.length>0?(
+    {
+      savedPosts?.isPending ? (
+        <p>Loading...</p>
+      ):(
+        savedPosts?.data?.length===0 && (
+          <p>No post</p>
+        )
+      )
+    }
+        {
             savedPosts?.data?.map((post) => (
               <PostListItem key={post?._id} post={post} />
             ))
       
-          ):(
-            <h1>NO POSTS</h1>
-        )}
+}
   </>
   );
 };
