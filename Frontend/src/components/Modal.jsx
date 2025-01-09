@@ -71,7 +71,7 @@ const Modal = ({ update,setUpdate,setShow }) => {
           </button>
           {/* LOGOUT  BUTTON */}
           <Link
-            className="bg-[#dc2525] md:py-2 md:px-4 py-1 px-2 text-white rounded"
+            className="bg-gray-400 md:py-2 md:px-4 py-1 px-2 text-white rounded text-center"
             to='/my-blog'
           >
             My Posts
