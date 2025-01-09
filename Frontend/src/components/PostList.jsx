@@ -73,8 +73,13 @@ const PostList = () => {
               page.allPosts.map((post) => (
                 <PostListItem key={post?._id} post={post} />
               ))
-            ))}
-            {!hasNextPage && <h1 className="text-xl font-bold -mt-12">All Posts are Loaded</h1>}
+            ))
+            }
+            {
+              !allPosts.length === 0 &&(
+                !hasNextPage && <h1 className="text-xl font-bold -mt-12">All Posts are Loaded</h1>
+              )
+            }
          
     </>
   );

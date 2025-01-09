@@ -32,11 +32,11 @@ const SavedPosts = () => {
   return (
     <>
     {
-      savedPosts?.isPending ? (
+      savedPosts?.isLoading ? (
         <p>Loading...</p>
       ):(
         savedPosts?.data?.length===0 && (
-          <p>No post</p>
+          <p className="text-center mb-6">No post</p>
         )
       )
     }
