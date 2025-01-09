@@ -22,11 +22,13 @@ const MyBlog = () => {
     },
     enabled: !!token,
   });
+  console.log(savedPosts.savedPosts);
   console.log(savedPosts);
   
 
   if (savedPosts.isLoading) return <p>Loading...</p>;
   if (savedPosts.isError) return <p>Error: {savedPosts.error.message}</p>;
+  
   
 
 
@@ -37,7 +39,7 @@ const MyBlog = () => {
       savedPosts.isLoading?(
         <p>Loading...</p>
       ):(
-        savedPosts?.data?.message?.length===0 && (
+        savedPosts?.length===0 && (
           <p className="text-center mb-6">No posts found.</p>
         )
       )
@@ -45,7 +47,7 @@ const MyBlog = () => {
 
 
         
-            {savedPosts?.data?.message.map((post) => (
+            {savedPosts?.map((post) => (
               <PostListItem key={post?._id} post={post} />
             ))}
       
