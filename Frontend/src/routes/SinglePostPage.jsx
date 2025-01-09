@@ -88,6 +88,7 @@ const SinglePostPage = () => {
             h={48}
             />}
             <Button
+            to='/my-blog'
             value={data?.user?.username}
             />
             </div>
