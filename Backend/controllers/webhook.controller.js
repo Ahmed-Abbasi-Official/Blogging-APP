@@ -3,6 +3,7 @@ import userModel from "../models/user.model.js";
 import dotenv from 'dotenv';
 import { getUser } from "../service/auth.js";
 import bcrypt from "bcrypt";
+import { sendVerificationCode } from "../middlewares/email.js";
 dotenv.config();
 
 export const signUp =async(req,res)=>{
@@ -26,14 +27,17 @@ export const signUp =async(req,res)=>{
     }
     const salt =  bcrypt.genSaltSync(10);
     const hashedPassword =  bcrypt.hashSync(password, salt);
-
+    const verification=Math.floor(100000+Math.random()*900000);
     const user= new userModel({
       username,
       email,
       password:hashedPassword,
+      verificationCode:verification
     });
+
     // console.log(user);
     await user.save();
+    sendVerificationCode(user.email,verification)
     return res.json({message:"Register successful"})
   } catch (error) {
     res.json({error: error.message});

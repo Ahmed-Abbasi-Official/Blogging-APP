@@ -33,6 +33,9 @@ const userSchema=new Schema({
   role:{
     type:String,
     default:"user"
+  },
+  verificationCode:{
+    type:String,
   }
 
 },{timestamps:true})
