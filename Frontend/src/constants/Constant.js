@@ -37,11 +37,6 @@ const iconsList = [
     path: "/saved-posts",
     class:'hidden'
   },
-  {
-    title: "My Blog",
-    path: "/my-blog",
-    class:'hidden'
-  }
 ];
 
 // CATEGORIES LIST
