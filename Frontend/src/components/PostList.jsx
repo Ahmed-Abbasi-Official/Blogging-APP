@@ -61,18 +61,21 @@ const PostList = () => {
 
   return (
     <>
-      {allPosts.length > 0 ? (
-        <>
-          {data?.pages.map((page, idx) => (
-            page.allPosts.map((post) => (
-              <PostListItem key={post?._id} post={post} />
-            ))
-          ))}
-          {!hasNextPage && <h1 className="text-xl font-bold -mt-12">All Posts are Loaded</h1>}
-        </>
-      ) : (
-        <p>No Posts Available</p>
-      )}
+    {
+        isFetching ? (
+          <p className="text-center mb-6">Loading posts...</p>
+        ) : allPosts.length === 0 && (
+          <p className="text-center mb-6">No posts found.</p>
+        )
+      }
+      
+            {data?.pages.map((page, idx) => (
+              page.allPosts.map((post) => (
+                <PostListItem key={post?._id} post={post} />
+              ))
+            ))}
+            {!hasNextPage && <h1 className="text-xl font-bold -mt-12">All Posts are Loaded</h1>}
+         
     </>
   );
   

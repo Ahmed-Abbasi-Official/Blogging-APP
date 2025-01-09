@@ -32,14 +32,24 @@ const MyBlog = () => {
 
   return (
     <>
-        {savedPosts?.data?.message?.length>0?(
-            savedPosts?.data?.message.map((post) => (
+
+    {
+      savedPosts.isLoading?(
+        <p>Loading...</p>
+      ):(
+        savedPosts?.data?.message.length===0 && (
+          <p className="text-center mb-6">No posts found.</p>
+        )
+      )
+    }
+
+
+        
+            {savedPosts?.data?.message.map((post) => (
               <PostListItem key={post?._id} post={post} />
-            ))
+            ))}
       
-          ):(
-            <h1>NO POSTS</h1>
-        )}
+          
   </>
   );
 };
