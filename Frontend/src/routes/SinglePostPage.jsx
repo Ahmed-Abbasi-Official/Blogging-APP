@@ -29,8 +29,10 @@ const SinglePostPage = () => {
   if(isLoading) return "Loading....."
   if(error) return "Error............" + error.message 
   if(!data) return "Post Not Found....."
+  console.log(data);
+  
   const image=data?.user?.userImg || '';
-  // console.log(image);
+  console.log(image);
   // console.log(image);
   
   

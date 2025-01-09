@@ -156,13 +156,14 @@ class Post {
     try {
       const clerkUserId = req?.headers?.authorization;
     const postId = req.params.id;
+    console.log(postId);
+    
     if (!clerkUserId) {
       return res.status(401).json("Not authenticated!");
     }
     const role = (await userModel.findOne({ role: "admin" })) || "user";
 
     const allCommentPosts=await commentModel.findOne({post:postId})
-    console.log(allCommentPosts._id);
     
 
     if (role==="admin") {
@@ -178,15 +179,15 @@ class Post {
       _id: postId,
       user: user._id,
     });
-    const deleteComments = await commentModel.findByIdAndDelete(allCommentPosts._id);
-    console.log(deleteComments);
+   if(allCommentPosts){
+     await commentModel.findByIdAndDelete(allCommentPosts._id);
+   }
     
     if (!deletePost) {
       return res.status(403).json("You can delete only your Post");
     }
     res.status(200).json({
       message: "Post deleted",
-      post: deleteComments,
     });
     } catch (error) {
       console.log(error);

@@ -22,9 +22,11 @@ class User {
       if (!user) {
         return res.status(404).json({ error: "User not found!" });
       }
+      // console.log(user);
+      
 
       const savedPosts = user.savedPosts || [];
-      console.log("Saved Posts:", savedPosts);
+      // console.log("Saved Posts:", savedPosts);
 
       return res.status(200).json({ savedPosts });
     } catch (error) {
@@ -35,39 +37,68 @@ class User {
 
   //  UPDATE USER
   async savePost(req, res) {
-    const clerkUserId = req?.headers?.authorization;
-    const postId = req.body.postId;
-    // console.log(postId);
-
-    if (!clerkUserId) {
-      return res.status(401).json("Not authenticated!");
+    try {
+      // Extract the Clerk user ID from the authorization header
+      const clerkUserId = req?.headers?.authorization;
+      if (!clerkUserId) {
+        return res.status(401).json({ message: "Not authenticated!" });
+      }
+  
+      // Extract the post ID from the request body
+      const postId = req.body.postId;
+      if (!postId) {
+        return res.status(400).json({ message: "Post ID is required!" });
+      }
+  
+      // Retrieve the user ID associated with the Clerk user ID
+      const userID = getUser(clerkUserId); // Assuming this function retrieves user details
+      if (!userID?.userId) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+  
+      // Fetch the user from the database
+      const user = await userModel.findOne({ _id: userID.userId });
+      if (!user) {
+        return res.status(404).json({ message: "User not found in the database!" });
+      }
+  
+      // Check if the post is already saved
+      const isSaved = user.savedPosts.includes(postId);
+      // console.log(isSaved);
+      
+  
+      // Update the saved posts based on the current state
+      const updateOperation = isSaved
+        ? { $pull: { savedPosts: postId } } // Remove post from savedPosts
+        : { $push: { savedPosts: postId } }; // Add post to savedPosts
+  
+      // Update the user document
+      const updatedUser = await userModel.findByIdAndUpdate(
+        user._id,
+        updateOperation,
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedUser) {
+        return res.status(500).json({ message: "Failed to update user!" });
+      }
+  
+      // Determine the updated state of the post
+      const updatedIsSaved = updatedUser.savedPosts.includes(postId);
+  
+      // Delay response to simulate processing
+      
+        res.status(200).json({
+          message: updatedIsSaved ? "Post Saved" : "Post Unsaved",
+          savedPosts: updatedUser.savedPosts, // Optional: Return updated savedPosts
+        });
+      
+    } catch (error) {
+      console.error("Error in savePost:", error);
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
-
-    const userID = getUser(clerkUserId);
-    // console.log(userID);
-    const user = await userModel.findOne({ _id: userID.userId });
-    // console.log(user);
-
-    const isSaved = user.savedPosts.some((p) => p === postId);
-
-    if (!isSaved) {
-      await userModel.findOneAndUpdate(user._id, {
-        $push: { savedPosts: postId },
-      });
-    } else {
-      await userModel.findOneAndUpdate(user._id, {
-        $pull: { savedPosts: postId },
-      });
-    }
-    const updatedIsSaved = updatedUser.savedPosts.some((p) => p === postId);
-
-    // console.log(updatedIsSaved ? "Post Saved" : "Post Unsaved");
-
-    // Delay response
-    setTimeout(() => {
-      res.status(200).json(updatedIsSaved ? "Post Saved" : "Post Unsaved");
-    }, 3000);
   }
+  
 
   //  GET USER
 

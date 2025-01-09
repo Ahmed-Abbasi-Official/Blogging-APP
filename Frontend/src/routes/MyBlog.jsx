@@ -22,6 +22,7 @@ const MyBlog = () => {
     },
     enabled: !!token,
   });
+  console.log(savedPosts);
   
 
   if (savedPosts.isLoading) return <p>Loading...</p>;

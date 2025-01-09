@@ -19,7 +19,7 @@ const allowedOrigins = [process.env.AllowedOrigin1, process.env.AllowedOrigin2];
 
 const corsOptions = {
   origin: (origin, callback) => {
-      console.log("origin ==>", origin);
+      // console.log("origin ==>", origin);
 
       if (allowedOrigins.includes(origin) || !origin) {
           callback(null, true);
@@ -44,7 +44,7 @@ const PORT =process.env.PORT || 3000;
 //  DATABSE URL
 
 const MONGO=process.env.MONGO;
-console.log(MONGO);
+// console.log(MONGO);
 
 
 // Middleware to parse form data (urlencoded) and JSON

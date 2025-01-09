@@ -7,6 +7,7 @@ import { TiEdit } from "react-icons/ti";
 const PostMenuActions = ({ post }) => {
   const { token,isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   // console.log(post);
   
 
@@ -19,7 +20,6 @@ const PostMenuActions = ({ post }) => {
   } = useQuery({
     queryKey: ["savedPosts"],
     queryFn: async () => {
-      // const token = await getToken();
       const res= await axios.get(`${import.meta.env.VITE_API_URL}/user/saved`, {
         headers: {
           Authorization: `${token}`,
@@ -29,27 +29,23 @@ const PostMenuActions = ({ post }) => {
       
       return res.data
     },
-  });
-  if(error){
-    console.log(error);
+    enabled: !!isAuthenticated,
     
-  }
+  });
   if(isPending){
-   <div>Loading...</div>
+  return <div>Loading...</div>
     
   }
 
   
   // console.log(savedPosts?.savedPosts);
+  const isSaved = isAuthenticated ? savedPosts?.savedPosts?.some((p) => p===post._id) : false;
   
-  const isSaved = savedPosts?.savedPosts?.some((p) => {
-    return p===post._id
-  });
   
 
  
 
-  // console.log(isSaved);
+  
   //  GET USER
 
   const {
@@ -107,13 +103,11 @@ const PostMenuActions = ({ post }) => {
     
   });
 
-  const queryClient = useQueryClient();
 
   //  SAVE POST MUTATION
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      // const token = await getToken();
       const res= await axios.patch(
         `${import.meta.env.VITE_API_URL}/user/save`,
         {
@@ -125,12 +119,14 @@ const PostMenuActions = ({ post }) => {
           },
         }
       );
+      console.log(res);
+      
       return res.data
     },
     onSuccess: (data) => {
-      toast.success(isSaved ? "Post Un-Saved" : "Post Saved");
-      queryClient.invalidateQueries({ queryKey: ["savedPosts", "adminData"] });
-      navigate("/saved-posts");
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["savedPosts"] });
+      // navigate("/saved-posts");
     },
     onError: (error) => {
       const errorMessage = error.response?.data || "Something went wrong!";
@@ -180,7 +176,7 @@ const PostMenuActions = ({ post }) => {
       navigate("/login");
     }
     saveMutation.mutate();
-    navigate('/saved-posts')
+    navigate('/')
   };
   const handleFeature = () => {
     featureMutation.mutate();
