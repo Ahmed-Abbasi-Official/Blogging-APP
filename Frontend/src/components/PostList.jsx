@@ -76,7 +76,7 @@ const PostList = () => {
             ))
             }
             {
-              !allPosts.length === 0 &&(
+              allPosts.length !== 0 &&(
                 !hasNextPage && <h1 className="text-xl font-bold -mt-12">All Posts are Loaded</h1>
               )
             }

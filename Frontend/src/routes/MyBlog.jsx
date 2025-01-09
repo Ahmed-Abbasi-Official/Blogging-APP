@@ -37,7 +37,7 @@ const MyBlog = () => {
       savedPosts.isLoading?(
         <p>Loading...</p>
       ):(
-        savedPosts?.data?.message.length===0 && (
+        savedPosts?.data?.message?.length===0 && (
           <p className="text-center mb-6">No posts found.</p>
         )
       )
