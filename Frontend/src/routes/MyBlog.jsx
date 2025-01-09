@@ -30,7 +30,7 @@ const MyBlog = () => {
   // console.log(savedPosts.savedPosts);
   useEffect(()=>{
     if(savedPosts?.data){
-      setPosts(savedPosts?.data?.message)
+      setPosts(savedPosts?.data)
     }
   },[savedPosts])
   console.log(posts);

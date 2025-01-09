@@ -177,7 +177,7 @@ class User {
 
       if (!myBlog) return res.status(404).json({ message: "No blog found" });
 
-      return res.status(200).json({ message: myBlog });
+      return res.status(200).json( myBlog );
     } catch (error) {
       console.log("Error :: ", error.message);
       return res
