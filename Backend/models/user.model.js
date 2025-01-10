@@ -24,6 +24,7 @@ const userSchema=new Schema({
   },
   userImg:{
     type:String,
+    default:'/User.png?updatedAt=1735717183257'
   },
   savedPosts:{
     type:[String],
@@ -35,6 +36,10 @@ const userSchema=new Schema({
   },
   verificationCode:{
     type:String,
+  },
+  isVerified:{
+    type:Boolean,
+    default:false
   }
 
 },{timestamps:true})

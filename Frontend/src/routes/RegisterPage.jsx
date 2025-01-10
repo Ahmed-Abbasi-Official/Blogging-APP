@@ -1,5 +1,5 @@
 // import { SignUp } from "@clerk/clerk-react";
-import React, { useRef, useState } from "react";
+import React, {  useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEyeSlash } from "react-icons/fa6";
@@ -7,14 +7,15 @@ import { FaRegEye } from "react-icons/fa6";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useAuth } from "../context/userContext";
-import { googleSignup } from "../Conf/googleAuth";
 import {  signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../Conf/firebase"; 
+import VerifiedPopUp from "../components/VerifiedPopUp";
 
 
 const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(false);
+  const [otpPopUp, setOtpPopUp] = useState(false);
+  const [email, setEmail] = useState('');
   const navigate=useNavigate();
   const provider = new GoogleAuthProvider();
   
@@ -29,7 +30,8 @@ const RegisterPage = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      navigate('/login');
+      setOtpPopUp(true)
+      // navigate('/login');
     },
     onError: (error) => {
       
@@ -64,7 +66,7 @@ const RegisterPage = () => {
   //  FOR ON SUBMIT
 
   const onSubmit = (data) => {
-   
+    setEmail(data?.email);
     newUser.mutate(data);
     
   };
@@ -226,20 +228,6 @@ const RegisterPage = () => {
           {/* Social Login Buttons */}
 
           <div className="flex items-center gap-3 mb-2">
-            {/* Apple Button
-            <button className="flex justify-center items-center w-full h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.07-.5-2.04-.48-3.16 0-1.4.62-2.13.53-3.01-.38C2.79 15.15 3.51 7.84 9.05 7.58c1.35.07 2.29.74 3.08.78 1.18-.23 2.32-.94 3.53-.84 1.96.17 3.32.94 4.05 2.38-3.65 2.21-3.07 6.62.35 8.37-.86 1.64-1.97 3.27-3.01 4.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-              </svg>
-            </button>
-
-            Facebook Button
-            <button className="flex justify-center items-center w-full h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.47h3.047v-2.642c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385c5.737-.9 10.125-5.864 10.125-11.854z" />
-              </svg>
-            </button> */}
-
             {/* Google Button */}
             <button className="flex justify-center items-center w-full h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors" onClick={handleGoogleBtnClick}>
               <svg
@@ -281,14 +269,15 @@ const RegisterPage = () => {
             </Link>
           </p>
 
-          {/* Branding */}
-          {/* <div className="mt-6 flex flex-col items-center space-y-1">
-            <div className="flex items-center space-x-1 text-xs text-gray-500">
-              <span>Secured by</span>
-              <Image src="logo.png" alt="logo" w={15} h={15} />
-              <span>Blogging Site</span>
-            </div>
-          </div> */}
+              {/* FOR VERIFIED POPUP */}
+
+              {
+                otpPopUp ?
+                (<div >
+                  <VerifiedPopUp email={email}  />
+                  </div>):(null)
+              }
+          
         </div>
       </div>
     </div>

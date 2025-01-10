@@ -6,6 +6,8 @@ import bcrypt from "bcrypt";
 import { sendVerificationCode } from "../middlewares/email.js";
 dotenv.config();
 
+  //  FOR SIGNUP
+
 export const signUp =async(req,res)=>{
   try {
     const { email, username, password} = req.body;
@@ -25,9 +27,11 @@ export const signUp =async(req,res)=>{
       return res.status(400).json({ message: 'username already registered' });
 
     }
-    const salt =  bcrypt.genSaltSync(10);
+    const salt = bcrypt.genSaltSync(10);
     const hashedPassword =  bcrypt.hashSync(password, salt);
-    const verification=Math.floor(100000+Math.random()*900000);
+    console.log(hashedPassword);
+    
+    const verification=Math.floor(100000+Math.random()*900000).toString();
     const user= new userModel({
       username,
       email,
@@ -45,6 +49,9 @@ export const signUp =async(req,res)=>{
     
   }
 }
+
+  //  FOR SIGN
+
 export const signIn =async(req,res)=>{
   try {
     const {email,password} = req.body
@@ -64,6 +71,7 @@ export const signIn =async(req,res)=>{
   }
 }
 
+ //  FOR UPDATEUSSER
 
 export const userUpdate = async (req, res) => {
   try {
@@ -98,3 +106,17 @@ export const userUpdate = async (req, res) => {
     console.log("error====>>>", error.message);
   }
 };
+
+export const verifyEmail=async(req,res)=>{
+  try {
+    const {code}=req.body;
+    const user=await userModel.findOne({verificationCode:code});
+    if(!user)return res.status(400).json({success:false,message:"Invalid or expired Code"});
+    user.isVerified=true;
+    user.verificationCode=undefined;
+    await user.save();
+    return res.status(200).json({success:true,message:"Email Verified Successfully"});
+  } catch (error) {
+    return res.status(500).json({success:false,message:"Internal Server Error"});
+  }
+}

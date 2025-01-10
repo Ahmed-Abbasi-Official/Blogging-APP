@@ -1,6 +1,5 @@
 import express from   'express'
 import postController from '../controllers/post.controller.js';
-import { isAuth } from '../middlewares/isAuth.js';
 import increaseVisits from '../middlewares/increaseVisits.js';
 
 const postsRouter = express.Router();

@@ -1,4 +1,5 @@
 import { transporter } from "./emailConfig.js";
+import { Verification_Email_Template } from "./emailTemplate.js";
 
 export const sendVerificationCode=async (email,verificationCode)=>{
     try {
@@ -8,7 +9,7 @@ export const sendVerificationCode=async (email,verificationCode)=>{
             to: email, // list of receivers
             subject: "Email Verification ✔", // Subject line
             text: "Please Verified Through the Code", // plain text body
-            html: verificationCode, // html body
+            html: Verification_Email_Template.replace("{verificationCode}",verificationCode), // html body
           });
 
           console.log("Email Send Succesfully : ",response)
