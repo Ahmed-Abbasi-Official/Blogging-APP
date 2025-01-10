@@ -47,7 +47,7 @@ const Navbar = () => {
   console.log("User Data:", user); // Debug user data
 
   if (isAdminPending) {
-    // return <Loader/>
+     return <Loader/>
   }
 
   if (adminError) {

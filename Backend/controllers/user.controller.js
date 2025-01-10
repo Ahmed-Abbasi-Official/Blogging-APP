@@ -105,6 +105,7 @@ class User {
   async getUser(req, res) {
     try {
       const clerkUserId = req?.headers?.authorization;
+      
 
       if (!clerkUserId) {
         return res.status(401).json("Not authenticated!");
