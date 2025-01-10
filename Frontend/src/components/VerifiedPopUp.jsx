@@ -45,11 +45,11 @@ const VerifiedPopUp = ({ email }) => {
   };
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[40%] h-[50%] p-2 py-4 bg-white  text-black text-center rounded-lg ">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] sm:w-[65%] md:w-[55%] lg:w-[40%] md:h-[55%] h-[65%] p-2 py-4 bg-white  text-black text-center rounded-lg shadow-2xl shadow-black ">
       <div className="flex flex-col justify-center items-center gap-2">
         <img src="/logo.png" className="w-16 h-16" />
         <h2 className="text-lg font-bold text-[#444] ">Bloggify</h2>
-        <p className="mb-4 w-[60%] text-[12px] text-[#bebebe">
+        <p className="mb-4 w-[90%] sm:w-[60%] text-[12px] text-[#bebebe">
           We have sent a verification code to your email{" "}
           <strong>{email || "email"}</strong>. Please enter it below to
           continue.
