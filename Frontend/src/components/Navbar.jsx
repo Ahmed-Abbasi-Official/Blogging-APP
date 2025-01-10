@@ -83,7 +83,7 @@ const Navbar = () => {
         {/* MOBILE MENU LIST */}
         <div
           className={`w-full h-72   flex flex-col px-4 justify-center absolute top-16 items-start z-10  transition-all duration-500 ease-in-out ${
-            open ? "left-0" : "left-[120%]"
+            open ? "right-0" : "right-[120%] "
           } gap-4 font-medium text-sm  bg-white`}
           style={{boxShadow: '0px 1px 10px 2px #8d86ff'}}
         >

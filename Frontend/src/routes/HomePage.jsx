@@ -10,7 +10,7 @@ const HomePage = () => {
   const {isAuthenticated}=useAuth();
   // console.log("Login===>>>",isAuthenticated);
   return (
-    <div className="mt-4 flex flex-col gap-4 ">
+    <div className="mt-4 flex flex-col gap-4 overflow-hidden">
       {/* BREADCRUMB */}
       <div className="flex gap-4   ">
         <Link to="/">Home</Link>
