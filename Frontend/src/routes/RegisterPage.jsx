@@ -14,7 +14,7 @@ import VerifiedPopUp from "../components/VerifiedPopUp";
 
 const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(false);
-  const [otpPopUp, setOtpPopUp] = useState(true);
+  const [otpPopUp, setOtpPopUp] = useState(false);
   const [email, setEmail] = useState('');
   const navigate=useNavigate();
   const provider = new GoogleAuthProvider();
