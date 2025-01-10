@@ -15,7 +15,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const[update,setUpdate]=useState(false);
-   const { isAuthenticated,token,pImg } = useAuth();
+   const {isAuthenticated, token,pImg } = useAuth();
 
   
    useEffect(() => {
@@ -46,9 +46,9 @@ const Navbar = () => {
   const user = adminData?.userData || {}; // Safely access user data
   console.log("User Data:", user); // Debug user data
 
-  if (isAdminPending) {
-     return <Loader/>
-  }
+  // if (isAdminPending) {
+  //    return <p>Loading...</p>
+  // }
 
   if (adminError) {
     console.error("Error fetching admin data:", adminError);
