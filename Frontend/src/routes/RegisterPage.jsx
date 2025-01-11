@@ -16,6 +16,7 @@ const RegisterPage = () => {
   const [seePassword, setSeePassword] = useState(false);
   const [otpPopUp, setOtpPopUp] = useState(false);
   const [email, setEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const navigate=useNavigate();
   const provider = new GoogleAuthProvider();
   
@@ -29,6 +30,8 @@ const RegisterPage = () => {
       return res.data;
     },
     onSuccess: (data) => {
+      console.log(data);
+      setUserId(data?.data?.userId)
       toast.success(data.message);
       setOtpPopUp(true)
       // navigate('/login');
@@ -274,7 +277,7 @@ const RegisterPage = () => {
               {
                 otpPopUp ?
                 (<div >
-                  <VerifiedPopUp email={email}  />
+                  <VerifiedPopUp email={email} userId={userId}  />
                   </div>):(null)
               }
           
