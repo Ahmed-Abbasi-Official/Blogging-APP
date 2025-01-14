@@ -48,10 +48,10 @@ console.log(posts);
           </p>
         )
       }
-      {posts.length === 0 ? (
+      {savedPosts.length === 0 ? (
         <p className="text-center mb-6">No post</p>
       ) : (
-        posts?.map((post) => <PostListItem key={post?._id} post={post} />)
+        savedPosts?.map((post) => <PostListItem key={post?._id} post={post} />)
       )}
     </div>
   );
