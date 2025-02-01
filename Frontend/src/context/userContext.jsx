@@ -45,7 +45,7 @@ const {data:user,isLoading:userLoading,error:userError}=useQuery({
  //  refetchInterval: 60000, // every minute
 })
   return (
-    <UserContext.Provider value={{getImg,storeTokenInLs,isAuthenticated,token,pImg,user,userLoading,userError}}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{setIsAuthenticated,getImg,storeTokenInLs,isAuthenticated,token,pImg,user,userLoading,userError}}>{children}</UserContext.Provider>
   );
 };
 

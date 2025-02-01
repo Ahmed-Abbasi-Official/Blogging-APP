@@ -35,7 +35,7 @@ const LoginPage = () => {
     },
     onSuccess: (data) => {
       storeTokenInLs(data?.token);
-      queryClient.invalidateQueries(["adminData"]);
+      queryClient.invalidateQueries(["adminData","user"]);
       navigate("/");
       toast.success(data.message);
     },
