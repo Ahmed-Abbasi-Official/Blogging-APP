@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -28,8 +29,23 @@ export const PostProvider = ({ children }) => {
      
    } 
  }, [Navigate,isAuthenticated]);
+
+//  GET USER
+
+const {data:user,isLoading:userLoading,error:userError}=useQuery({
+  queryKey: ["user","adminData"],
+  queryFn: async () => {
+    const res=await axios.get(`${import.meta.env.VITE_API_URL}/user`,{
+      headers: { Authorization:`${token}` },
+    })
+    console.log(res.data)
+    return res.data;
+  },
+  // enabled:!!isAuthenticated,
+ //  refetchInterval: 60000, // every minute
+})
   return (
-    <UserContext.Provider value={{getImg,storeTokenInLs,isAuthenticated,token,pImg}}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{getImg,storeTokenInLs,isAuthenticated,token,pImg,user,userLoading,userError}}>{children}</UserContext.Provider>
   );
 };
 
