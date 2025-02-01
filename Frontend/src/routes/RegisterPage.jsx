@@ -134,11 +134,6 @@ const RegisterPage = () => {
               <input
                 {...register("username", {
                   required: "Username is required",
-                  pattern: {
-                    value: /^[a-z]+[0-9]/,
-                    message:
-                      "Username must contain only lowercase plus letters",
-                  },
                 })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent placeholder-gray-400 text-sm"
                 placeholder="Enter username"
@@ -183,12 +178,6 @@ const RegisterPage = () => {
               <input
                 {...register("password", {
                   required: "password is required",
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    message:
-                      "Password must contain at least 8 characters, including uppercase letters, lowercase letters, numbers, and special characters",
-                  },
                 })}
                 // ref={passwordFieldRef}
                 type={seePassword ? "text": "password"}

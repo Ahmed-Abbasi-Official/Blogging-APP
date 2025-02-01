@@ -142,12 +142,6 @@ const LoginPage = () => {
               <input
                 {...register("password", {
                   required: "password is required",
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    message:
-                      "Password must contain at least 8 characters, including uppercase letters, lowercase letters, numbers, and special characters",
-                  },
                 })}
                 // ref={passwordFieldRef}
                 type={seePassword ? "text" : "password"}

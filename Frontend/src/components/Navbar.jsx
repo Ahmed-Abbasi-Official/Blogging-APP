@@ -9,7 +9,6 @@ import Image from "../utils/Image.jsx";
 import { useQuery } from "@tanstack/react-query";
 import Modal from "./Modal.jsx";
 import axios from "axios";
-import Loader from "./Loader.jsx";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -37,6 +36,7 @@ const Navbar = () => {
         headers: {
           Authorization:`${token}`,
         },
+        staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
       });
       console.log("API Response:", res.data); // Debug API response
       return res.data; // Return actual data
@@ -44,7 +44,7 @@ const Navbar = () => {
   });
 
   const user = adminData?.userData || {}; // Safely access user data
-  console.log("User Data:", user); // Debug user data
+  // console.log("User Data:", user); // Debug user data
 
   // if (isAdminPending) {
   //    return <p>Loading...</p>
