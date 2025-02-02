@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -16,14 +17,14 @@ export const PostProvider = ({ children }) => {
   // Set Token
  const storeTokenInLs =(serverToken)=>{
    localStorage.setItem("token", serverToken);
-  setIsAuthenticated(true)
+  // setIsAuthenticated(true)
  }
  
 
  useEffect(() => {
    const token = localStorage.getItem("token");
    if (token) {
-     setIsAuthenticated(true);
+    //  setIsAuthenticated(true);
      setToken(token);
      <Navigate to='/'/>
      
@@ -35,14 +36,13 @@ export const PostProvider = ({ children }) => {
 const {data:user,isLoading:userLoading,error:userError}=useQuery({
   queryKey: ["user","adminData"],
   queryFn: async () => {
+
     const res=await axios.get(`${import.meta.env.VITE_API_URL}/user`,{
       headers: { Authorization:`${token}` },
     })
-    console.log(res.data)
+    // console.log(res)
     return res.data;
   },
-  // enabled:!!isAuthenticated,
- //  refetchInterval: 60000, // every minute
 })
   return (
     <UserContext.Provider value={{setIsAuthenticated,getImg,storeTokenInLs,isAuthenticated,token,pImg,user,userLoading,userError}}>{children}</UserContext.Provider>

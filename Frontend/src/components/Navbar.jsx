@@ -38,7 +38,7 @@ const Navbar = () => {
         },
         staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
       });
-      console.log("API Response:", res.data); // Debug API response
+      // console.log("API Response:", res.data); // Debug API response
       return res.data; // Return actual data
     },
   });

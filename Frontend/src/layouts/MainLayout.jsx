@@ -5,14 +5,20 @@ import Loader from "../components/Loader";
 import { useAuth } from "../context/userContext";
 
 const MainLayout = () => {
-  const {user,userLoading,setIsAuthenticated}=useAuth();
+  const {user,userLoading,setIsAuthenticated,userError}=useAuth();
+  if (userLoading) return <Loader />;
+  // if (userError) {
+  //   return <div>Error: {userError.message || JSON.stringify(userError)}</div>;
+  // }
+  
   useEffect(() => {
     if (user) {
       setIsAuthenticated(true);
     }
   }, [user]);
+  console.log(user)
 
-  if (userLoading) return <Loader />;
+ 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
           <>
