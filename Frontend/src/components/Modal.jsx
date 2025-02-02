@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../context/userContext";
@@ -8,7 +8,8 @@ import './Modal.css'
 import { Link } from "react-router-dom";
 
 const Modal = ({ update,setUpdate,setShow }) => {
-  const { token } = useAuth();
+  const { token ,user} = useAuth();
+  const queryClient = useQueryClient();
 
   //  GET USER INFO
 
@@ -26,16 +27,20 @@ const Modal = ({ update,setUpdate,setShow }) => {
       });
     },
   });
-  const userData = adminData?.data?.userData;
-  //  console.log(userData);
+  if(isAdminPending){
+    return <div>Loading...</div>
+  }
+  const userData = adminData?.data?.userData || [];
+
 
   // FOR LOAGOUT
 
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
+    queryClient.invalidateQueries(["user","adminDatas"])
     toast.success("Logged out");
-    window.location.reload();
+    // window.location.reload();
     navigate("/login");
   };
 

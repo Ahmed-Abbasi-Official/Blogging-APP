@@ -16,11 +16,11 @@ const LoginPage = () => {
   // console.log("Login===>>>",isAuthenticated);
   const provider = new GoogleAuthProvider();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/");
+  //   }
+  // }, []);
 
   const queryClient = useQueryClient();
 
