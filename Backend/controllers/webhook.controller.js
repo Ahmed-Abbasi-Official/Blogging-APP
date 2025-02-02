@@ -30,11 +30,12 @@ export const signUp = async (req, res) => {
     // console.log(hashedPassword);
 
     const user = new userModel({
-      username:username.toLowerCase(),
+      username: username.trim().toLowerCase(),
       email,
       password: hashedPassword,
       isVerified: false,
     });
+    
 
     // console.log(user);
     await user.save();
