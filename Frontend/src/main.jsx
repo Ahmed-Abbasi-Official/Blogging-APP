@@ -40,9 +40,7 @@ const router = createBrowserRouter(
       } />
       <Route path="/posts" element={<PostListPage />} />
       <Route path="/:slug" element={
-        <ProtectedRoute>
           <SinglePostPage/>
-        </ProtectedRoute>
       } />
       <Route path="/write" element={
         <ProtectedRoute>
