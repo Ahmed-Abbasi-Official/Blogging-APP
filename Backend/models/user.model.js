@@ -4,10 +4,11 @@ import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
 const userSchema=new Schema({
-  username:{
-    type:String,
-    required:true,
-    unique:true,
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
   },
   fullName:{
     type:String,
