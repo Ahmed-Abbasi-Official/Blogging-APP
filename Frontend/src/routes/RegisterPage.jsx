@@ -141,11 +141,11 @@ const RegisterPage = () => {
                 name="username"
               />
               {/* ERROR IN USERNAME */}
-              {errors.username && (
+              {/* {errors.username && (
                 <p className="text-xs text-red-500">
                   {errors.username.message}
                 </p>
-              )}
+              )} */}
             </div>
 
             {/* Email Input */}
@@ -186,11 +186,11 @@ const RegisterPage = () => {
                 placeholder="Enter your password"
               />
               {/* ERROR IN PASSWORD */}
-              {errors.password && (
+              {/* {errors.password && (
                 <p className="text-xs text-red-500">
                   {errors.password.message}
                 </p>
-              )}
+              )} */}
               <div
                 className="absolute bottom-[10px] right-4 cursor-pointer hover:scale-105"
                 onClick={handleSeePassword}
